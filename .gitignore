@@ -1,5 +1,6 @@
 *.pages
 *.pdf
+*.o
 .MWebMetaData
 阿里巴巴
 百度
@@ -9,6 +10,6 @@
 腾讯
 网易
 网易游戏
-README.md
+README_MORE.md
 Media
 Image
