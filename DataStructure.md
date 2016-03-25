@@ -1,5 +1,5 @@
 
-## 图
+# 图
 
 
 # 树
@@ -53,8 +53,8 @@
      * 没有键值相等的节点。
 * 平衡二叉树（AVL树）：它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。
 
-参考：
-[轻松搞定面试中的二叉树题目](http://blog.csdn.net/luckyxiaoqiang/article/details/7518888)
+参考：  
+[轻松搞定面试中的二叉树题目](http://blog.csdn.net/luckyxiaoqiang/article/details/7518888)  
 [卡特兰数](https://zh.wikipedia.org/wiki/卡塔兰数)
 
 ## 树与二叉树的转换
