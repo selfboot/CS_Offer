@@ -39,9 +39,9 @@ VL树的特性让二叉搜索树的节点实现平衡(balance)：节点相对均
 
 删除操作也是在平衡二叉树的删除基础上，加上旋转动作保持平衡二叉树的性质。
 
-参考：
-[Wiki: AVL tree](https://en.wikipedia.org/wiki/AVL_tree)
-[AVL树(一)之 图文解析 和 C语言的实现](http://www.cnblogs.com/skywang12345/p/3576969.html)
+参考：  
+[Wiki: AVL tree](https://en.wikipedia.org/wiki/AVL_tree)  
+[AVL树(一)之 图文解析 和 C语言的实现](http://www.cnblogs.com/skywang12345/p/3576969.html)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_AVL_1.jpg

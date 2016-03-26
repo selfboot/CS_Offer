@@ -207,8 +207,8 @@ UDP通信流程图如下：
     client.close()
 
 
-参考：
-[Python爬虫(三)-Socket网络编程](http://www.jianshu.com/p/e062b3dd110c)
+参考：  
+[Python爬虫(三)-Socket网络编程](http://www.jianshu.com/p/e062b3dd110c)  
 [Linux Socket编程（不限Linux）](http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html)
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_1.png

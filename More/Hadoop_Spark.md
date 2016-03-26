@@ -86,9 +86,9 @@ MapReduce提供一个统一的计算框架，可完成：
 
 
 参考：
-[如何简单解释 MapReduce 算法](http://blog.jobbole.com/79255/)
-[MapReduce原理与设计思想](http://blog.jobbole.com/80619/)
-[Spark：一个高效的分布式计算系统](http://blog.jobbole.com/47791/)
+[如何简单解释 MapReduce 算法](http://blog.jobbole.com/79255/)  
+[MapReduce原理与设计思想](http://blog.jobbole.com/80619/)  
+[Spark：一个高效的分布式计算系统](http://blog.jobbole.com/47791/)  
 
 [1]: 
 

@@ -19,7 +19,7 @@
     size=ftell(fp);
     fclose(fp);
 
-    // 库函数 stat获取文件信息
+    // 库函数 stat 获取文件信息
     struct stat buf;
     auto size ＝ (unsigned long)buf.st_size;
 

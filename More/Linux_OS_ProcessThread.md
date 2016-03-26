@@ -65,7 +65,7 @@ Linux 线程间通信：互斥量（mutex），信号量，条件变量
 4. 系统开销：在创建或撤销进程时，系统都要为之分配和回收进程控制块、内存空间、I/O设备等，因此操作系统所付出的开销显著地大于创建或撤销线程时的开销。类似地，在进行进程切换时，涉及到当前进程CPU环境的保存及新被调度运行进程CPU环境的设置。而线程的切换只需要保存和设置少量寄存器地内容，不涉及存储器管理方面的操作。可见，进程切换的开销也远大于线程切换的开销。此外，由于同一个进程中的多个线程具有相同的地址空间，在同步和通信的实现方面线程也比进程容易。在一些操作系统中，线程的切换、同步和通信都无须操作系统内核的干预。
   
 # 参考
-[进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)
-[Linux的IPC命令](http://www.cnblogs.com/cocowool/archive/2012/05/22/2513027.html)
+[进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)  
+[Linux的IPC命令](http://www.cnblogs.com/cocowool/archive/2012/05/22/2513027.html)  
 
 

@@ -89,7 +89,7 @@
 
 ## 参考
 
-[数据结构之红黑树](http://dongxicheng.org/structure/red-black-tree/)
+[数据结构之红黑树](http://dongxicheng.org/structure/red-black-tree/)  
 [Wiki：红黑树](https://zh.wikipedia.org/wiki/红黑树)
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_1.png

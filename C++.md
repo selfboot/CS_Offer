@@ -13,7 +13,7 @@
         char* m_data;//用于保存字符串w
     };
 
-详细内容参见：[String.cpp](C++_Code/String.cpp)
+具体实现（[String.cpp](C++_Code/String.cpp)）
 
 ## 虚函数
 
@@ -41,7 +41,7 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
 
 struct 或者 union 成员对齐规则如下：
 
-1. 第一个数据成员放在offset为0的地方，对齐按照对齐系数和自身占用字节数中，二者比较小的那个进行对齐；
+1. 第一个数据成员放在offset为0的地方，每个成员按照对齐系数和自身占用字节数中，二者比较小的那个进行对齐；
 2. 在数据成员完成各自对齐以后，struct或者union本身也要进行对齐，对齐将按照对齐系数和struct或者union中最大数据成员长度中比较小的那个进行；
 
 先局部成员对齐，然后再全局对齐。（[memory_align.cpp](C++_Code/memory_align.cpp)）
@@ -86,7 +86,7 @@ struct 或者 union 成员对齐规则如下：
     
         extern int num;
     
-编译系统由此知道num是一个已在别处定义的外部变量，它先在本文件中找有无外部变量num，如果有，则将其作用域扩展到本行开始(如上节所述)，如果本文件中无此外部变量，则在程序连接时从其他文件中找有无外部变量num，如果有，则把在另一文件中定义的外部变量num的作用域扩展到本文件，在本文件中可以合法地引用该外部变量num。
+    编译系统由此知道num是一个已在别处定义的外部变量，它先在本文件中找有无外部变量num，如果有，则将其作用域扩展到本行开始(如上节所述)，如果本文件中无此外部变量，则在程序连接时从其他文件中找有无外部变量num，如果有，则把在另一文件中定义的外部变量num的作用域扩展到本文件，在本文件中可以合法地引用该外部变量num。
 
 ## extern c 编译器的函数名修饰机制
 
@@ -196,7 +196,7 @@ static 用法
     int* a[4];           // 指针数组：和上面是一样的，因为[]优先级高于*。
     int (*a)[4];         // 数组指针：指向数组a的指针
 
-［[二维数组运算结果](http://www.nowcoder.com/questionTerminal/8e78bcf76d0241938dc5f08ed8b2a065)］
+［[二维数组运算结果](http://www.nowcoder.com/questionTerminal/8e78bcf76d0241938dc5f08ed8b2a065)］  
 ［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］
 
 ## 函数指针
@@ -303,7 +303,7 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 * 对数组执行 sizeof 运算得到整个数组所占空间的大小（sizeof 不会把数组转换成指针来处理，可以用数组的大小除以单个元素的大小得到数组中元素的个数）。
 * 对 string 对象或 vector 对象执行 sizeof 运算只返回该类型固定部分的大小（**24**），不会计算对象占用了多少空间；
 
-[sizeof_demo.cpp](C++_Code/sizeof_demo.cpp)
+[sizeof_demo.cpp](C++_Code/sizeof_demo.cpp)  
 ［[字符数组，八进制坑](http://www.nowcoder.com/questionTerminal/a7b35bc367604e73823d2dded6496e38)］
 
 参考：
@@ -433,7 +433,7 @@ final关键字可用于修饰类、变量和方法。final修饰的类不能被�
 
 指针的行为和其他非引用类型一样，执行指针拷贝操作时，拷贝的是指针的值，拷贝之后，两个指针是不同的指针。因为指针可以使我们间接地访问所指向的对象，所以通过指针可以修改它所指向的对象的值。
 
-［[复杂的参数传递](http://www.nowcoder.com/questionTerminal/2b09b944ce7342ab8ca645690afd207b)］
+［[复杂的参数传递](http://www.nowcoder.com/questionTerminal/2b09b944ce7342ab8ca645690afd207b)］  
 ［[指针传递](http://www.nowcoder.com/questionTerminal/960f8047a9ee4a6f8227768f3bc2734d)］
 
 `传引用参数`：通过使用引用形参，允许函数改变一个或者多个实参的值。使用引用可以避免拷贝，因为有时候拷贝较大的类对象或者容器对象比较低效，甚至有的类类型（包括 IO 类型在内）根本不支持拷贝操作。
@@ -450,9 +450,9 @@ final关键字可用于修饰类、变量和方法。final修饰的类不能被�
 
 我们可以利用 union 的存储特点，写一个简单的程序来判定当前 CPU 的字节序([union_endian.cpp](C++_Code/union_endian.cpp))。
 
-［[判断 CPU大小端](http://www.nowcoder.com/questionTerminal/a903ebe93add411d9c94b114f5fabb36)］
-［[溢出，大小端](http://www.nowcoder.com/questionTerminal/c7298be0b2ce42698b80987631cf8fca)］
-［[大小端，网络发送](http://www.nowcoder.com/questionTerminal/d7c1ff50fab44443b61903eccd791f1d)］
+［[判断 CPU大小端](http://www.nowcoder.com/questionTerminal/a903ebe93add411d9c94b114f5fabb36)］  
+［[溢出，大小端](http://www.nowcoder.com/questionTerminal/c7298be0b2ce42698b80987631cf8fca)］  
+［[大小端，网络发送](http://www.nowcoder.com/questionTerminal/d7c1ff50fab44443b61903eccd791f1d)］  
 
 ## 赋值还是构造
 
@@ -553,9 +553,9 @@ C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低�
 
 ## 其它详细问题
 
-［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］
-［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］
-［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］
+［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］  
+［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］  
+［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］  
 
 ## C++ 11 新特性
 
@@ -563,7 +563,7 @@ Lambda、变参模板、auto、decltype、constexpr、智能指针、列表初�
 
 # 更多阅读
 
-[C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)
-[那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)
+[C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)  
+[那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
 [C语言的整型溢出问题](http://www.nowcoder.com/test/question/done?tid=2482392&qid=14466#summary)
 

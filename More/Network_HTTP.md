@@ -241,17 +241,17 @@ Web代理（proxy）服务器是网络的中间实体。代理位于Web客户端
 
 # 参考
 
-[深入理解HTTP协议（二）——协议详解篇](http://www.voidcn.com/blog/huangjianxiang1875/article/p-1596378.html)
-[深入理解HTTP协议（三）——深入了解篇](http://www.voidcn.com/blog/huangjianxiang1875/article/p-1596379.html)
-[RFC2616 is Dead](https://www.mnot.net/blog/2014/06/07/rfc2616_is_dead)
-[HTTP协议 (四) 缓存](http://www.cnblogs.com/TankXiao/archive/2012/11/28/2793365.html)
-[HTTP cookies 详解](http://bubkoo.com/2014/04/21/http-cookies-explained/)
-[细说 Cookie](http://www.cnblogs.com/fish-li/archive/2011/07/03/2096903.html)
-[HTTP/1.1与HTTP/1.0的区别](http://blog.csdn.net/forgotaboutgirl/article/details/6936982)
-[浏览器缓存机制浅析](http://web.jobbole.com/82997/)
-[HTTP缓存机制](http://oohcode.com/2015/05/28/http-cache/)
-[Http状态码查询，各种返回码的详解](http://www.bkjia.com/headlines/491296.html)
-[HTTP协议详解(五) http协议代理](http://www.bkjia.com/headlines/491855.html)
+[深入理解HTTP协议（二）——协议详解篇](http://www.voidcn.com/blog/huangjianxiang1875/article/p-1596378.html)  
+[深入理解HTTP协议（三）——深入了解篇](http://www.voidcn.com/blog/huangjianxiang1875/article/p-1596379.html)  
+[RFC2616 is Dead](https://www.mnot.net/blog/2014/06/07/rfc2616_is_dead)  
+[HTTP协议 (四) 缓存](http://www.cnblogs.com/TankXiao/archive/2012/11/28/2793365.html)  
+[HTTP cookies 详解](http://bubkoo.com/2014/04/21/http-cookies-explained/)  
+[细说 Cookie](http://www.cnblogs.com/fish-li/archive/2011/07/03/2096903.html)  
+[HTTP/1.1与HTTP/1.0的区别](http://blog.csdn.net/forgotaboutgirl/article/details/6936982)  
+[浏览器缓存机制浅析](http://web.jobbole.com/82997/)  
+[HTTP缓存机制](http://oohcode.com/2015/05/28/http-cache/)  
+[Http状态码查询，各种返回码的详解](http://www.bkjia.com/headlines/491296.html)  
+[HTTP协议详解(五) http协议代理](http://www.bkjia.com/headlines/491855.html)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_2.png

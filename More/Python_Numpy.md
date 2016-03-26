@@ -142,7 +142,7 @@ NumPy 还提供一个类似range的函数（arange）返回一个数列形式的
             [2, 5],
             [3, 6]])
 
-参考：
-[Numpy 学习](https://www.zybuluo.com/tankle/note/51606)
-[DOC: numpy.matrix](http://docs.scipy.org/doc/numpy-1.10.1/reference/generated/numpy.matrix.html)
+参考：  
+[Numpy 学习](https://www.zybuluo.com/tankle/note/51606)  
+[DOC: numpy.matrix](http://docs.scipy.org/doc/numpy-1.10.1/reference/generated/numpy.matrix.html)  
 

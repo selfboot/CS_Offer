@@ -203,10 +203,10 @@ TCP New Reno：[RFC682](http://tools.ietf.org/html/rfc6582)
 
 ## 参考
 
-[图解TCP-IP协议](http://www.cricode.com/3568.html)
-[简析TCP的三次握手与四次分手](http://www.jellythink.com/archives/705)
-[TCP 的那些事儿（上）](http://coolshell.cn/articles/11564.html)
-[TCP 的那些事儿（下）](http://coolshell.cn/articles/11609.html)
+[图解TCP-IP协议](http://www.cricode.com/3568.html)  
+[简析TCP的三次握手与四次分手](http://www.jellythink.com/archives/705)  
+[TCP 的那些事儿（上）](http://coolshell.cn/articles/11564.html)  
+[TCP 的那些事儿（下）](http://coolshell.cn/articles/11609.html)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_2.png

@@ -124,10 +124,10 @@ helloworld.cpp 的源代码，仅仅有六行，而且该程序除了显示一�
     hello, world
 
 
-参考：
-[详解C/C++预处理器](http://blog.csdn.net/huang_xw/article/details/7648117)
-[Compiling Cpp](http://wiki.ubuntu.org.cn/Compiling_Cpp)
-[C++静态库与动态库](http://www.cnblogs.com/skynet/p/3372855.html)
-[高级语言的编译：链接及装载过程介绍](http://tech.meituan.com/linker.html)
+参考：  
+[详解C/C++预处理器](http://blog.csdn.net/huang_xw/article/details/7648117)  
+[Compiling Cpp](http://wiki.ubuntu.org.cn/Compiling_Cpp)  
+[C++静态库与动态库](http://www.cnblogs.com/skynet/p/3372855.html)  
+[高级语言的编译：链接及装载过程介绍](http://tech.meituan.com/linker.html)  
 
 

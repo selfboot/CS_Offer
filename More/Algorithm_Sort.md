@@ -158,12 +158,12 @@ Python 实现如下：
 
 # 参考
 
-[冒泡排序](https://zh.wikipedia.org/wiki/冒泡排序)
-[选择排序](https://zh.wikipedia.org/wiki/冒泡排序)
-[插入排序](https://zh.wikipedia.org/wiki/插入排序)
-[希尔排序](https://zh.wikipedia.org/wiki/希尔排序)
-[快速排序](https://zh.wikipedia.org/wiki/快速排序)
-[常见排序算法 - 堆排序 (Heap Sort)](http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/)
+[冒泡排序](https://zh.wikipedia.org/wiki/冒泡排序)  
+[选择排序](https://zh.wikipedia.org/wiki/冒泡排序)  
+[插入排序](https://zh.wikipedia.org/wiki/插入排序)  
+[希尔排序](https://zh.wikipedia.org/wiki/希尔排序)  
+[快速排序](https://zh.wikipedia.org/wiki/快速排序)  
+[常见排序算法 - 堆排序 (Heap Sort)](http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_1.gif
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_2.gif

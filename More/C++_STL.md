@@ -159,7 +159,7 @@ strcpy()函数将源字符串复制到目的缓冲区，但是没有指定要复
 strcat()函数非常类似于 strcpy()，除了它将一个字符串合并到缓冲区末尾。它也有一个类似的、更安全的替代方法 `strncat()`。如果可能，使用 strncat() 而不要使用 strcat()。
 
 
-参考：
-[标准模板库（STL）使用入门（上）](http://blog.jobbole.com/87586/)
+参考：  
+[标准模板库（STL）使用入门（上）](http://blog.jobbole.com/87586/)  
 [防止缓冲区溢出](http://www.ibm.com/developerworks/cn/security/buffer-defend/index.html)
 

@@ -188,11 +188,11 @@ epoll是对select和poll的改进，避免了上述的三个缺点。我们先�
 与 I/O 复用密切相关的另一种 I/O 模型是在多线程中使用阻塞式 I/O。这种模型与上述模型极为相似，但它没有使用 select 阻塞在多个描述符上，而是使用多个线程，每个线程阻塞在一个描述符上。
 
 # 参考
-[Unix五种I/O模型对比](http://sukai.me/linux-five-io-models/)
-[IO多路复用之select总结](http://www.cnblogs.com/Anker/archive/2013/08/14/3258674.html)
-[IO多路复用之epoll总结](http://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html)
-[Linux IO模式及 select、poll、epoll详解](https://segmentfault.com/a/1190000003063859)
-[使用事件驱动模型实现高效稳定的网络服务器程序](http://www.ibm.com/developerworks/cn/linux/l-cn-edntwk/index.html?ca=drs-)
+[Unix五种I/O模型对比](http://sukai.me/linux-five-io-models/)  
+[IO多路复用之select总结](http://www.cnblogs.com/Anker/archive/2013/08/14/3258674.html)  
+[IO多路复用之epoll总结](http://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html)  
+[Linux IO模式及 select、poll、epoll详解](https://segmentfault.com/a/1190000003063859)  
+[使用事件驱动模型实现高效稳定的网络服务器程序](http://www.ibm.com/developerworks/cn/linux/l-cn-edntwk/index.html?ca=drs-)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_1.png

@@ -22,6 +22,6 @@ B树中的每个结点根据实际情况可以包含大量的关键字信息和�
 
 
 
-参考：
+参考：  
 [从B树、B+树、B*树谈到R树](http://blog.csdn.net/v_july_v/article/details/6530142)
 

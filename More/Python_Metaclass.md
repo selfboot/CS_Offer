@@ -334,6 +334,6 @@ Foo中有__metaclass__这个属性吗？如果是，Python会在内存中通过_
 Python中的一切都是对象，它们要么是类的实例，要么是元类的实例，除了type。type实际上是它自己的元类，在纯Python环境中这可不是你能够做到的，这是通过在实现层面耍一些小手段做到的。其次，元类是很复杂的。
 
 参考：
-[深刻理解Python中的元类(metaclass)](http://blog.jobbole.com/21351/)
+[深刻理解Python中的元类(metaclass)](http://blog.jobbole.com/21351/)  
 [What is a metaclass in Python?](http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python)
 
