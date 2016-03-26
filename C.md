@@ -65,9 +65,9 @@ C 语言标准库提供了一组函数用于操作 C 风格字符串，定义在
 
 《C++ Primer》 Page109
 
-参考： 
-[What is the difference between char s[] and char *s in C?](http://stackoverflow.com/questions/1704407/what-is-the-difference-between-char-s-and-char-s-in-c)
-[Why do I get a segmentation fault when writing to a string initialized with “char *s” but not “char s[]”?](http://stackoverflow.com/questions/164194/why-do-i-get-a-segmentation-fault-when-writing-to-a-string-initialized-with-cha)
+参考：   
+[What is the difference between char s[] and char *s in C?](http://stackoverflow.com/questions/1704407/what-is-the-difference-between-char-s-and-char-s-in-c)  
+[Why do I get a segmentation fault when writing to a string initialized with “char *s” but not “char s[]”?](http://stackoverflow.com/questions/164194/why-do-i-get-a-segmentation-fault-when-writing-to-a-string-initialized-with-cha)  
 
 ## printf 格式化字符串
 
@@ -106,12 +106,12 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
 
 [结构体柔性数组作用](http://www.nowcoder.com/questionTerminal/be5269b8c2d340c3add69510d0089747)
 
-参考：
-[C语言结构体里的成员数组和指针](http://coolshell.cn/articles/11377.html)
+参考：  
+[C语言结构体里的成员数组和指针](http://coolshell.cn/articles/11377.html)  
 [Arrays of Length Zero](https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html)
 
 ## 参考
 
-[C语言的谜题](http://coolshell.cn/articles/945.html)
+[C语言的谜题](http://coolshell.cn/articles/945.html)  
 [语言的歧义](http://coolshell.cn/articles/830.html)
 

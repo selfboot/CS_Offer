@@ -155,7 +155,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     Python中的除了map和reduce外，还有一些别的如filter, find, all, any的函数做辅助，可以让代码更简洁，更易读，更高效。（没有了循环体，于是就可以少了些临时变量，以及变量倒来倒去的逻辑。）
     
 参考：
-[Python 代码性能优化技巧](http://www.ibm.com/developerworks/cn/linux/l-cn-python-optim/)
+[Python 代码性能优化技巧](http://www.ibm.com/developerworks/cn/linux/l-cn-python-optim/)  
 [函数式编程](http://coolshell.cn/articles/10822.html)
 
 ## 生成器 与 yeild
@@ -233,7 +233,7 @@ python中一切都是对象，这里需要强调函数是对象，那么
             return fib_cache(n - 1) + fib_cache(n - 2)
             
 参考： 
-[python装饰器详解](http://selfboot.cn/2014/08/10/python_decorator/)
+[python装饰器详解](http://selfboot.cn/2014/08/10/python_decorator/)  
 [Python修饰器的函数式编程](http://coolshell.cn/articles/11265.html)
 
 ## 排序函数
@@ -412,6 +412,6 @@ Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块
 
 参考
 
-[关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)
+[关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)  
 [How do I pass a variable by reference?](http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference)
 

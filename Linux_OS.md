@@ -50,10 +50,10 @@
 
 ![][1]
 
-［[fork 输出个数](http://www.nowcoder.com/questionTerminal/1f6cc9c0ef354f86b1727c6c030a1a19)］
-［[进程和线程描述](http://www.nowcoder.com/questionTerminal/686a6b91356042cab35d7429b4e86547)］
-［[线程共享的资源](http://www.nowcoder.com/questionTerminal/e77f38359f074676b7f6f6e981c71cce)］
-［[线程并发脏数据](http://www.nowcoder.com/questionTerminal/532ddd8c34e84eaab24c6538b8091445)］
+［[fork 输出个数](http://www.nowcoder.com/questionTerminal/1f6cc9c0ef354f86b1727c6c030a1a19)］  
+［[进程和线程描述](http://www.nowcoder.com/questionTerminal/686a6b91356042cab35d7429b4e86547)］  
+［[线程共享的资源](http://www.nowcoder.com/questionTerminal/e77f38359f074676b7f6f6e981c71cce)］  
+［[线程并发脏数据](http://www.nowcoder.com/questionTerminal/532ddd8c34e84eaab24c6538b8091445)］  
 
 ## 守护进程
 
@@ -119,7 +119,7 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
 
 `银行家算法`：判断对请求的满足是否会进入不安全状态，如果是，就拒绝请求，如果满足请求后系统仍然是安全的，就予以分配。不安全状态不一定引起死锁，因为客户不一定需要其最大贷款额度。
 
-［[死锁产生必要条件](http://www.nowcoder.com/questionTerminal/28e91f200206451b9ee44dd1613f94ce)］
+［[死锁产生必要条件](http://www.nowcoder.com/questionTerminal/28e91f200206451b9ee44dd1613f94ce)］  
 ［[资源一定，进程最多申请多少资源](http://www.nowcoder.com/questionTerminal/18b1f01c1901424382735d5d158a8f7f)］
 
 # 存储管理
@@ -156,9 +156,9 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
     
     由于程序设计中经常使用循环结构，根据程序执行的局部性特点，可以设想在一段时间内经常被访问的代码和数据在将来也会经常被访问，显然这样的页面不应该被淘汰。最近最不常用调度算法总是根据一段时间内页面的访问次数来选择淘汰页面，每次淘汰访问次数最少的页面。算法实现时需要为每个页面设置计数器，记录访问次数。计数器由硬件或操作系统自动定时清零。
 
-［[LRU 缺页次数](http://www.nowcoder.com/questionTerminal/b6ba25af8c474d11909f756052f29c0e)］
-［[缺页率计算](http://www.nowcoder.com/questionTerminal/0a0e709f1c7343799c0194a1996ae202)］
-［[缺页替换影响效率](http://www.nowcoder.com/questionTerminal/40a2ed91959b4586b8a7255bbabdad7d)］
+［[LRU 缺页次数](http://www.nowcoder.com/questionTerminal/b6ba25af8c474d11909f756052f29c0e)］  
+［[缺页率计算](http://www.nowcoder.com/questionTerminal/0a0e709f1c7343799c0194a1996ae202)］  
+［[缺页替换影响效率](http://www.nowcoder.com/questionTerminal/40a2ed91959b4586b8a7255bbabdad7d)］  
 
 ## 主存、辅存、虚拟存储
 
@@ -233,7 +233,7 @@ select，poll，epoll都是IO多路复用的机制。I/O多路复用就通过一
 
     平均的访问时间=命中时间(L1)+失效率(L1)*失效开销(L1)
                 =命中时间(L1)+失效率(L1)*((命中时间(L2)+失效率(L2)*失效开销(L2))
-              
+
 ［[两级缓存访问开销](http://www.nowcoder.com/questionTerminal/c0acab67e0794f3b84c0827f8bad6174)］
             
 ## RAID 工作模式
@@ -311,7 +311,7 @@ POSIX线程标准要求C标准库中的大多数函数具备线程安全性。C+
 
 对一个数值执行单目运算符 -  表示的是对该数取反然后再+1，也即是我们常说的`求补运算`，注意这里取反+1与原码求补码的区别！也就是求补运算与求补码是不一样的！例子（4位有符号整数）：x=-4  1100（补码）   -x=~x+1 也即是 0011+0001=0100（4），而1100再求补码应是先数值位取反，即1011，然后+1，变成1100！注意这两者（求补与求补码）之间的区别。
 
-［[－2^31 -1 的各种计算](http://www.nowcoder.com/questionTerminal/5f5f30bea94748fe903ff5616e73de00)］
+［[－2^31 -1 的各种计算](http://www.nowcoder.com/questionTerminal/5f5f30bea94748fe903ff5616e73de00)］  
 ［[unsigned 取值](http://www.nowcoder.com/questionTerminal/3327439779e146dc9035b0977d9469eb)］
 
 参考：
@@ -352,6 +352,6 @@ POSIX线程标准要求C标准库中的大多数函数具备线程安全性。C+
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_1.jpg
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_2.jpg
+[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_2.gif
 
 

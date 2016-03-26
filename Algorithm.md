@@ -24,7 +24,7 @@
 |归并排序  |nlogn    | nlogn  | n    | **稳定** |
 |基数排序  |d(r+n)   |d(r+n)  |rd+n  | **稳定** |
 
-［[5排序函数，最大3位](http://www.nowcoder.com/questionTerminal/7cd79ea790ca4fa1a06dbd93dcf58d7d)］
+［[5排序函数，最大3位](http://www.nowcoder.com/questionTerminal/7cd79ea790ca4fa1a06dbd93dcf58d7d)］  
 ［[大量数据中获取前十名](http://www.nowcoder.com/questionTerminal/2ff38817ad074579ae9e07d7d2143fc8)］
 
 # 贪心算法

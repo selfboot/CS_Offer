@@ -27,7 +27,7 @@ OSI(Open System Interconnect)，即开放式系统互联。 一般都叫 OSI 参
    
 ![][3]
 
-［[网络层含有的协议](http://www.nowcoder.com/questionTerminal/4d87fe456e39498c995011813be0230b)］
+［[网络层含有的协议](http://www.nowcoder.com/questionTerminal/4d87fe456e39498c995011813be0230b)］  
 ［[网络层功能](http://www.nowcoder.com/questionTerminal/b79339e956ac4330937b01af14b3102b)］
 
 参考：
@@ -66,19 +66,19 @@ socket起源于UNIX，在Unix`一切皆文件`哲学的思想下，socket是一�
 
 详细内容参见 [Network_Socket](more/Network_Socket.md)
 
-参考：
-[Socket通信原理简介](http://www.jianshu.com/p/90348ef3f41e)
+参考：  
+[Socket通信原理简介](http://www.jianshu.com/p/90348ef3f41e)  
 [简单理解Socket](http://www.cnblogs.com/dolphinX/p/3460545.html)
 
 # TCP 协议
 
 TCP(Transmission Control Protocol)为应用程序之间提供面向连接的可靠的字节流服务。TCP为全双工协议，提供流控制机制，即允许接收方控制发送方的发送速度，此外还提供拥塞控制功能。
 
-［[TCP 协议细节](http://www.nowcoder.com/questionTerminal/7aa912d4886e45759698dd074521c726)］
-［[滑动窗口协议](http://www.nowcoder.com/questionTerminal/3d9d35cc024840d2ae21929bcf868d53)］
-［[nagle算法](http://www.nowcoder.com/questionTerminal/787f0b432012420cb2918b7e1ca37ab2)］
-［[拥塞控制算法](http://www.nowcoder.com/questionTerminal/a2b95450f85c4855877a0c4f06c91a72)］
-［[状态转换流程](http://www.nowcoder.com/questionTerminal/246945f0e26541b89f4735c79e3f16a2)］
+［[TCP 协议细节](http://www.nowcoder.com/questionTerminal/7aa912d4886e45759698dd074521c726)］  
+［[滑动窗口协议](http://www.nowcoder.com/questionTerminal/3d9d35cc024840d2ae21929bcf868d53)］  
+［[nagle算法](http://www.nowcoder.com/questionTerminal/787f0b432012420cb2918b7e1ca37ab2)］  
+［[拥塞控制算法](http://www.nowcoder.com/questionTerminal/a2b95450f85c4855877a0c4f06c91a72)］  
+［[状态转换流程](http://www.nowcoder.com/questionTerminal/246945f0e26541b89f4735c79e3f16a2)］  
 
 详细内容参见 [Network_TCP](more/Network_TCP.md)
  
