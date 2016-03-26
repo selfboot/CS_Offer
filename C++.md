@@ -13,7 +13,7 @@
         char* m_data;//用于保存字符串w
     };
 
-（[String.cpp](more/String.cpp)）
+详细内容参见：[String.cpp](C++_Code/String.cpp)
 
 ## 虚函数
 
@@ -44,7 +44,7 @@ struct 或者 union 成员对齐规则如下：
 1. 第一个数据成员放在offset为0的地方，对齐按照对齐系数和自身占用字节数中，二者比较小的那个进行对齐；
 2. 在数据成员完成各自对齐以后，struct或者union本身也要进行对齐，对齐将按照对齐系数和struct或者union中最大数据成员长度中比较小的那个进行；
 
-先局部成员对齐，然后再全局对齐。（[memory_align.cpp](more/memory_align.cpp)）
+先局部成员对齐，然后再全局对齐。（[memory_align.cpp](C++_Code/memory_align.cpp)）
 
 参考： [C、C++内存对齐](http://www.jellythink.com/archives/413)
 
@@ -66,7 +66,7 @@ struct 或者 union 成员对齐规则如下：
 2. 若派生类中包含对象成员，还要进行对象成员初始化。如果有多个成员类对象则构造函数的调用顺序是对象在类中被声明的顺序。
 3. 派生类构造函数。
     
-析构函数正好和构造函数相反。 ([constructor_derived_class.cpp](more/constructor_derived_class.cpp))
+析构函数正好和构造函数相反。 ([constructor_derived_class.cpp](C++_Code/constructor_derived_class.cpp))
 
 参考： [构造函数：C++](https://msdn.microsoft.com/zh-cn/library/s16xw1a8.aspx)
 
@@ -303,7 +303,7 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 * 对数组执行 sizeof 运算得到整个数组所占空间的大小（sizeof 不会把数组转换成指针来处理，可以用数组的大小除以单个元素的大小得到数组中元素的个数）。
 * 对 string 对象或 vector 对象执行 sizeof 运算只返回该类型固定部分的大小（**24**），不会计算对象占用了多少空间；
 
-[sizeof_demo.cpp](more/sizeof_demo.cpp)
+[sizeof_demo.cpp](C++_Code/sizeof_demo.cpp)
 ［[字符数组，八进制坑](http://www.nowcoder.com/questionTerminal/a7b35bc367604e73823d2dded6496e38)］
 
 参考：
@@ -448,7 +448,7 @@ final关键字可用于修饰类、变量和方法。final修饰的类不能被�
 
 一般来说，x86系列CPU 都是little-endian 的字节序，PowerPC通常是Big endian，还有的CPU 能通过跳线来设置CPU 工作于Little endian 还是Big endian 模式。
 
-我们可以利用 union 的存储特点，写一个简单的程序来判定当前 CPU 的字节序([union_endian.cpp](more/union_endian.cpp))。
+我们可以利用 union 的存储特点，写一个简单的程序来判定当前 CPU 的字节序([union_endian.cpp](C++_Code/union_endian.cpp))。
 
 ［[判断 CPU大小端](http://www.nowcoder.com/questionTerminal/a903ebe93add411d9c94b114f5fabb36)］
 ［[溢出，大小端](http://www.nowcoder.com/questionTerminal/c7298be0b2ce42698b80987631cf8fca)］
