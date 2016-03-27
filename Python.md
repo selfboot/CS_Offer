@@ -34,7 +34,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 |a = A()| a.foo(x)| a.class_foo(x)  |  a.static_foo(x)  |
 | A     | 不可用   | A.class_foo(x)  |  A.static_foo(x)  |
 
-参考：
+参考：  
 [What is the difference between @staticmethod and @classmethod in Python?](http://stackoverflow.com/questions/136097/what-is-the-difference-between-staticmethod-and-classmethod-in-python)
 
 ## Python 类变量
@@ -154,7 +154,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 
     Python中的除了map和reduce外，还有一些别的如filter, find, all, any的函数做辅助，可以让代码更简洁，更易读，更高效。（没有了循环体，于是就可以少了些临时变量，以及变量倒来倒去的逻辑。）
     
-参考：
+参考：  
 [Python 代码性能优化技巧](http://www.ibm.com/developerworks/cn/linux/l-cn-python-optim/)  
 [函数式编程](http://coolshell.cn/articles/10822.html)
 
@@ -189,7 +189,8 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 
 当一个生成器函数调用yield，生成器函数的“状态”会被冻结，所有的变量的值会被保留下来，下一行要执行的代码的位置也会被记录，直到再次调用next()。一旦next()再次被调用，生成器函数会从它上次离开的地方开始。
 
-参考： [What does the yield keyword do in Python?](http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python)
+参考：  
+[What does the yield keyword do in Python?](http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python)
 
 ## 装饰器
 
@@ -232,7 +233,7 @@ python中一切都是对象，这里需要强调函数是对象，那么
         else:
             return fib_cache(n - 1) + fib_cache(n - 2)
             
-参考： 
+参考：   
 [python装饰器详解](http://selfboot.cn/2014/08/10/python_decorator/)  
 [Python修饰器的函数式编程](http://coolshell.cn/articles/11265.html)
 
@@ -324,7 +325,8 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
 
 深拷贝，其实就是递归拷贝。也就是说对于嵌套对象比如说source = [1, 2, [3, 4]]，深拷贝时创建新的列表对象target，然后递归地将source中的所有对象均拷贝到target中。即如果source中的元素是列表、字典等，那么python将拷贝这些列表、字典中的对象到target中去，就这样迭代下去，直到不存在嵌套结构。
 
-参考： [操作之灵魂——拷贝](http://selfboot.cn/2014/08/08/python_copy/)
+参考：  
+[操作之灵魂——拷贝](http://selfboot.cn/2014/08/08/python_copy/)
 
 ## 字典推导
 
@@ -348,7 +350,8 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
     |10          |  4       | 4 + 3       |
     |20          |  9       | 9 + 7       |
 
-参考： [Python中list的实现](http://www.jianshu.com/p/J4U6rR)
+参考：   
+[Python中list的实现](http://www.jianshu.com/p/J4U6rR)
     
 ## Python 常用库
 

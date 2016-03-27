@@ -87,8 +87,6 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
 
 参考： [孤儿进程与僵尸进程](http://www.cnblogs.com/Anker/p/3271773.html)
 
-## 信号量
-
 ## 死锁以及避免死锁的策略
 
 死锁的规范定义如下：如果一个进程集合中的每个进程都在等待只能由该进程集合中其他进程才能引发的事件，那么该进程集合就是死锁的。
@@ -178,7 +176,7 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
 
 虚拟存储（Storage Virtualization）是指将多个不同类型、独立存在的物理存储体，通过软、硬件技术，集成转化为一个逻辑上的虚拟的存储单元，集中管理供用户统一使用。这个虚拟逻辑存储单元的存储容量是它所集中管理的各物理存储体的存储量的总和，而它具有的访问带宽则在一定程度上接近各个物理存储体的访问带宽之和。
 
-［[对应题目](http://www.nowcoder.com/test/question/done?tid=2502237&qid=23994#summary)］
+［[虚拟存储的目的](http://www.nowcoder.com/questionTerminal/8622d41af5f343c58ebbdf6e2e427ae3)］
 
 ## 内存存储模式
 
@@ -193,7 +191,7 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
 
 ## Linux 的任务调度机制是什么？
 
-[对应题目](http://www.nowcoder.com/test/question/done?tid=2625399&qid=25651#summary)
+[作业调度设备利用率](http://www.nowcoder.com/questionTerminal/683d207653d9460ba9b60418695f2c8d)
 
 ## 系统如何将信号通知到进程？
 
@@ -201,22 +199,34 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
 
 
 ## 共享内存的实现原理（共享内存段被映射进进程空间之后，存在于进程空间的什么位置？共享内存段最大限制是多少？）
+
+
+
 ##  经典布局 和 灵活布局
 ##  可执行的链接格式 ELF
-## 管道、命名管道
 
-## 消息队列
 
-## 如何定位内存泄露？
+## 内存泄露检测
 
-## Linux IO 多路复用
+内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。
+
+最难捉摸也最难检测到的错误之一是内存泄漏，即未能正确释放以前分配的内存的 bug。只发生一次的小的内存泄漏可能不会被注意，但泄漏大量内存的程序或泄漏日益增多的程序可能会表现出各种征兆：从性能不良（并且逐渐降低）到内存完全用尽。更糟的是，泄漏的程序可能会用掉太多内存，以致另一个程序失败，而使用户无从查找问题的真正根源。
+
+内存泄漏的原因可以概括为：调用了malloc/new等内存申请的操作，但缺少了对应的free/delete，总之就是，malloc/new比free/delete的数量多。实际项目中检测内存泄漏通常会十分繁琐，所以有许多工具帮助我们检测内存泄漏，比如 [mtrace](http://en.wikipedia.org/wiki/Mtrace)，[valgrind](http://valgrind.org)。
+
+详细内容参见 [Linux_OS_MemoryLeaks.md](More/Linux_OS_MemoryLeaks.md)
+
+参考：  
+[C/C++内存泄漏及检测](http://www.cnblogs.com/skynet/archive/2011/02/20/1959162.html)
+
+## Linux IO 模式
 
 select，poll，epoll都是IO多路复用的机制。I/O多路复用就通过一种机制，实现单进程可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。select，poll，epoll本质上都是同步I/O，因为他们都需要在读写事件就绪后自己负责进行读写，也就是说这个读写过程是阻塞的（异步I/O则无需自己负责进行读写，异步I/O的实现会负责把数据从内核拷贝到用户空间）。
 
 ［[epoll和select](http://www.nowcoder.com/test/question/done?tid=2625399&qid=25654#summary)］
 
 更多内容参见：
-[Linux_OS_IO_Multiplexing](More/Linux_OS_IO_Multiplexing.md)
+[Linux_OS_IO_Multiplexing.md](More/Linux_OS_IO_Model.md)
 
 # 文件系统
 
@@ -295,7 +305,8 @@ POSIX线程标准要求C标准库中的大多数函数具备线程安全性。C+
 
 ［[对应题目](http://www.nowcoder.com/profile/509/test/2519469/3919#summary)］
 
-参考： [线程安全和线程不安全理解](http://blog.csdn.net/ghevinn/article/details/37764791)
+参考：  
+[线程安全和线程不安全理解](http://blog.csdn.net/ghevinn/article/details/37764791)
 
 ## Linux 用户权限管理
 
