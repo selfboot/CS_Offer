@@ -39,7 +39,8 @@
 
 `ipcs`：Linux下显示进程间通信设施状态的工具。可以显示消息队列、共享内存和信号量的信息。
 
-参考： [工具参考篇](http://linuxtools-rst.readthedocs.org/zh_CN/latest/tool/index.html)
+参考  
+[工具参考篇](http://linuxtools-rst.readthedocs.org/zh_CN/latest/tool/index.html)
 
 # 进程与线程
 
@@ -235,20 +236,10 @@ select，poll，epoll都是IO多路复用的机制。I/O多路复用就通过一
 
 # 文件系统
 
-Linux中文件的权限有r(读) w(写) x(执行)，分别用数字4，2，1代表。创建文件时，默认权限666，目录的权限为777（对于目录来说，x意味着可以查看目录内容）。
+更多内容参见 [Linux_OS_FileSystem.md](More/Linux_OS_FileSystem.md)
 
-Umask是设置系统创建文件时的默认权限，umask是从权限中“拿走”相应的位。
-
-`硬链接`就是在原有的iNode的引用加一，用ls -li是可以看到，硬连接的文件与源文件iNode值相同；而软连接是建立了一个iNode，专门用来指向实际文件的iNode，像快捷方式。
-
-文件储存在硬盘上，硬盘的最小存储单位叫做"扇区"（Sector）。每个扇区储存512字节（相当于0.5KB）。操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个"块"（block）。这种由多个扇区组成的"块"，是文件存取的最小单位。"块"的大小，最常见的是4KB，即连续八个 sector组成一个 block。
-
-文件数据都储存在"块"中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为"索引节点"。
-
-## 硬盘存取
-
-硬盘的存取访问时间分为三个部分：寻道时间Ts，旋转延迟时间Tr和传送时间Tt
-
+［[文件软链接描述](http://www.nowcoder.com/questionTerminal/232390b1b4e44464bbe58cba7a409d92)］  
+［[磁盘存储优化](http://www.nowcoder.com/questionTerminal/c504ecac432d4fcd9c7a39edc79815bc)］  
 
 ## 两级缓存机制
 
