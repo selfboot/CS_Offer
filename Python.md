@@ -1,4 +1,4 @@
-# Python 类讲解
+# Python 类
 
 ## Python 类方法
 
@@ -76,7 +76,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 
 更多详细内容见 [Python_Metaclass.md](More/Python_Metaclass.md)
 
-# python 性能优化的方法
+# python 性能调优
 
 1. 选择合适的数据结构。
 
@@ -158,6 +158,8 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 [Python 代码性能优化技巧](http://www.ibm.com/developerworks/cn/linux/l-cn-python-optim/)  
 [函数式编程](http://coolshell.cn/articles/10822.html)
 
+# Python 思想
+
 ## 生成器 与 yeild
 
 当你建立了一个列表，你可以逐项地读取这个列表，这叫做一个可迭代对象。所有可以使用 for .. in .. 的对象都可以看作是一个`迭代器`。链表，字符串，文件都是迭代器，访问迭代器时首先把所有数据读进内存，然后用一个一个读取。
@@ -237,6 +239,29 @@ python中一切都是对象，这里需要强调函数是对象，那么
 [python装饰器详解](http://selfboot.cn/2014/08/10/python_decorator/)  
 [Python修饰器的函数式编程](http://coolshell.cn/articles/11265.html)
 
+## lambda 匿名函数
+
+Python使用lambda关键字创造匿名函数。所谓匿名，意即不再使用def语句这样标准的形式定义一个函数。这种语句在调用时绕过函数的栈分配，可以提高效率。其语法是：
+
+    lambda [arg1[, arg2, ... argN]]: expression
+
+其中，参数是可选的，如果使用参数的话，参数通常也会在表达式之中出现。
+
+    # 调用lambda函数
+    >>> a = lambda x, y: x + y
+    >>> a( 1, 3 )
+    4
+    >>> b = lambda x, y = 2: x + y
+    >>> b( 1 )
+    3
+    >>> b( 1, 3 )
+    4
+    >>> c = lambda *z: z
+    >>> c( 10, 'test')
+    (10, 'test')
+
+# Python 用法
+
 ## 排序函数
 
 `s.sort`：sort the items of s(mutable sequence types) in place.
@@ -270,26 +295,13 @@ sorted 中cmp, key, reverse 和 sort 的用法一样，不过它返回一个排�
 参考：
 [python里方法sort()中cmp参数的用法](https://segmentfault.com/q/1010000000405289)
  
-## lambda 匿名函数
+# 深入 Python 机制
+ 
+## Python 程序执行原理
 
-Python使用lambda关键字创造匿名函数。所谓匿名，意即不再使用def语句这样标准的形式定义一个函数。这种语句在调用时绕过函数的栈分配，可以提高效率。其语法是：
+简单来说，Python先把代码（.py文件）编译成字节码，交给字节码虚拟机，然后虚拟机一条一条执行字节码指令，从而完成程序的执行。这里字节码在Python虚拟机程序里对应的是PyCodeObject对象，.pyc文件是字节码在磁盘上的表现形式。
 
-    lambda [arg1[, arg2, ... argN]]: expression
-
-其中，参数是可选的，如果使用参数的话，参数通常也会在表达式之中出现。
-
-    # 调用lambda函数
-    >>> a = lambda x, y: x + y
-    >>> a( 1, 3 )
-    4
-    >>> b = lambda x, y = 2: x + y
-    >>> b( 1 )
-    3
-    >>> b( 1, 3 )
-    4
-    >>> c = lambda *z: z
-    >>> c( 10, 'test')
-    (10, 'test')
+更多内容参见 [Python_HowToRun.md](More/Python_HowToRun.md)
 
 ## Python 垃圾回收机制
 
@@ -325,13 +337,9 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
 
 深拷贝，其实就是递归拷贝。也就是说对于嵌套对象比如说source = [1, 2, [3, 4]]，深拷贝时创建新的列表对象target，然后递归地将source中的所有对象均拷贝到target中。即如果source中的元素是列表、字典等，那么python将拷贝这些列表、字典中的对象到target中去，就这样迭代下去，直到不存在嵌套结构。
 
-参考：  
+参考  
 [操作之灵魂——拷贝](http://selfboot.cn/2014/08/08/python_copy/)
-
-## 字典推导
-
-    d = {key: value for (key, value) in iterable}
-    
+   
 ## list的实现
 
 类似于 C++ STL中 vector 的实现。在需要的时候扩容，但又不允许过度的浪费，适当地进行内存回收。
@@ -350,10 +358,25 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
     |10          |  4       | 4 + 3       |
     |20          |  9       | 9 + 7       |
 
-参考：   
+参考     
 [Python中list的实现](http://www.jianshu.com/p/J4U6rR)
-    
-## Python 常用库
+
+##  Python 运行慢的原因
+  
+我们知道和 C/C++ 相比，Python效率确实不高，那么有哪些原因导致了Python 的低效呢？
+
+1. Python 是动态类型，C++ 是静态类型；
+2. Python 是解释型语言，C++是编译型的。
+3. Python 的对象模型导致低效的内存访问。
+
+更多内容参见 XXX
+
+参考  
+[Why Python is Slow: Looking Under the Hood](https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/)  
+
+# Python 常用库
+
+## requests 库
 
 `Requests` 是一个 HTTP 库，用 Python 编写，真正的为人类着想。Python 标准库中的 urllib2 模块提供了你所需要的大多数 HTTP 功能，但是它的 API 太渣了。它需要巨量的工作，甚至包括各种方法覆盖，来完成最简单的任务。
 
@@ -389,7 +412,6 @@ pylab 是 matplotlib 面向对象绘图库的一个接口，考虑用默认配�
     
     show()
 
-
 ## Numpy 库
 
 Numpy 是一个用python实现的科学计算包。包括：
@@ -403,7 +425,7 @@ Numpy 是一个用python实现的科学计算包。包括：
 
 Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块有最优化、线性代数、积分、插值、快速傅里叶变换其他科学与工程中常用的计算。
 
-##  Python 中的函数式编程
+#  Python 中的函数式编程
 
 函数式编程：不依赖于外部的数据，而且也不改变外部数据的值，而是返回一个新的值给你。
     

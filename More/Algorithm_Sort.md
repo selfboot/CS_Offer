@@ -164,6 +164,7 @@ Python 实现如下：
 [希尔排序](https://zh.wikipedia.org/wiki/希尔排序)  
 [快速排序](https://zh.wikipedia.org/wiki/快速排序)  
 [常见排序算法 - 堆排序 (Heap Sort)](http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/)  
+[Sorting Algorithm Animations](http://www.sorting-algorithms.com)
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_1.gif
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_2.gif
