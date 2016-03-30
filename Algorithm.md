@@ -1,3 +1,11 @@
+**写在最前面**
+
+能解算法题并不意味着这个人就有能力就能在工作中解决问题，你可以想想，小学奥数题可能比这些题更难，但并不意味着那些奥数能手就能解决实际问题。
+
+对于算法题，我们太喜欢研究算法题的空间和时间复杂度了。我们希望做到空间和时间双丰收，这是算法学术界的风格。所以，习惯于标准答案的我们已经失去思考的能力，只会机械地思考算法之内的性能，而忽略了`算法之外的性能`。
+
+当然，算法很重要，算法题能锻炼我们的思维，而且也有很多实际用处。所以，才有了下面的内容...
+
 # 基本算法理论
 
 ## 渐进记号的性质
@@ -27,9 +35,17 @@
 ［[5排序函数，最大3位](http://www.nowcoder.com/questionTerminal/7cd79ea790ca4fa1a06dbd93dcf58d7d)］  
 ［[大量数据中获取前十名](http://www.nowcoder.com/questionTerminal/2ff38817ad074579ae9e07d7d2143fc8)］
 
-# 贪心算法
 
 ［[加减数字组成一个范围](http://www.nowcoder.com/questionTerminal/1ed7b4017caf4e79ab0621089b4e3d0d)］
+
+# 常用算法思想
+
+## 贪心
+
+## 动态规划
+
+## 分治法
+
 
 # 字符串算法
 
@@ -55,10 +71,10 @@ KMP 算法
 
 
 
-# 算法
+# 参考
 
-[数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)
-
+[数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)  
+[为什么我反对纯算法面试题](http://coolshell.cn/articles/8138.html)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_1.jpg

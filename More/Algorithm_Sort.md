@@ -87,8 +87,8 @@ Python 实现如下：
 
 快速排序的实现基于分治法，具体分为三个步骤。假设待排序的序列为L[m..n]。
 
-* `分解`：序列L[m .. n]被划分成两个可能为空的子序列L[m .. pivot-1]和L[pivot+1 .. n]，使L[m .. pivot-1]的每个元素均小于或等于L[pivot]，同时L[pivot+1.. n]的每个元素均大于L[pivot]。其中L[pivot]称为这一趟分割中的主元（也称为枢轴、支点）。
-* `解决`：通过递归调用快速排序，对子序列L[m .. pivot-1]和L[pivot+1 .. r]排序。
+* `分解`：随机选定一个轴pivot，将序列L[m .. n]划分成两个`非空的子序列`L1和L2，使L1的每个元素均小于或等于L[pivot]，同时L2的每个元素均大于L[pivot]（`或者L2只有一个pivot`）。
+* `解决`：通过递归调用快速排序，对两个子序列进行排序。
 * `合并`：由于两个子序列是就地排序的，所以对它们的合并不需要操作，整个序列L[m .. n]已排好序。
 
 快速排序每次将待排序数组分为两个部分，在理想状况下，每一次都将待排序数组划分成等长两个部分，则需要logn次划分。而在最坏情况下，即数组已经有序或大致有序的情况下，每次划分只能减少一个元素，快速排序将不幸退化为冒泡排序，所以快速排序时间复杂度下界为O(nlogn)，最坏情况为O(n^2 )。在实际应用中，快速排序的平均时间复杂度为O(nlogn)。
@@ -99,30 +99,23 @@ Python 实现如下：
 
     def quick_sort(L, start, end):
         # Sort the array: [start, end).  Here pivot is the end number in L.
-        if start >= end-1:
+        if start >= end - 1:
             return
-        pivot = L[end-1]
-        left = start
-        right = end - 2
+        left, right = start, end - 1
+        pivot = L[right]
         while left < right:
-            while L[left] < pivot and left < right:
+            while L[left] <= pivot and left < right:
                 left += 1
-            while L[right] >= pivot and left < right:
+            while L[right] > pivot and left < right:
                 right -= 1
             L[left], L[right] = L[right], L[left]
-    
-        if L[left] >= L[end-1]:
-            L[left], L[end-1] = L[end-1], L[left]
-        # Worse case: all the number is less than pivot.
-        else:
-            left += 1
-    
+        # left is the same with right
         quick_sort(L, start, left)
-        quick_sort(L, left+1, end)
+        quick_sort(L, left, end)
+    
+这里选择pivot为序列最后一个元素，不使用新的空间（内部交换）进行排序。采用双指针做法，left用来保存下一个小于等于pivot的元素，right用来保存下一个大于pivot的元素。然后left从前往后扫，right从后往前扫，交换在错误位置的数字。
 
-这里选择pivot为序列最后一个元素，不使用新的空间（内部交换）。采用双指针做法，left用来保存下一个比pivot小的元素，right用来保存下一个大于等于pivot的元素。然后left从前往后扫，right从后往前扫，交换在错误位置的数字。
-
-［[快排扫描一次结果](http://www.nowcoder.com/questionTerminal/1bed46e1732c47529bf6034cda88603a)］
+［[快排扫描一次结果](http://www.nowcoder.com/questionTerminal/1bed46e1732c47529bf6034cda88603a)］  
 ［[快排最优原数组特征](http://www.nowcoder.com/questionTerminal/e3065c9dfc694ffeb9b98099fc84f3ee)］
  
 # 二叉树排序 
@@ -164,6 +157,7 @@ Python 实现如下：
 [希尔排序](https://zh.wikipedia.org/wiki/希尔排序)  
 [快速排序](https://zh.wikipedia.org/wiki/快速排序)  
 [常见排序算法 - 堆排序 (Heap Sort)](http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/)  
+[数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)  
 [Sorting Algorithm Animations](http://www.sorting-algorithms.com)
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_1.gif
