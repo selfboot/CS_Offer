@@ -34,8 +34,6 @@
 
 ［[5排序函数，最大3位](http://www.nowcoder.com/questionTerminal/7cd79ea790ca4fa1a06dbd93dcf58d7d)］  
 ［[大量数据中获取前十名](http://www.nowcoder.com/questionTerminal/2ff38817ad074579ae9e07d7d2143fc8)］
-
-
 ［[加减数字组成一个范围](http://www.nowcoder.com/questionTerminal/1ed7b4017caf4e79ab0621089b4e3d0d)］
 
 # 常用算法思想
@@ -47,11 +45,17 @@
 ## 分治法
 
 
+相关题目
+
+| 题目简单描述 |  OJ来源  |  Python | C++ |
+|---------|---------|----------|---------|
+|数组中第 k 大的数 | [LeetCode](https://leetcode.com/problems/kth-largest-element-in-an-array/) | [py](https://github.com/xuelangZF/LeetCode/blob/master/DivideConquer/215_KthLargestElementArray.py) | [cpp](https://github.com/xuelangZF/LeetCode/blob/master/DivideConquer/215_KthLargestElementArray.cpp) |
+
+
 # 字符串算法
 
 KMP 算法
 
-［字符串的 next 数组］
 
 # 图算法
 
