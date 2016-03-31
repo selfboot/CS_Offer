@@ -44,7 +44,7 @@
 
 ［[对应题目](http://www.nowcoder.com/question/next?pid=1227362&qid=15947&tid=2494453)］
 
-参考： [C语言宏的特殊用法和几个坑](http://hbprotoss.github.io/posts/cyu-yan-hong-de-te-shu-yong-fa-he-ji-ge-keng.html)
+参考： [C语言宏的特殊用法和几个坑](http://hbprotoss.github.io/posts/cyu-yan-hong-de-te-shu-yong-fa-he-ji-ge-keng.html)  
 《Effective C++》 条款02：尽量以const, enum, inline 代替 #define，预处理器不够安全。
 
 ## C 风格字符串的函数
