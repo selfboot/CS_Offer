@@ -1,0 +1,36 @@
+int  InsertBST(BSTree  *bst,  KeyType  K)
+/*若在二叉排序树中不存在关键字等于key的元素，插入该元素*/
+{
+	BSTree  f, q, s;
+	s=(BSTree)malloc(sizeof(BSTNode));
+	s->key = K;
+	s->lchild = NULL;
+	s->rchild = NULL;
+	if ( *bst == NULL ) 
+	{ 
+		*bst = s; 
+		return  1; 
+	}
+	f = NULL;
+	q = *bst;
+	while( q )
+	{ 
+		if ( q->key == K ) 
+			return  0;
+		if( K < q->key ) 
+		{ 
+			f = q; 
+			q = q->lchild; 
+		}
+		else 
+		{  
+			f = q; 
+			q = q->rchild; 
+		}
+	}
+	if ( K < f->key ) 
+		f->lchild = s; 
+	else  
+		f->rchild = s;
+	return  1;  
+}

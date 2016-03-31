@@ -1,0 +1,84 @@
+
+#include "bitree.h"
+
+void Visit(char ch)
+{
+	printf("%c  ",ch);
+}
+
+void  PreOrder(BiTree root) 
+/*先序遍历二叉树, root为指向二叉树(或某一子树)根结点的指针*/
+{
+	if (root!=NULL)
+	{
+		Visit(root->data);  /*访问根结点*/
+		PreOrder(root->LChild);  /*先序遍历左子树*/
+		PreOrder(root->RChild);  /*先序遍历右子树*/
+	}
+}
+
+void  InOrder(BiTree root)  
+/*中序遍历二叉树, root为指向二叉树(或某一子树)根结点的指针*/
+{
+	if (root!=NULL)
+	{
+		InOrder(root->LChild);   /*中序遍历左子树*/
+		Visit(root->data);        /*访问根结点*/
+		InOrder(root->RChild);   /*中序遍历右子树*/
+	}
+}
+
+void  PostOrder(BiTree root)  
+/* 后序遍历二叉树，root为指向二叉树(或某一子树)根结点的指针*/
+{
+	if(root!=NULL)
+	{
+		PostOrder(root->LChild); /*后序遍历左子树*/
+		PostOrder(root->RChild); /*后序遍历右子树*/
+		Visit(root->data);       /*访问根结点*/
+	}
+}
+
+void main()
+{
+	BiTree T;
+	printf("请输入二叉树序列:\n");
+    CreateBiTree(&T);
+	printf("先序遍历序列为:");
+	PreOrder(T);
+	printf("\n中序遍历序列为:");
+	InOrder(T);
+	printf("\n后序遍历序列为:");
+	PostOrder(T);
+	getch();
+}
+
+
+//其中的bitree.h内容如下//
+#include <stdio.h>
+#include <malloc.h>
+#include <conio.h>
+
+typedef char DataType;
+
+typedef struct Node
+{
+	DataType data;
+	struct Node *LChild;
+	struct Node *RChild;
+}BiTNode, *BiTree;
+
+
+void CreateBiTree(BiTree *bt)
+{
+	char ch;
+	ch = getchar();
+    if(ch=='.') *bt=NULL;
+    else 
+	{
+		*bt=(BiTree)malloc(sizeof(BiTNode)); //生成一个新结点
+        (*bt)->data=ch;
+        CreateBiTree(&((*bt)->LChild)); //生成左子树
+        CreateBiTree(&((*bt)->RChild)); //生成右子树
+	}
+}

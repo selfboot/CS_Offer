@@ -1,0 +1,38 @@
+void printword(HashTable ht)
+/*按第一个字母的顺序输出哈希表ht中的关键字，处理冲突的方法为线性探测开放定址法*/
+{
+	int i,j;
+	for(i=1; i<=26; i++)       /*按字母顺序输出关键字*/
+	{
+		j = i;               /*哈希地址j初始为序号I*/
+		while(ht[j].key != NULLKEY)   /*判断关键字是否为空*/
+		{
+			if(hash(ht[j].key) == i)     /*若关键字与序号i对应，则输出该关键字*/
+				printf("%s\n",ht[j].key);
+			j = (j+1)%m;            /*按线性探测规则更新地址j*/
+		}
+	}
+}
+
+
+float unsucclength(HashTable ht)
+/*模拟手工计算在等概率情况下查找哈希表ht不成功的平均查找长度算法 */
+{
+	int i,j;
+	int	count;
+	int asl = 0;
+	float unasl;
+	for(i=1; i<=26; i++)   /*对每个哈希函数值，计算查找不成功的比较次数*/
+	{
+		j = i;
+		count = 1;      /*计数器count暂存每个哈希函数值的确定查找不成功的比较次数*/
+		while(ht[j].key != NULLKEY)
+		{
+			count++;             /*计算对应每个哈希函数值的不成功查找长度*/
+			j=(j+1)%m;
+		}
+		asl = asl + count;         /*计算不成功查找长度总和*/
+	}
+	unasl = (float)asl/26;        /*求得不成功的平均查找长度*/
+	return (unasl);
+}

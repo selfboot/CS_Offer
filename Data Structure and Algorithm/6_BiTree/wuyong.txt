@@ -1,0 +1,23 @@
+   [方法一]
+void  RootFirst(CSTree  root) 
+{ 
+	if (root!=NULL)
+{	 Visit(root ->data);        /* 访问根结点 */
+p= root-> FirstChild;
+while (p!=NULL)
+  {  RootFirst( p );      /* 访问以p为根的子树 */
+     p = p -> Nextsibling;
+}
+}
+}
+
+    [方法二]
+void  RootFirst(CSTree  root) 
+{
+if (root!=NULL)
+{
+Visit (root ->data);           /*访问根结点*/
+RootFirst (root->FirstChild);   /*先根遍历首子树*/
+RootFirst (root->Nextsibling);  /*先根遍历兄弟树*/
+}
+}
