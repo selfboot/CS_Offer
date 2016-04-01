@@ -118,7 +118,9 @@ DEK：Knuth在《编程的艺术 第三卷》的第六章排序和搜索中给�
 
 首先来说假如关键字是随机分布的，那么无所谓一定要模质数。但在实际中往往关键字有某种规律，例如大量的等差数列，那么公差和模数不互质的时候发生碰撞的概率会变大，而用质数就可以很大程度上回避这个问题。
 
-参考： [浅谈算法和数据结构: 十一 哈希表](http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html)
+参考  
+[浅谈算法和数据结构: 十一 哈希表](http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html)  
+[哈希碰撞](http://alexyyek.github.io/2014/12/14/hashCollapse/)  
 
 # bitmap
 
