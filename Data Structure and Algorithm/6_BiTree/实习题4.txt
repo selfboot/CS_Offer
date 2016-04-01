@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef char DataType;
+
+typedef struct CSNode
+{
+	DataType  data;                  /*结点信息*/
+	struct CSNode  *FirstChild;      /*第一个孩子*/
+	struct CSNode  *Nextsibling;     /*下一个兄弟*/
+}CSNode, *CSTree;
+
+CSNode *find(CSNode *root, char value)
+{
+	CSNode *q;
+	if(root == NULL)
+		return (NULL);
+	else
+		if(root->data == value)
+			q=root;
+		else
+		{
+			q = find(root->FirstChild,value);
+			if(q == NULL)
+				q = find(root->Nextsibling,value);	
+		}
+	return q;
+}
+
+CSNode * create()
+{
+	char pvalue,cvalue;
+	int i;
+	int type;
+	CSNode *p,*q,*s,*head;
+	i=1;
+	printf("请输入建立树序列(以$表示结束)!\n");
+	printf("第%d个结点＝>根结点值:",i);
+	i++;
+	scanf("%c",&cvalue);
+	if(cvalue != '$')
+	{
+		head=(CSNode *)malloc(sizeof(CSNode));
+		head->data = cvalue;
+		head->FirstChild = NULL;
+		head->Nextsibling = NULL;
+	}
+	else
+		return (NULL);
+	do
+	{
+		printf("第%d个结点＝>结构关联父结点值:",i);
+		i++;
+		fflush(stdin);
+		scanf("%c",&pvalue);
+		if(pvalue != '$')
+		{
+			do 
+			{
+				printf("   孩子(0)或兄弟(1)结点:");
+				fflush(stdin);
+				scanf("%d",&type);				
+			} while(type!=0 && type!=1);
+			printf("        当前结点值为:");
+			fflush(stdin);
+			scanf("%c",&cvalue);
+			
+			p = head;
+			q = find(p,pvalue);
+			if (q!=NULL)
+			{
+				s=(CSNode *)malloc(sizeof(CSNode));
+				s->data = cvalue;
+				s->FirstChild = NULL;
+				s->Nextsibling = NULL;
+				if(type == 0)
+					q->FirstChild = s;
+				if(type == 1)
+					q->Nextsibling = s;
+			}
+			else
+			{
+				printf("已建立的树中没有此结点!\n");
+				i--;
+			}			
+		}
+	}while(pvalue != '$');
+	return (head);
+}
+
+void  RootFirst(CSTree  root) 
+{
+	if (root!=NULL)
+	{
+		printf("%c  ",root->data);           /*访问根结点*/
+		RootFirst (root->FirstChild);   /*先根遍历首子树*/
+		RootFirst (root->Nextsibling);  /*先根遍历兄弟树*/
+	}
+}
+
+void PrintTree(CSTree root,int nLayer)  /* 按竖向树状打印的树 */
+{
+	if(root == NULL) return;
+	for(int i=0;i<nLayer;i++)
+		printf("   ");
+	printf("%c\n",root->data);
+	PrintTree(root->FirstChild,nLayer+1);
+	PrintTree(root->Nextsibling,nLayer);
+}
+
+void main()
+{
+	CSTree ct;
+	int layer;
+	layer = 0;
+	ct = create();
+	RootFirst(ct);
+	printf("\n");
+	PrintTree(ct,layer);
+}
