@@ -86,13 +86,52 @@ I/O 操作一个与生俱来的问题是可能发生错误，I/O类定义了一�
 
 |文件模式|             描述            | 
 |-------|----------------------------|
-| in    | 以读方式打开
-| out   | 以写方式打开
-| app   |
-| ate   |
-| trunc |
-| binary|  
+| in    | 以读方式打开                 |
+| out   | 以写方式打开                 |
+| app   | 每次写操作均定位到文件末尾，只要没有trunc，就可以设定app     |
+| ate   | 打开文件后立即定位到文件末尾，适用于任何类型的文件流对象|
+| trunc | 截断文件（out被设定才可设定trunc，out默认是trunc的） 
+| binary| 以二进制方式进行 IO，适用于任何类型的文件流对象     |
+
+每个文件流类型都定义了一个默认的文件模式，ifstream 关联的文件默认 in 打开，ofstream 关联的文件默认 out 模式打开，fstream 关联的文件默认 in 和 out 打开。下面是一些打开时选定模式的例子：
+
+    ofstream outfile("filename", ofstream::out);  // 隐含截断文件
+    ofstream outfile("filename", ofstream::app); // 追加模式
+ 
 ## 字符串输入输出
+
+sstream 头文件定义了三个类型来支持`内存 IO`，这些类型可以向 string 写入数据，从 string 读取数据，就像 string 是一个 IO 流一样。
+
+输出时数据不是流向外存文件，而是流向内存中的一个存储空间。输入时从内存中的存储空间读取数据。在严格的意义上说，这不属于输入输出，称为读写比较合适。 因为输入输出一般指的是在计算机内存与计算机外的文件（外部设备也视为文件）之间 的数据传送。
+
+sstream 定义来的类型增加了一些成员来管理与流相关联的 string，可以对 stringstream 对象调用这些操作，但不能对其它 IO 调用。
+
+* stringstream strm： 未绑定的stringstream 对象；
+* stringstream strm(s)：一个 stringstream 对象，保存了 string s 的一个拷贝；
+* strm.str()：返回 strm 所保存的 string 的拷贝；
+* strm.str(s)：将 string s拷贝到 strm 中，返回 void.
+
+对字符串流的几点说明：
+
+1. 用字符串流时不需要打开和关闭文件。
+2. 通过字符串流从字符数组读数据就如同从键盘读数据一样，可以从字符数组读入字符数据，也可以读入整数、浮点数或其他类型数据。如果不用字符串流，只能从字符数组逐个访问字符，而不能按其他类型的数据形式读取数据。这是用字符串流访问字符数组的优点，使用方便灵活。
+
+一个简单的例子，反转 vector 中的数字：
+
+    vector<int> nums{123,456,789};
+    vector<int> reversed_nums;
+    for(auto n : nums){
+        ostringstream digit;
+        digit << n;
+        string str_n = digit.str();
+        reverse(str_n.begin(), str_n.end());
+
+        int reversed_n;
+        istringstream rev_n(str_n);
+        rev_n >> reversed_n;
+        reversed_nums.push_back(reversed_n);
+    }
+    // reversed_nums: {321, 654, 987}
 
 我们知道在要求使用基类对象的地方，可以使用继承类型的对象取代，所以在接受一个 iostream 类型引用或者指针参数的函数，可以用一个对应的 fstream(或 sstream)类型来调用。
 
