@@ -158,8 +158,95 @@ strcpy()函数将源字符串复制到目的缓冲区，但是没有指定要复
 
 strcat()函数非常类似于 strcpy()，除了它将一个字符串合并到缓冲区末尾。它也有一个类似的、更安全的替代方法 `strncat()`。如果可能，使用 strncat() 而不要使用 strcat()。
 
+# 高效、安全使用 STL
 
-参考：  
+都是STL，可能写出来的效率相差几倍。
+
+## 建立指针的容器
+
+当对象很大时，建立指针的容器而不是对象的容器，主要基于下面两个原因：
+
+1. STL基于拷贝的方式的来工作，任何需要放入STL中的元素，都会被复制；这也好理解，STL工作的`容器是在堆内开辟的一块新空间`，而我们自己的变量一般存放在函数栈或另一块堆空间中。如果复制的对象很大，由复制带来的性能代价也不小；对于大对象的操作，使用指针来代替对象能消除这方面的代价；
+2. 只涉及到指针拷贝操作，没有额外类的构造函数和赋值构造函数的调用。
+
+下面例子：
+
+        vector <BigObj> vt1;
+        vt1.push_bach(myBigObj);
+        vector <BigObj* > vt2;
+        vt2.push_bach(new BigObj());
+
+不过要注意：
+
+1. 容器销毁前需要自行销毁指针所指向的对象；否则就造成了内存泄漏；
+2. 使用排序等算法时，需要构造基于对象的比较函数，如果使用默认的比较函数，其结果是基于指针大小的比较，而不是对象的比较；
+	
+## 用区间成员函数
+
+尽量用区间成员函数代替单元素操作，使用区间成员函数有以下好处：
+
+1. 更少的函数调用
+2. 更少的元素移动
+3. 更少的内存分配
+
+例：将v2后半部的元素赋值给v1：
+
+    for (vector<Widget>::const_iterator ci = v2.begin() + v2.size() / 2;
+         ci != v2.end();
+         ++ci)
+        v1.push_back(*ci);
+    // 使用区间成员函数assign()
+    v1.assign(v2.begin() + v2.size() / 2, v2.end());
+    
+## 避免 vector 频繁内存分配
+
+新增元素空间不够时，vector会进行如下操作：
+
+1. 分配当前空间的两倍空间；
+2. 将当前元素拷贝到新的空间中；
+3. 释放之前的空间；
+4. 将新值放入新空间指定位置；
+
+如果预先知道空间的大小，预先分配空间（使用 reserve，或者定义 vector 时指明大小）避免了重新分配空间和复制的代价；注：reserve()只是修改了容量，并非大小，向vector中增加元素还是需要通过push_back加入；
+
+[cplusplus：vector::reserve](http://www.cplusplus.com/reference/vector/vector/reserve/)  
+
+## 关联容器还是有序 vector
+
+对一些阶段性的操作：做一系列插入、完成之后，后续操作都是查询。使用vector有以下优势：
+
+1. 因为可以对vector排序，关联容器带来的有序优势丧失；
+2. 使用二分法查找的前提下，查询算法对连续的内存空间的访问要快于离散的空间；
+
+## 仿函数还是函数
+
+在仿函数（functor, 函数对象）的方式中，内联有效，而作为函数指针时，一般编译器都不会内联函数指针指向的函数；即使指定了inline；
+
+    inline bool doubleGreater(double d1, double d2)
+    {
+        return d1 > d2;
+    }
+    vector<double> v;
+    sort(v.begin(), v.end(), doubleGreater);
+
+这个调用不是真的把doubleGreater传给sort，它传了一个doubleGreater的指针。更好的方式是使用仿函数：
+
+    struct myclass {
+        inline bool operator() (int i, int j) {
+            return (i<j);
+        }
+    } myobject;
+
+    sort(v.begin(), v.end(), myobject);
+
+## 其它小条款
+
+1. 用empty() 代替size()来检查是否为空。对于list，size()会遍历每一个元素来确定大小，时间复杂度 o（n），线性时间；而empty总是保证常数时间；
+2. 尽量用成员函数代替同名的算法。基于效率考虑，成员函数知道自己这个容器和其他容器有哪些特有属性，能够利用到这些特性；而通用算法不可以；此外对于关联容器，成员函数find基于等价搜索，而通用算法find基于相等来搜索；可能导致结果不一样；
+
+# 参考  
 [标准模板库（STL）使用入门（上）](http://blog.jobbole.com/87586/)  
 [防止缓冲区溢出](http://www.ibm.com/developerworks/cn/security/buffer-defend/index.html)
+[高效使用 STL](https://segmentfault.com/a/1190000002932246)
+
 

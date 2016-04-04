@@ -16,8 +16,20 @@
 
 ［[索引字段不唯一](https://www.nowcoder.com/questionTerminal/1fbc72e6a9964221ab1f8bb674775869)］
 
+GroupBy语句从英文的字面意义上理解就是“根据(by)一定的规则进行分组(Group)”。它的作用是通过一定的规则将一个数据集划分成若干个小的区域，然后针对若干个小区域进行数据处理。
+
+## 主键、外键
+
 
 ［[候选关键字](http://www.nowcoder.com/questionTerminal/088587c25467478884128c0cb31eeeb8)］  
 ［[主键、外键](http://www.nowcoder.com/questionTerminal/70100692594e4130a6b3efe344ef3874)］  
+
+# SQL 语句
+
+GroupBy语句从英文的字面意义上理解就是“根据(by)一定的规则进行分组(Group)”。它的作用是通过一定的规则将一个数据集划分成若干个小的区域，然后针对若干个小区域进行数据处理。
+
+［[Group By子句作用](http://www.nowcoder.com/questionTerminal/a1403ec16dc245ebbed0f88f7479dd92)］  
+# 高级主题
+
 ［[事物并发丢失修改](http://www.nowcoder.com/questionTerminal/ea4505062668488c8048a82368e3d9e2)］  
 

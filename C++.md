@@ -121,7 +121,10 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
     
 析构函数正好和构造函数相反。 ([constructor_derived_class.cpp](C++_Code/constructor_derived_class.cpp))
 
-参考： [构造函数：C++](https://msdn.microsoft.com/zh-cn/library/s16xw1a8.aspx)
+［[构造函数中调用虚函数](http://www.nowcoder.com/questionTerminal/adb540e6222b401eb294b093b9fc6f0e)］
+
+参考  
+[构造函数：C++](https://msdn.microsoft.com/zh-cn/library/s16xw1a8.aspx)
 
 # 关键字
 ## extern 关键字
@@ -287,7 +290,8 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
     int (*a)[4];         // 数组指针：指向数组a的指针
 
 ［[二维数组运算结果](http://www.nowcoder.com/questionTerminal/8e78bcf76d0241938dc5f08ed8b2a065)］  
-［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］
+［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］  
+［[指针数组的读取](http://www.nowcoder.com/questionTerminal/5a6e0056f81648fe97f9a85462e256c6)］  
 
 ## 函数指针
 
@@ -386,9 +390,10 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 [sizeof_demo.cpp](C++_Code/sizeof_demo.cpp)  
 
 ［[字符数组，八进制坑](http://www.nowcoder.com/questionTerminal/a7b35bc367604e73823d2dded6496e38)］  
-［[类的大小](http://www.nowcoder.com/questionTerminal/33f3a63dc5d449adb351168ada7f47c6)］
+［[类的大小](http://www.nowcoder.com/questionTerminal/33f3a63dc5d449adb351168ada7f47c6)］  
+［[C中整型字符常量，C++字符字面量大小](http://www.nowcoder.com/questionTerminal/e16ca070d715455fa8f6916aa324138d)］  
 
-参考：  
+参考    
 [sizeof() a vector](http://stackoverflow.com/questions/2373189/sizeof-a-vector)
 
 ## C++内存堆栈
