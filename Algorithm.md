@@ -56,6 +56,7 @@
 
 KMP 算法
 
+［[计算 nextval 值](http://www.nowcoder.com/questionTerminal/6bfed2073b48431ea5bfea01684e9ef1)］
 
 # 图算法
 
