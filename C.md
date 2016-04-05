@@ -58,15 +58,14 @@ C 语言标准库提供了一组函数用于操作 C 风格字符串，定义在
 3. strcmp(p1, p2)：比较 p1 和 p2 的相等性，如果 p1 == p2，返回0，p1 > p2返回一个正值；p1 < p2 返回一个负值。
 4. strcpy(p1, p2)：将p2拷贝给p1，返回p1。
 
-（[示例程序](/Users/feizhao/dropbox/实习生/C:C++ Code/c_string_func.cpp
-)）
+（[c_string_func.cpp](C++_Code/c_string_func.cpp)）
 
-［[对应题目](http://www.nowcoder.com/profile/509/test/2519469/22589#summary)］
-
-《C++ Primer》 Page109
+［[字符串常量赋值](http://www.nowcoder.com/questionTerminal/462f7c3746814b1cadde05a1084f8740)］  
+［[strcpy 拷贝](http://www.nowcoder.com/questionTerminal/74d917fe09a94a2fb03b5371a2417372)］
 
 参考：   
-[What is the difference between char s[] and char *s in C?](http://stackoverflow.com/questions/1704407/what-is-the-difference-between-char-s-and-char-s-in-c)  
+《C++ Primer》 Page109  
+[What is the difference between char s[] and char *s in C?](http://stackoverflow.com/questions/1704407/what-is-the-difference-between-char-s-and-char-s-in-c)      
 [Why do I get a segmentation fault when writing to a string initialized with “char *s” but not “char s[]”?](http://stackoverflow.com/questions/164194/why-do-i-get-a-segmentation-fault-when-writing-to-a-string-initialized-with-cha)  
 
 ## printf 格式化字符串
@@ -96,7 +95,7 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
     printf("%d %d %d\n", i, m, n);  //123 83 291
     printf("%o %o %o\n", i, m, n);  //173 123 443
 
-［[对应题目](http://www.nowcoder.com/test/question/done?tid=2500235&qid=26117#summary)］
+［[八进制输出](http://www.nowcoder.com/questionTerminal/25bce0284ec040fabdf6629dbd0c5dc9)］
 
 参考：[C语言格式输出函数printf()详解](http://c.biancheng.net/cpp/html/33.html)
 
@@ -104,7 +103,7 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
 
 
 
-[结构体柔性数组作用](http://www.nowcoder.com/questionTerminal/be5269b8c2d340c3add69510d0089747)
+［[结构体柔性数组作用](http://www.nowcoder.com/questionTerminal/be5269b8c2d340c3add69510d0089747)］
 
 参考：  
 [C语言结构体里的成员数组和指针](http://coolshell.cn/articles/11377.html)  

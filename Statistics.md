@@ -30,3 +30,6 @@
 
 ［[两个孩子一个是男孩，两个都是男孩的概率](http://www.nowcoder.com/questionTerminal/7ffb76a86ea4484fa06157419c3fee07)］  
 
+
+［[连续抛硬币无穷次，稳定时分布](http://www.nowcoder.com/questionTerminal/d409ab8979184e7b8f69e5efdb56ced5)］  
+
