@@ -127,9 +127,6 @@ Boyer–Moore majority vote 算法：如果每次删除两个不同的数，那�
 ![][1]
 
 
-
-
-
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/BeautyofProgramming_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/BeautyofProgramming_2.jpg
 
