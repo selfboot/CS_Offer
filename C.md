@@ -99,17 +99,43 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
 
 参考：[C语言格式输出函数printf()详解](http://c.biancheng.net/cpp/html/33.html)
 
-## 柔性数组
+## 整型溢出
 
+对于整型溢出，分为无符号整型溢出和有符号整型溢出。
+
+对于unsigned整型溢出，C的规范是有定义的——`溢出后的数会以2^(8*sizeof(type))作模运算`，也就是说，如果一个unsigned char（1字符，8bits）溢出了，会把溢出的值与256求模。
+
+当一个算术表达式中既有无符号数又有有符号数时，就会将有符号值转换为无符号值。
+
+    unsigned int u=10;
+    int i=-42;
+    cout << "i+i: " << i+i << endl; // -84
+    cout << "i+u: " << i+u << endl; // 4294967264
+
+第二个表达式中，相加前首先把整数 －42 转换成无符号数。把负数转换成无符号数类似于直接给无符号数赋一个负值，结果等于这个负数加上无符号数（ 2^32 ）的模。
+
+    unsigned char c = -1, d = -2, e=0xff;
+    printf("%d, %d", c, d, e);         // 255, 254, 255
+
+对于signed整型的溢出，C的规范定义是`undefined behavior`，也就是说，编译器爱怎么实现就怎么实现。
+
+［[For 循环次数](http://www.nowcoder.com/questionTerminal/7183f3428a444efe8a3f91247ddf6b7a)］  
+
+参考  
+[C语言的整型溢出问题](http://coolshell.cn/articles/11466.html)  
+[从Swap函数谈加法溢出问题](http://blog.csdn.net/dataspark/article/details/9703967)  
+
+## 柔性数组
 
 
 ［[结构体柔性数组作用](http://www.nowcoder.com/questionTerminal/be5269b8c2d340c3add69510d0089747)］
 
-参考：  
+参考  
 [C语言结构体里的成员数组和指针](http://coolshell.cn/articles/11377.html)  
 [Arrays of Length Zero](https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html)
 
-## 参考
+
+# 更多阅读
 
 [C语言的谜题](http://coolshell.cn/articles/945.html)  
 [语言的歧义](http://coolshell.cn/articles/830.html)

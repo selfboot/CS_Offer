@@ -93,6 +93,12 @@ static 用法
 3. 对指针来说，可以指定指针本身为常量（const pointer, `常量指针`），也可以指定指针所指的对象为常量（pointer to const, `指向常量的指针`），或二者同时指定为const；
 4. 在一个函数声明中，const可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；
 5. 对于类的成员函数，有时候必须指定其返回值为const类型，以使得其返回值不为“左值”。
+6. 对于类的成员函数，可以用const关键字来说明这个函数是 "只读(read-only)"函数，不会修改任何数据成员。为了声明一个const成员函数，把const关键字放在函数括号的后面。
+
+代码实例参见 [C++_Const.cpp](C++_Code/C++_Const.cpp)
+
+参考  
+[Meaning of “const” last in a C++ method declaration?](http://stackoverflow.com/questions/751681/meaning-of-const-last-in-a-c-method-declaration)  
 
 ## final 关键字
 
@@ -149,6 +155,8 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
     const double * const pip = &pi;
 
 为了判断const到底对谁起作用（即谁是const的），可以用以下简单规则：**const只对它左边的东西起作用，当const本身就是最左边的修饰符时，它才会对右边的东西起作用**。
+
+［[指向常量的指针](http://www.nowcoder.com/questionTerminal/524cd1e7926a44e38d9d7c3a3359b822)］  
 
 ## 指针和数组
 
@@ -284,6 +292,7 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 ［[字符数组，八进制坑](http://www.nowcoder.com/questionTerminal/a7b35bc367604e73823d2dded6496e38)］  
 ［[类的大小](http://www.nowcoder.com/questionTerminal/33f3a63dc5d449adb351168ada7f47c6)］  
 ［[C中整型字符常量，C++字符字面量大小](http://www.nowcoder.com/questionTerminal/e16ca070d715455fa8f6916aa324138d)］  
+［[引用的大小](http://www.nowcoder.com/questionTerminal/31095437d232497c9ea40c5c7a629dc4)］  
 
 参考    
 [sizeof() a vector](http://stackoverflow.com/questions/2373189/sizeof-a-vector)
@@ -298,6 +307,8 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 * 生长方向：对于堆来讲，向着内存地址增加的方向增长；对于栈来讲，向着内存地址减小的方向增长。
 * 分配方式：堆都是动态分配的，没有静态分配的堆。栈有2种分配方式：静态分配和动态分配。
 * 分配效率：计算机在底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。堆则是C/C++函数库提供的，它的机制是很复杂的，效率比栈要低得多。
+
+［[栈空间分布，printf 函数参数](http://www.nowcoder.com/questionTerminal/b5e03f2361f04631b2eaf567029385c6)］  
 
 ## 常见的内存错误
 
@@ -403,17 +414,20 @@ C++ 编译器中浮点数存储采用的是 IEEE 754标准，它定义的单精�
 
 一个十进制数能否用二进制浮点数精确表示，关键在于小数部分。我们来看一个最简单的小数 0.1，它会得到一个无限循环的二进制小数 0.000110011...，用有限位无法表示无限小数，因此无法用IEEE 754 浮点数精确表示。
 
-IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 -2^128 ~ 2^128 （-10^38 ～ 10^38 ），因为尾数的最大值是接近 2，而指数的范围是 [-127, 127]，那么这个范围就可以表示为2*2^127 。单精度浮点数的精度为小数点后面 5～6（2^23=8388608）个十进制位。
+IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 -2^128 ~ 2^128 （-10^38 ～ 10^38 ），因为尾数的最大值是接近 2，而指数的范围是 [-127, 127]，那么这个范围就可以表示为2*2^127 。单精度浮点数的精度为小数点后面 5～6（2^23 =8388608）个十进制位。
 
     float b = 54.00001;
     float c = 54.000001;
     cout << setprecision(10) << b << endl; // 54.00001144
     cout << setprecision(10) << c << endl; // 54
 
+［[double 精度丢失](http://www.nowcoder.com/questionTerminal/d12c2556b4614d8b87a7b64d0d0c24bb)］
+
 参考  
 [IEEE 754 浮点数的表示精度探讨](http://www.cnblogs.com/bossin/archive/2007/04/08/704567.html)  
 [IEEE 754浮点数在机器中的格式](http://blog.csdn.net/glgoober/article/details/6209881)  
 [一个浮点数跨平台产生的问题](http://coolshell.cn/articles/11235.html)  
+[float and double](http://www.cplusplus.com/forum/beginner/83526/)  
 
 # 其它语言特征
 
@@ -436,6 +450,8 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
     
     int getpos(int *);
     int getpos(const int *);  // 新函数，作用于指向常量的指针
+
+［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］  
 
 ## 四种类型转换
 
@@ -533,22 +549,6 @@ float 型变量：浮点型变量并不精确，所以不可将float变量用“
 
 ［[相等判断语句](http://www.nowcoder.com/questionTerminal/230d0664d5104b73b4c9b4fa51c5e735)］
 
-## unsigned 溢出
-
-当一个算术表达式中既有无符号数又有有符号数时，就会将有符号值转换为无符号值。
-
-    unsigned u=10;
-    int i=-42;
-    cout << "i+i: " << i+i << endl; // -84
-    cout << "i+u: " << i+u << endl; // 4294967264
-    
-第二个表达式中，相加前首先把整数 －42 转换成无符号数。把负数转换成无符号数类似于直接给无符号数赋一个负值，结果等于这个负数加上无符号数（ 2^32 ）的模。
-
-    unsigned char c = -1, d = -2, e=0xff;
-    printf("%d, %d", c, d, e);         // 255, 254, 255
-
-［[For 循环次数](http://www.nowcoder.com/questionTerminal/7183f3428a444efe8a3f91247ddf6b7a)］
-
 ## 逗号运算符
 
 C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低。
@@ -571,16 +571,10 @@ C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低�
     printf("%d,%d,%d\n",x,y,z); // 231
 
     int a,b;
-    b=( a=1,a+1,a++);
+    b=(a=1,a+1,a++);
     printf("%d,%d\n",a,b)；// 2, 1
 
 ［[逗号表达式的值](http://www.nowcoder.com/questionTerminal/5971372060a24eac874d43b830864189)］
-
-## 其它问题记录
-
-［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］  
-［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］  
-［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］  
 
 # 编程实现
 
@@ -605,12 +599,16 @@ C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低�
 
 Lambda、变参模板、auto、decltype、constexpr、智能指针、列表初始化、正则表达式、线程库、静态断言、委托构造。
 
+# 其它问题记录
+
+［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］  
+［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］  
 
 # 更多阅读
 
 [C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)  
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
-[C语言的整型溢出问题](http://www.nowcoder.com/test/question/done?tid=2482392&qid=14466#summary)
+[Can we change the value of a constant through pointers?](http://stackoverflow.com/questions/3801557/can-we-change-the-value-of-a-constant-through-pointers/3801601#3801601)   
 
 
 

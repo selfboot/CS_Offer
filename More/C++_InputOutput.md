@@ -10,6 +10,10 @@ C++输入输出中有两个基类，分别为ios_base和ios，而基于这两个
 2. `文件输入输出`：C++ 提供了三个类以方便程序员进行文件读写操作，分别为：ifstream（读文件），ofstream（写文件），fstream（读写文件）
 3. `字符串输入输出流`：将字符串作为输入输出流进行处理，有三个对应的类，分别为：istringstream（字符串输入流），ostringstream（字符串输出流），stringstream（字符串输入输出流）。
 
+如下图：
+
+![][1]
+
 注意 I/O 对象不能进行拷贝或者赋值操作！
 
 I/O 操作一个与生俱来的问题是可能发生错误，I/O类定义了一些函数和标志，用来访问和操纵流的条件状态。一共有4个流状态：
@@ -211,4 +215,6 @@ C++ Primer 文件输入输出
 [The difference between cin.ignore and cin.sync](http://stackoverflow.com/questions/10585392/the-difference-between-cin-ignore-and-cin-sync)  
 [C++输入输出详解：C++标准输入输出流、文件流、字符串流](http://c.biancheng.net/cpp/biancheng/cpp/rumen_13/)
 
+
+[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_InputOutput.gif
 
