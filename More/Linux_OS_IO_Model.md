@@ -72,7 +72,7 @@ Unix 下有5种可用的 I/O 模型，如下：
 
 前4种模型主要区别在第一阶段，它们的第二阶段都是一样的：在数据从内核复制到调用者的缓冲区期间，进程阻塞于 recvfrom 调用。
 
-![][5]
+![][6]
 
 POSIX关于同步、异步的定义如下:
 
@@ -197,7 +197,9 @@ epoll是对select和poll的改进，避免了上述的三个缺点。我们先�
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
+[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_3.png
+[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_4.png
+[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_5.png
+[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_6.png
+
 
