@@ -43,7 +43,7 @@ Linux中，与IPC相关的命令包括：ipcs、ipcrm（释放IPC）。IPCS命�
 
 # 线程
 
-### 进程共享
+## 进程共享
 
 线程共享的内容包括：
 
@@ -62,7 +62,10 @@ Linux中，与IPC相关的命令包括：ipcs、ipcrm（释放IPC）。IPCS命�
 * 错误返回码
 * 线程的信号屏蔽码
 
-### Linux 线程间通信：互斥量（mutex），信号量，条件变量
+## 线程间通信
+
+互斥量（mutex），信号量，条件变量
+
 # 进程与线程
 
 下面主要从调度、并发性、系统开销、拥有资源等方面来对线程与进程进行比较。
@@ -78,5 +81,5 @@ Linux中，与IPC相关的命令包括：ipcs、ipcrm（释放IPC）。IPCS命�
 # 参考
 [进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)  
 [Linux的IPC命令](http://www.cnblogs.com/cocowool/archive/2012/05/22/2513027.html)  
-
+[操作系统(计算机)进程和线程管理](http://c.biancheng.net/cpp/u/xitong_2/)  
 

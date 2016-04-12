@@ -6,13 +6,16 @@
 * 继承：定义相似的类型，并对其相似关系建模。（优点：可以扩展已存在的代码模块）
 * 多态：一定程度上忽略相似类型的区别，以统一的方式使用它们的对象。
 
-面向对象设计的头 5 大原则：
+面向对象设计的 5 大原则：
 
 * SRP(The Single Responsibility Principle) 单一职责原则：一个类应该有且只有一个去改变它的理由，这意味着一个类应该只有一项工作。
 * OCP(The Open Closed Principle) 开放封闭原则：对象或实体应该对扩展开放，对修改封闭，这就意味着一个类应该无需修改类本身但却容易扩展。
-* LSP(The Liskov Substitution Principle) 里氏替换原则：每一个子类或派生类应该可以替换它们基类或父类。
+* LSP(The Liskov Substitution Principle) 里氏替换原则：每一个子类或派生类应该可以替换它们的基类或父类。
 * ISP(The Interface Segregation Principle) 接口隔离原则：不应强迫客户端实现一个它用不上的接口，或是说客户端不应该被迫依赖它们不使用的方法。
 * D(The Dependency Inversion Principle) 依赖倒置原则：实体必须依靠抽象而不是具体实现。它表示高层次的模块不应该依赖于低层次的模块，它们都应该依赖于抽象。
+
+参考  
+[S.O.L.I.D：面向对象设计的头 5 大原则](http://blog.jobbole.com/86267/)  
 
 C++ 有关类的更多内容，参见 [C++_Class.md](More/C++_Class.md)
 
@@ -191,6 +194,40 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
 ［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］  
 ［[指针数组的读取](http://www.nowcoder.com/questionTerminal/5a6e0056f81648fe97f9a85462e256c6)］  
 
+## 产生野指针原因
+
+“野指针”不是NULL指针，是指向“垃圾”内存的指针。“野指针”的成因主要有三种：
+
+1. 指针变量没有被初始化。指针变量刚被创建时不会自动成为NULL指针，它的缺省值是随机的，它会乱指一气。所以，指针变量在创建的同时应当被初始化，要么将指针设置为NULL，要么让它指向合法的内存。
+2. 指针p被free或者delete之后，没有置为NULL，让人误以为p是个合法的指针。
+3. 指针操作超越了变量的作用域范围。
+
+［[指针赋值语句](http://www.nowcoder.com/questionTerminal/b6f566ba692442d4b7cce66bf6804c53)］
+
+# 函数相关
+
+## 重载函数
+
+如果`同一个作用域内`的几个`函数名字相同`但`形参列表`不同，称之为重载函数（main函数不能重载）。对于重载函数来说，它们应该在形参数量或形参类型上有所不同。不允许两个函数除了返回类型外其它所有的要素都相同。
+
+一个拥有顶层 const 的形参无法和另一个没有顶层 const 的形参区分开来：
+
+    int getnum(int);
+    int getnum(const int);    // 重复声明
+    
+    int getpos(int *);
+    int getpos(int * const);  // 重复声明
+
+如果形参是某种类型的引用或者指针，则通过其指向的是常量对象还是非常量对象可以实现函数重载，此时 const 是底层的：
+
+    int getnum(int &);
+    int getnum(const int &);  // 新函数，作用于常量引用
+    
+    int getpos(int *);
+    int getpos(const int *);  // 新函数，作用于指向常量的指针
+
+［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］ 
+
 ## 函数指针
 
 函数指针指向的`是函数而非对象`，和其他指针一样，函数指针指向某种特定类型。函数的类型由它的返回类型和形参类型共同决定，与函数名无关。
@@ -209,16 +246,6 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
 ［[函数指针应用](http://www.nowcoder.com/questionTerminal/2c18fc889b924cc1b21ce6ec387fd853)］  
 
 《C++ Primer》 P221
-
-## 产生野指针原因
-
-“野指针”不是NULL指针，是指向“垃圾”内存的指针。“野指针”的成因主要有三种：
-
-1. 指针变量没有被初始化。指针变量刚被创建时不会自动成为NULL指针，它的缺省值是随机的，它会乱指一气。所以，指针变量在创建的同时应当被初始化，要么将指针设置为NULL，要么让它指向合法的内存。
-2. 指针p被free或者delete之后，没有置为NULL，让人误以为p是个合法的指针。
-3. 指针操作超越了变量的作用域范围。
-
-［[指针赋值语句](http://www.nowcoder.com/questionTerminal/b6f566ba692442d4b7cce66bf6804c53)］
 
 # 存储相关
 
@@ -438,28 +465,6 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
 [float and double](http://www.cplusplus.com/forum/beginner/83526/)  
 
 # 其它语言特征
-
-## 重载函数
-
-如果同一个作用域内的几个函数名字相同但形参列表不同，称之为重载函数（main函数不能重载）。对于重载函数来说，它们应该在形参数量或形参类型上有所不同。不允许两个函数除了返回类型外其它所有的要素都相同。
-
-一个拥有顶层 const 的形参无法和另一个没有顶层 const 的形参区分开来：
-
-    int getnum(int);
-    int getnum(const int);    // 重复声明
-    
-    int getpos(int *);
-    int getpos(int * const);  // 重复声明
-
-如果形参是某种类型的引用或者指针，则通过其指向的是常量对象还是非常量对象可以实现函数重载，此时 const 是底层的：
-
-    int getnum(int &);
-    int getnum(const int &);  // 新函数，作用于常量引用
-    
-    int getpos(int *);
-    int getpos(const int *);  // 新函数，作用于指向常量的指针
-
-［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］  
 
 ## 四种类型转换
 

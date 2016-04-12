@@ -10,11 +10,12 @@
 
 ## 渐进记号的性质
 
-［[记号O的定义](http://www.nowcoder.com/questionTerminal/281cab90faae4597a1164e25ea42fd87)］
-
 ![][1]
 
 ![][2]
+
+［[记号O的定义](http://www.nowcoder.com/questionTerminal/281cab90faae4597a1164e25ea42fd87)］  
+［[求算法时间复杂度](http://www.nowcoder.com/questionTerminal/38ec26f251b1471682653e69e17d3f52?source=relative)］  
 
 # 经典排序算法
 
@@ -44,8 +45,13 @@
 
 ## 分治法
 
+### 二分查找
 
-相关题目
+二分查找算法（binary search）是一种在有序数组中查找某一特定元素的算法。搜索过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜索过程结束；如果某一特定元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半中查找，而且跟开始一样从中间元素开始比较。如果在某一步骤数组为空，则代表找不到。这种搜索算法每一次比较都使搜索范围缩小一半，因此时间复杂度为 logn。
+
+更多内容参见 [BinarySearch.md](C++_Code/Algorithm_BinarySearch.md)
+
+### 相关题目
 
 | 题目简单描述 |  OJ来源  |  Python | C++ |
 |---------|---------|----------|---------|
