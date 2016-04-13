@@ -195,7 +195,38 @@
         }
     };
 
+## 30 最小的K个数
 
+输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8 这8个数字，则最小的4个数字是1,2,3,4。
+
+    class Solution {
+    public:
+        vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+            if(k<=0 || k>input.size()){
+                // k < size时返回空
+                return vector<int>();
+            }
+            priority_queue<int> heap;
+            for(int &n : input){
+                if(heap.size() < k){
+                    heap.push(n);
+                }
+                else{
+                    if(n<heap.top()){
+                        heap.pop();
+                        heap.push(n);
+                    }
+                }
+            }
+    
+            vector<int> ans;
+            while(!heap.empty()){
+                ans.push_back(heap.top());
+                heap.pop();
+            }
+            return vector<int>(ans.rbegin(), ans.rend());
+        }
+    };
 
 ## 39 二叉树的深度 
 

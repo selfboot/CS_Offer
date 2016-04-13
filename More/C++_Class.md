@@ -128,7 +128,8 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
 
 此外：内联函数也不能是虚函数，因为其在编译时展开。虚函数是动态绑定，运行期决定的，所以内联函数不能是虚函数。
 
-［[虚函数地址分配](http://www.nowcoder.com/questionTerminal/d50dbed9a0f44e8092f86927cb7c259f)］
+［[虚函数地址分配](http://www.nowcoder.com/questionTerminal/d50dbed9a0f44e8092f86927cb7c259f)］  
+［[虚函数表被置为0](http://www.nowcoder.com/questionTerminal/97c2bf56369845528a109bec8cfb3556)］  
 
 `函数隐藏`是指派生类的函数屏蔽了与其同名的基类函数，规则如下：
 

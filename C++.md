@@ -262,7 +262,8 @@ struct 或者 union 成员对齐规则如下：
 
 先局部成员对齐，然后再全局对齐。（[memory_align.cpp](C++_Code/memory_align.cpp)）
 
-参考： [C、C++内存对齐](http://www.jellythink.com/archives/413)
+参考  
+[C、C++内存对齐](http://www.jellythink.com/archives/413)
 
 ## 联合体存储特点以及CPU字节序
 
@@ -618,6 +619,12 @@ Lambda、变参模板、auto、decltype、constexpr、智能指针、列表初�
 ［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］  
 
 # 更多阅读
+
+《C++ Primer（第五版）》  
+《深度探索 C++ 对象模型》  
+《STL 源码剖析》   
+《Effective C++》   
+《More Effective C++》
 
 [C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)  
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
