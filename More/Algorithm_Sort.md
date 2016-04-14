@@ -150,8 +150,48 @@ Python 实现如下：
 
 # 归并排序
 
+归并排序是建立在归并操作上的一种有效的排序算法，该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。
+
+归并操作(Merge)，也叫归并算法，指的是将两个已经排序的序列合并成一个序列的操作。归并排序算法依赖归并操作。归并排序有多路归并排序、两路归并排序。
+
+![][6]
+
+算法思路：
+
+1. 把 n 个记录看成 n 个长度为 l 的有序子表；
+2. 进行两两归并使记录关键字有序，得到 n/2 个长度为 2 的有序子表；
+3. 重复第 2 步直到所有记录归并成一个长度为 n 的有序表为止。
+	
+Python 实现如下：
+
+    def merge_sort(array):
+        if len(array) <= 1:
+            return array
+    
+        mid = len(array) / 2
+        left = merge_sort(array[:mid])
+        right = merge_sort(array[mid:])
+        return merge(left, right)
+    
+    
+    def merge(left, right):
+        result = []
+        i, j = 0, 0
+        while i < len(left) and j < len(right):
+            if(left[i] <= right[j]):
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result += left[i:]
+        result += right[j:]
+        return result
+
 
 # 基数排序
+
+
 
 # 参考
 
@@ -160,8 +200,9 @@ Python 实现如下：
 [插入排序](https://zh.wikipedia.org/wiki/插入排序)  
 [希尔排序](https://zh.wikipedia.org/wiki/希尔排序)  
 [快速排序](https://zh.wikipedia.org/wiki/快速排序)  
-[常见排序算法 - 堆排序 (Heap Sort)](http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/)  
-[常见排序算法 - 快速排序 (Quick Sort)](http://bubkoo.com/2014/01/12/sort-algorithm/quick-sort/)  
+[常见排序算法：堆排序 (Heap Sort)](http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/)  
+[常见排序算法：快速排序 (Quick Sort)](http://bubkoo.com/2014/01/12/sort-algorithm/quick-sort/)  
+[常见排序算法：归并排序](http://bubkoo.com/2014/01/15/sort-algorithm/merge-sort/)   
 [数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)  
 [Sorting Algorithm Animations](http://www.sorting-algorithms.com)
 
@@ -170,4 +211,6 @@ Python 实现如下：
 [3]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_3.gif
 [4]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_4.gif
 [5]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_5.gif
+[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_6.gif
+
 
