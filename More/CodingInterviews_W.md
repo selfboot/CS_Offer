@@ -1,5 +1,5 @@
 
-## 替换空格
+## 4 替换空格
 
 请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
 
@@ -36,6 +36,98 @@
             }
             return;
         }
+    };
+
+## 5 从尾到头打印链表
+
+输入一个链表，从尾到头打印链表每个节点的值。 
+
+    /**
+    *  struct ListNode {
+    *        int val;
+    *        struct ListNode *next;
+    *        ListNode(int x) :
+    *              val(x), next(NULL) {
+    *        }
+    *  };
+    */
+    
+    class Solution {
+    public:
+        vector<int> printListFromTailToHead(struct ListNode* head) {
+            if(head==NULL){
+                return {};
+            }
+            stack<ListNode*> keep;
+            while(head){
+                keep.push(head);
+                head = head->next;
+            }
+            vector<int> reversed;
+            while(!keep.empty()){
+                ListNode *tmp = keep.top();
+                keep.pop();
+                reversed.push_back(tmp->val);
+            }
+            return reversed;
+        }
+    };
+
+## 6 重建二叉树
+
+输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+
+    class Solution {
+    public:
+        struct TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> in) {
+    		return helper(pre, 0, pre.size(), in, 0, in.size());
+        }
+        
+        struct TreeNode* helper(const vector<int>&pre, int p_l, int p_r, const vector<int>&in, int i_l, int i_r){
+            if(p_l+1 > p_r || i_l+1 > i_r){
+                return NULL;
+            }
+            TreeNode *root = new TreeNode(pre[p_l]);
+            for(int i=i_l;i<i_r;i++){
+                if(in[i] == pre[p_l]){
+                    root->left = helper(pre, p_l+1, p_l+1+i-i_l, in, i_l, i);
+                    root->right = helper(pre, p_l+1+i-i_l, p_r, in, i+1, i_r);
+                }
+            }
+            return root;
+        }
+    };
+
+## 7 用两个栈实现队列
+
+用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+
+    class Solution
+    {
+    public:
+        void push(int node) {
+            stack1.push(node);
+        }
+    
+        int pop() {
+            if(stack2.empty()){
+                while(!stack1.empty()){
+                    int num = stack1.top();
+                    stack1.pop();
+                    stack2.push(num);
+                }
+            }
+            if(stack2.empty()){
+                return -1;    // pop from empty list.
+            }
+            int pop_num = stack2.top();
+            stack2.pop();
+            return pop_num;
+        }
+    
+    private:
+        stack<int> stack1;	// push
+        stack<int> stack2;  // pop
     };
 
 ## 栈的压入、弹出序列
