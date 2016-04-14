@@ -432,12 +432,15 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
         A* a = new A;
         B* b = reinterpret_cast(a);
         
-* static_cast：允许执行隐式转换和相反的转换操作，父类转换为子类是强制转换，而子类转换为父类就是隐式转换；
+* static_cast：该运算符没有运行时类型检查来保证转换的安全性。可以用于以下场景：
+    * 用于类层次结构中基类（父类）和派生类（子类）之间指针或引用的转换，进行上行转换（把派生类的指针或引用转换成基类表示）是安全的；进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所以是不安全的。
+    * 用于基本数据类型之间的转换，如把int转换成char，把int转换成enum。这种转换的安全性也要开发人员来保证。
+    * 把任何类型的表达式转换成void类型。
 
-        class Base {}; 
-        class Derive:public Base{}; 
-        Base* a = new Base; 
-        Derive *b = static_cast(a);
+            class Base {}; 
+            class Derive:public Base{}; 
+            Base* a = new Base; 
+            Derive *b = static_cast(a);
 
 * dynamic_cast：用于对象的指针和引用，当用于多态类型转换时，允许隐式转换及相反的过程中。与static_cast的不同之处在于，在相反的转换过程中，dynamic_cast会检测操作的有效性，如果返回的不是被请求的有效完整对象，则返回null，反之返回这个有效的对象，如果是引用返回无效时则会抛出bad_cast异常；
 * const_cast：这个转换操作会操纵传递对象的const属性，或者设置或者移除该属性。
@@ -445,6 +448,8 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
         class C{}; 
         const C* a = new C; 
         C *b = const_cast(a);
+
+［[虚函数继承类型转换](http://www.nowcoder.com/questionTerminal/5e5bb7214788436cb966e67305a8041e)］  
 
 ## include 头文件
 
