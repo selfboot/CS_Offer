@@ -130,6 +130,146 @@
         stack<int> stack2;  // pop
     };
 
+## 11 数值的整数次方
+
+给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+
+    class Solution {
+    public:
+        double Power(double base, int exponent) {
+            if(base-0.0 < 0.000001 && base-0.0 > -0.000001 && exponent != 0){
+                return 0.0;
+            }
+        	if(exponent == 0){
+                return 1.0;
+            }
+    
+            bool positive = exponent > 0 ? true:false;
+            exponent = abs(exponent);
+            
+            double result = Power(base, exponent >> 1);
+            result *= result;
+            if(exponent & 0x1){
+                result *= base;
+            }
+            if(!positive){
+                result = 1 / result;
+            }
+    		return result;
+        }
+    };
+
+## 14 调整数组顺序使奇数位于偶数前面
+
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+    class Solution {
+    public:
+        void reOrderArray(vector<int> &array) {
+            vector<int> even;
+            auto iter = array.begin();
+            while(iter!=array.end()){
+                if((*iter & 0x1) == 0){
+                    even.push_back(*iter);
+                    array.erase(iter);
+                }
+                else {
+                    iter++;
+                }
+            }
+            for(auto it=even.begin(); it!=even.end(); it++){
+                array.push_back(*it);
+            }
+            return;
+    	}
+    };
+    
+## 18 树的子结构
+
+输入两颗二叉树A，B，判断B是不是A的子结构。
+
+    class Solution {
+    public:
+        bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+        {
+            bool result = false;
+            if(pRoot1 != NULL && pRoot2 != NULL){
+                if(pRoot1->val == pRoot2->val){
+                    result = isSubtree(pRoot1, pRoot2);
+                }
+                if(!result) {
+                    result = HasSubtree(pRoot1->left, pRoot2) || HasSubtree(pRoot1->right, pRoot2);
+                }
+            }
+            return result;
+        }
+    
+        bool isSubtree(TreeNode* parent, TreeNode* child){
+            if(child == NULL){
+                return true;
+            }
+            if(parent == NULL){
+                return false;
+            }
+            if(parent->val == child->val){
+                return isSubtree(parent->left, child->left) && isSubtree(parent->right, child->right);
+            }
+            else{
+                return false;
+            }
+        }
+    };
+
+## 20 二叉树的镜像
+
+操作给定的二叉树，将其变换为源二叉树的镜像。
+
+    class Solution {
+    public:
+        void Mirror(TreeNode *pRoot) {
+            if(pRoot == NULL){
+                return;
+            }
+    		TreeNode *tmp = pRoot->left;
+            pRoot->left = pRoot->right;
+            pRoot->right = tmp;
+            Mirror(pRoot->left);
+            Mirror(pRoot->right);
+        }
+    };
+
+## 21 包含min函数的栈
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。
+
+    class Solution {
+    public:
+        void push(int value) {
+            data.push(value);
+            if(min_n.empty() || value <= min()){
+                min_n.push(value);
+            }
+        }
+    
+        void pop() {
+            if(top() == min()){
+                min_n.pop();
+            }
+            data.pop();
+        }
+    
+        int top() {
+            return data.top();
+        }
+    
+        int min() {
+            return min_n.top();
+        }
+    private:
+        stack<int> data;
+        stack<int> min_n;
+    };
+
 ## 栈的压入、弹出序列
 
 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。

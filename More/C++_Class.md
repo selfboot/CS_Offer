@@ -141,6 +141,59 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
 [C++ 虚函数表解析](http://blog.csdn.net/haoel/article/details/1948051)
 
 
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <stack>
+using namespace std;
+
+class Base {
+public:
+    virtual void f() { cout << "Base::f" << endl; }
+    virtual void g() { cout << "Base::g" << endl; }
+    virtual void h() { cout << "Base::h" << endl; }
+
+};
+
+double Power(double base, int exponent) {
+    if(base == 0 || exponent == 0){
+        return 1.0;
+    }
+
+    bool positive = exponent > 0 ? true:false;
+    exponent = abs(exponent);
+
+    double result = Power(base, exponent >> 1);
+    result *= result;
+    if(exponent & 0x1){
+        result *= base;
+    }
+    if(!positive){
+        result = 1 / result;
+    }
+    return result;
+}
+
+int main() {
+    typedef void(*Fun)();
+
+    Base b;
+
+    cout << "虚函数表地址：" << (int64_t *) (&b) << endl;
+    cout << "虚函数表 — 第一个函数地址：" << (int64_t *) *(int64_t *) (&b) << endl;
+    cout << "虚函数表 — 第二个函数地址：" << (int64_t *) *((int64_t *) (&b) + 1) << endl;
+    cout << "虚函数表 — 第三个函数地址：" << (int64_t *) *((int64_t *) (&b) + 2) << endl;
+
+    // Invoke the first virtual function
+    Fun fFun = (Fun) *((int64_t *) *(int64_t *) (&b));
+    Fun gFun = (Fun) *((int64_t *) *(int64_t *) (&b) + 1);
+    Fun hFun = (Fun) *((int64_t *) *(int64_t *) (&b) + 2);
+    fFun();
+    gFun();
+    hFun();
+
+    cout << Power(3.9, -2) << endl;
+}
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Class_1.png
