@@ -156,11 +156,17 @@ C 语言位图实现如下：
 
 如果用普通的排序算法，数据放进内存就需要 ( 10^9 * 4)/( 2^30 ) = 3.7G。改用 Bitmap 的话，一个数字占一位，一共需要 3.7/32 ＝ 0.1 G 内存。
 
-参考：[详解bitmap算法](http://www.wjxfpf.com/2015/10/300404.html)
+参考  
+[详解bitmap算法](http://www.wjxfpf.com/2015/10/300404.html)
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_1.jpg
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_2.jpg
 [3]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_3.jpg
+
+
+# 更多阅读
+
+《剑指 Offer》  
 
 

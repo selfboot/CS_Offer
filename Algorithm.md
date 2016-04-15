@@ -81,7 +81,10 @@ KMP 算法
 
 
 
-# 参考
+# 更多阅读
+
+《剑指 Offer》  
+《编程之美》  
 
 [数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)  
 [为什么我反对纯算法面试题](http://coolshell.cn/articles/8138.html)  
