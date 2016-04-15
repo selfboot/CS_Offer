@@ -127,7 +127,28 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
 
 参考：Effective C++：条款30， 透彻理解 inlining的里里外外
 
+## 数组
+
+
+## 数组形参
+
+数组作为形参时，会退化为指针，这是因为数组的两个性质：
+
+1. 不允许拷贝数组（无法以值传递的方式使用数组参数）；
+2. 使用数组时会将其转换为指针。
+
+所以给函数传递指针时，实际上传递的是指向数组首元素的指针。
+
+    // 尽管形式不同，但是这三个 print 函数是等价的
+    void print(const int*);
+    void print(const int[]);   
+    void print(const int[10]); // 纬度表示期望数组含有多少元素，实际并不一定
+
+［[数组合法参数](http://www.nowcoder.com/questionTerminal/e2ac8bddb9e5434a92511320221c8513)］
+
 # 指针
+
+指针的更多内容参考 [C++_Pointer](More/C++_Pointer.md)
 
 ## 指针与引用：
 
@@ -160,6 +181,8 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
 为了判断const到底对谁起作用（即谁是const的），可以用以下简单规则：**const只对它左边的东西起作用，当const本身就是最左边的修饰符时，它才会对右边的东西起作用**。
 
 ［[指向常量的指针](http://www.nowcoder.com/questionTerminal/524cd1e7926a44e38d9d7c3a3359b822)］  
+［[指针改变常量的值](http://www.nowcoder.com/questionTerminal/36f828664d2d4d14a1428ae49f701f23)］  
+
 # 函数
 
 ## 重载函数
@@ -473,22 +496,6 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
 ## 赋值还是构造
 
 ［[拷贝构造还是赋值](http://www.nowcoder.com/questionTerminal/cf1a3145d1b946c1861c9d10b8629665)］
-
-## 数组形参
-
-数组作为形参时，会退化为指针，这是因为数组的两个性质：
-
-1. 不允许拷贝数组（无法以值传递的方式使用数组参数）；
-2. 使用数组时会将其转换为指针。
-
-所以给函数传递指针时，实际上传递的是指向数组首元素的指针。
-
-    // 尽管形式不同，但是这三个 print 函数是等价的
-    void print(const int*);
-    void print(const int[]);   
-    void print(const int[10]); // 纬度表示期望数组含有多少元素，实际并不一定
-
-［[数组合法参数](http://www.nowcoder.com/questionTerminal/e2ac8bddb9e5434a92511320221c8513)］
 
 ## If 判断语句
 
