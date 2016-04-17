@@ -36,7 +36,19 @@
 
 # 矩阵
 
+# 卡塔兰数
 
+卡塔兰数是组合数学中一个常在各种计数问题中出现的数列。递推关系为：
+
+![][3]
+
+卡塔兰数的一般项公式为：
+
+![][4]
+
+参考  
+[维基百科卡塔兰数](http://zh.wikipedia.org/wiki/卡塔兰数)    
+[从《编程之美》买票找零问题说起，娓娓道来卡特兰数](http://www.cnblogs.com/wuyuegb2312/p/3016878.html)  
 
 # 其它
 
@@ -52,6 +64,10 @@
 
 
 
+
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_2.gif
+[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_3.png
+[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_4.png
+
 

@@ -183,7 +183,33 @@
             return;
     	}
     };
-    
+
+## 16 反转链表
+
+定义一个函数，输入一个链表的头结点，反转该链表并输出反转后链表的头结点。
+
+    /*
+    struct ListNode {
+    	int val;
+    	struct ListNode *next;
+    	ListNode(int x) :
+    			val(x), next(NULL) {
+    	}
+    };*/
+    class Solution {
+    public:
+        ListNode* ReverseList(ListNode* pHead) {
+    		ListNode *pre_head = NULL;
+            while(pHead!=NULL){
+                ListNode *next_node = pHead->next;
+                pHead->next = pre_head;
+                pre_head = pHead;
+                pHead = next_node;
+            }
+            return pre_head;
+        }
+    };
+
 ## 18 树的子结构
 
 输入两颗二叉树A，B，判断B是不是A的子结构。
@@ -269,6 +295,76 @@
         stack<int> data;
         stack<int> min_n;
     };
+
+## 23 从上往下打印二叉树
+
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+    /*
+    struct TreeNode {
+    	int val;
+    	struct TreeNode *left;
+    	struct TreeNode *right;
+    	TreeNode(int x) :
+    			val(x), left(NULL), right(NULL) {
+    	}
+    };*/
+    class Solution {
+    public:
+        vector<int> PrintFromTopToBottom(TreeNode *root) {
+    		if(root==NULL){
+                return vector<int>{};
+            }
+            vector<int> nodes;
+            deque<TreeNode*> que{root};
+    
+            while(!que.empty()){
+                TreeNode *head = que.front();
+                que.pop_front();
+                nodes.push_back(head->val);
+                if(head->left!=NULL){
+                    que.push_back(head->left);
+                }
+                if(head->right!=NULL){
+                    que.push_back(head->right);
+                }
+            }
+            return nodes;
+        }
+    };
+
+## 24 二叉搜索树的后序遍历序列
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+    class Solution {
+    public:
+        bool VerifySquenceOfBST(vector<int> sequence) {
+    		if(sequence.empty()){
+                return false;
+            }
+            int length = sequence.size();
+            int root = sequence[length-1];
+            
+            vector<int> left;
+            int pos=0;
+            while(sequence[pos] < root){
+                left.push_back(sequence[pos++]);
+            }
+            
+            vector<int> right;
+            while(pos < length-1){
+                if(sequence[pos] < root){
+                    return false;
+                }
+                right.push_back(sequence[pos++]);
+            }
+            // left, right 可能为空
+            return (left.empty() || VerifySquenceOfBST(left)) && (right.empty() || VerifySquenceOfBST(right));
+        }
+    };
+
+
 
 ## 栈的压入、弹出序列
 
