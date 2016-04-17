@@ -72,7 +72,7 @@ C 语言标准库提供了一组函数用于操作 C 风格字符串，定义在
 
 printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h”中。printf函数调用的一般形式为：
     
-    printf(“格式控制字符串”, 输出表列)
+    int printf ( const char * format, ... );
 
 其中格式控制字符串用于指定输出格式。格式控制串可由`格式字符串`和非格式字符串两种组成。格式字符串是以%开头的字符串，在%后面跟有各种格式字符，以说明输出数据的类型、形式、长度、小数位数等。`printf 返回值是输出的字符个数`。
 
@@ -88,6 +88,7 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
 * e,E：以指数形式输出单、双精度实数
 * c：输出单个字符
 * s：输出字符串
+* p：输出指针保存的地址
 
 简单程序
 
@@ -97,7 +98,10 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
 
 ［[八进制输出](http://www.nowcoder.com/questionTerminal/25bce0284ec040fabdf6629dbd0c5dc9)］
 
-参考：[C语言格式输出函数printf()详解](http://c.biancheng.net/cpp/html/33.html)
+参考  
+[cplusplus: printf](http://www.cplusplus.com/reference/cstdio/printf/?kw=printf)  
+[C语言格式输出函数printf()详解](http://c.biancheng.net/cpp/html/33.html)  
+[Where is %p useful with printf?](http://stackoverflow.com/questions/2369541/where-is-p-useful-with-printf)  
 
 ## 整型溢出
 
