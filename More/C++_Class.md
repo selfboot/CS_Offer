@@ -5,47 +5,9 @@
 # 构造／析构／赋值运算
 
 
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
-class A{
-public:
-    A(){
-        cout << "1" << endl;
-    }
-    ~A(){
-        cout << "2" << endl;
-    }
-    A(const A&b){
-        cout << "3" << endl;
-    }
-    A& operator= (A& b){
-        cout << "4" << endl;
-        return b;
-    }
-};
-
-void fun(A a){
-    return;
-}
-
-int main(void)
-{
-    // A a;
-    // A b=a;
-    // A c(b);
-    A *d;
-    d = new A();
-    A *e = d;
-    // fun(a);
-    return 0;
-}
-
+在面向对象程序设计中，对象间的相互拷贝和赋值是经常进行的操作。被赋值的对象存不存在是判断调用的是拷贝构造还是赋值函数的根本。
 
 ## 构造函数
-
 
 异常抛出问题：
 
@@ -70,7 +32,7 @@ int main(void)
 参考  
 [构造函数：C++](https://msdn.microsoft.com/zh-cn/library/s16xw1a8.aspx)
 
-## 构造函数初始值列表
+### 构造函数初始值列表
 
 定义变量时习惯对其初始化，而非先定义、再赋值。
 

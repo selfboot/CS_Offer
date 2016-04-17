@@ -68,7 +68,7 @@ static 用法
     
     编译系统由此知道num是一个已在别处定义的外部变量，它先在本文件中找有无外部变量num，如果有，则将其作用域扩展到本行开始(如上节所述)，如果本文件中无此外部变量，则在程序连接时从其他文件中找有无外部变量num，如果有，则把在另一文件中定义的外部变量num的作用域扩展到本文件，在本文件中可以合法地引用该外部变量num。
 
-## extern C 函数名修饰机制
+## extern "C" 函数名修饰机制
 
 作为一种面向对象的语言，C++支持函数重载，而过程式语言C则不支持。函数被C++编译后在symbol库中的名字与C语言的不同，例如，假设某个函数的原型为：    
 
@@ -126,7 +126,7 @@ final关键字可用于修饰类、变量和方法。final修饰的类不能被�
 
 ［[final 描述错误](http://www.nowcoder.com/questionTerminal/8272c92814ca40c39f9a534485c90be2)］
 
-### inline 关键字
+## inline 关键字
 
 内联机制用于优化规模较小、流程直接、频繁调用的函数，因为调用函数一般比求等价表达式的值要慢一些。在大多数机器上，一次函数调用包括：调用前保存寄存器并在返回时恢复，可能需要拷贝实参等。
 
@@ -138,8 +138,54 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
 
 参考：Effective C++：条款30， 透彻理解 inlining的里里外外
 
-## 数组
+## typedef 关键字
 
+C++ 中，可以给一个合法的类型起一个`别名`，用以下句子：
+
+    typedef existing_type new_type_name;
+
+其中 existing_type 可以是简单的基本类型，也可以是混合类型（比如 int *[]），new_type_name 是这个类型的一个标识符。如下例子：
+
+    typedef unsigned int WORD;
+    typedef char * pChar;
+    typedef char field [50];   // 合法的
+
+c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面类型别名也可用下面语句来进行声明（它们在语义上是对等的）：
+
+    using WORD = unsigned int;
+    using pChar = char *;
+    using field = char [50]; 
+
+当定义一个函数指针时，typedef 用法稍微不同，
+
+    // pFun 为函数 int(int, char * ) 的指针
+    typedef int (* pFun )(int, char* );
+    using pFun = int(*)(int, char *); 
+
+此外，要注意 typedef 并不同于 define 那样做简单的文本替换，而是**类型别名**，看下面的两个例子。
+
+    typedef int *pt;    	  
+    const pt a;         // a 是常量指针(pt是指针，前面加 const，说明是const pointer)
+    int * const a;      // 等同于上一句  
+	  pt c, d;           // cd 都是 int * 类型的
+
+参考  
+[Type aliases (typedef / using)](http://www.cplusplus.com/doc/tutorial/other_data_types/)  
+[揭秘 typedef四用途与两陷阱](http://niehan.blog.techweb.com.cn/archives/325.html)  
+[typedef 用法总结](http://blog.csdn.net/gaohuaid/article/details/16829599)  
+
+# 数组
+
+数组名指代一种数据结构，这种数据结构就是数组。
+
+    char str[10];
+    cout << sizeof(str) << endl; // 输出 10
+
+此外，数组名可以转换为指向其指代实体的指针，而且是一个常量指针，不能作自增、自减等操作；
+
+    int nums[] = {1,2,3,4};
+    *nums = 2;
+    nums++; // cannot increment value of type 'int [4]'
 
 ## 数组形参
 
@@ -162,6 +208,8 @@ inline函数可以调用又不至于导致函数调用的开销，但是仍有�
 指针的更多内容参考 [C++_Pointer](More/C++_Pointer.md)
 
 ## 指针与引用：
+
+将“引用”作为函数返回值类型，好处是在内存中不产生被返回值的副本。正是因为这点原因，所以返回一个局部变量的引用是不可取的。因为随着该局部变量生存期的结束，相应的引用也会失效!也不能返回函数内部new分配的内存的引用，被函数返回的引用只是作为一个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就无法释放，造成memory leak。
 
 指针与引用区别如下：
 
