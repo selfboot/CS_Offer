@@ -300,6 +300,19 @@ struct 或者 union 成员对齐规则如下：
 
 先局部成员对齐，然后再全局对齐。（[memory_align.cpp](C++_Code/memory_align.cpp)）
 
+在结构体中还可以用 `:` 指定每一个成员占用空间的大小，以下结构体中：
+
+    struct mybitfields
+    {
+        unsigned short a : 4;
+        unsigned short b : 5;
+        unsigned short c : 7;
+    } test
+
+a 占用 4 个bit，b占用 5 个bit，c占用 7 个bit，正好是两个字节。
+
+［[结构体中 : 的含义](http://www.nowcoder.com/questionTerminal/f4e20747a2dd4649bac0c028daa234f4)］    
+
 参考  
 [C、C++内存对齐](http://www.jellythink.com/archives/413)
 

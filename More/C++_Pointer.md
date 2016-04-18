@@ -115,6 +115,7 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
 ［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］  
 ［[指针数组的读取](http://www.nowcoder.com/questionTerminal/5a6e0056f81648fe97f9a85462e256c6)］   
 ［[数组和指针相关操作](http://www.nowcoder.com/questionTerminal/621ea797eea249cb9f4db93218e7929f)］  
+［[指针取值](http://www.nowcoder.com/questionTerminal/9c55cfec4cce4c9fac74845359968cb0)］  
 
 ## 复杂例子分析
 
