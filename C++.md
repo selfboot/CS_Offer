@@ -187,6 +187,14 @@ c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面
     *nums = 2;
     nums++; // cannot increment value of type 'int [4]'
 
+再来看另一个例子：
+
+    int a[5]={1,2,3,4,5};
+    int *ptr=(int *)(&a+1);
+    printf("%d",*(ptr-1));
+
+这里 &a+1 并不是数组的首地址a+1，因为 &a 是指向数组的指针，其类型为int(* )[5]。而指针加1要根据指针类型加上一定的值，不同类型的指针+1之后增加的大小不同，a是长度为5的int数组指针，所以要加5 * sizeof(int)，所以ptr指向的位置是a+5。但是ptr与（&a+1）类型是不一样的，所以ptr-1只会减去sizeof(int*)。
+
 ## 数组形参
 
 数组作为形参时，会退化为指针，这是因为数组的两个性质：
@@ -264,7 +272,8 @@ c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面
     int getpos(int *);
     int getpos(const int *);  // 新函数，作用于指向常量的指针
 
-［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］ 
+［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］   
+［[重载函数调用错误的](http://www.nowcoder.com/questionTerminal/a4311c49cc3843249e6b36e05b55edd4)］
 
 ## 函数指针
 

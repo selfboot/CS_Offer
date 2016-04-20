@@ -296,6 +296,28 @@
         stack<int> min_n;
     };
 
+## 22 栈的压入、弹出序列
+
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。
+
+    class Solution {
+    public:
+        bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+            if (pushV.empty()) {
+                return false;
+            }
+            vector<int> stack;
+            for(int i=0, j=0; i<pushV.size(); i++){
+                stack.push_back(pushV[i]);
+                while(j < popV.size() && stack.back() == popV[j]){
+                    stack.pop_back();
+                    j++;
+                }
+            }
+            return stack.empty();
+        }
+    };
+
 ## 23 从上往下打印二叉树
 
 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
@@ -364,32 +386,31 @@
         }
     };
 
+## 25 二叉树中和为某一值的路径
 
-
-## 栈的压入、弹出序列
-
-输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。
+输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
 
     class Solution {
     public:
-        bool IsPopOrder(vector<int> pushV,vector<int> popV) {
-            if (pushV.empty()) {
-                return false;
+        vector<vector<int> > FindPath(TreeNode* root,int expectNumber) {
+            vector<vector<int>> pathList;
+            vector<int> path;
+            pathSum(root, expectNumber, path, pathList);
+            return pathList;
+        }
+        void pathSum(TreeNode* root, int sum, vector<int> path, vector<vector<int>> &pathList){
+            if(root==NULL)  return;
+            path.push_back(root->val);
+            if(root->left == NULL && root->right==NULL && root->val==sum){
+                pathList.push_back(path);
             }
-            vector<int> stack;
-            for(int i=0, j=0; i<pushV.size(); i++){
-                stack.push_back(pushV[i]);
-                while(j < popV.size() && stack.back() == popV[j]){
-                    stack.pop_back();
-                    j++;
-                }
-            }
-            return  stack.empty();
+            pathSum(root->left, sum-root->val, path, pathList);
+            pathSum(root->right, sum-root->val, path, pathList);
+            path.pop_back(); // backtracking
         }
     };
 
-
-## 复制复杂链表
+## 26 复制复杂链表
 
 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），复制该链表。
 
@@ -430,96 +451,108 @@
         }
     };
 
-# 平衡二叉树
+## 27 二叉搜索树与双向链表
 
-输入一棵二叉树，判断该二叉树是否是平衡二叉树。
-
-    class Solution {
-    public:
-        bool isBalanced(TreeNode* root, int &height){
-            if(!root){
-                return true;
-            }
-            int left = 0;
-            int right = 0;
-            if (isBalanced(root->left, left) && isBalanced(root->right, right)){
-                int diff = left - right;
-                if (diff < -1 or diff > 1){
-                    return false;
-                }
-                height = (left > right ? left: right) + 1;
-                return true;
-            }
-            return false;
-        }
-        bool IsBalanced_Solution(TreeNode* pRoot) {
-            int height = 0;
-            return isBalanced(pRoot, height);
-        }
-    };
-
-# 数组中出现次数超过一半的数字
-
-数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+    
+迭代实现（中根遍历）
 
     class Solution {
     public:
-        int MoreThanHalfNum_Solution(vector<int> numbers) {
-            int count = 0, num = 0, size = numbers.size();
-            for(int i=0; i<size; i++){
-                if (count == 0){
-                    num = numbers[i];
-                }
-                if (num == numbers[i]){
-                    count += 1;
+        TreeNode* Convert(TreeNode* pRootOfTree)
+        {
+        	TreeNode *head_keep = NULL;
+            TreeNode *pre_node = NULL;
+            
+            vector<TreeNode*> stack;
+            while(pRootOfTree!=NULL || !stack.empty()){
+                if(pRootOfTree!=NULL){
+                    stack.push_back(pRootOfTree);
+                    pRootOfTree = pRootOfTree->left;
                 }
                 else{
-                    count -= 1;
+                    TreeNode *cur_root = stack.back();
+                    stack.pop_back();
+                    
+                    // 建立双向链表部分的操作
+                    // 首先找到中序遍历的头部，为双向链表的头部
+                    if(head_keep == NULL){
+                        head_keep = cur_root;
+                    	pre_node = cur_root;
+                    }
+                    // 建立和中序遍历的结果中前一个结点的指针关系
+                    else{
+                        pre_node->right = cur_root;
+                        cur_root->left = pre_node;
+                        pre_node = cur_root;
+                    }
+                    
+                    pRootOfTree = cur_root->right;
                 }
             }
-            int num_cnt = 0;
-            for(int i=0; i<size; i++){
-                if(num == numbers[i]){
-                    num_cnt += 1;
-                }
-            }
-            if(num_cnt > size / 2){
-                return num;
-            }
-            return 0;
+            return head_keep;
         }
     };
 
-# 把数组排成最小的数
-
-输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+递归实现如下：
 
     class Solution {
     public:
-        static bool compare(const string &str1, const string &str2){
-            string s1 = str1 + str2;
-            string s2 = str2 + str1;
-            return s1 < s2;
-        }
-        string PrintMinNumber(vector<int> numbers) {
-            int size = numbers.size();
-            if (size == 0){
-                return "";
-            }
-            vector<string> str_num;
-            for(int i=0;i<size;i++){
-                stringstream s;
-                s << numbers[i];
-                string str = s.str();
-                str_num.push_back(str);
+        TreeNode* Convert(TreeNode* pRootOfTree)
+        {
+            if(pRootOfTree == NULL){
+                return NULL;
             }
     
-            sort(str_num.begin(), str_num.end(), compare);
-            string result = "";
-            for(int i=0;i<size;i++){
-                result += str_num[i];
+            // 1. 对左子树递归进行转换
+            TreeNode* left_head = Convert(pRootOfTree->left);
+            if(left_head!=NULL){
+                // 左子树不为空，tmp 为左子树中最后的的结点；
+                TreeNode* tmp = left_head;
+                while(tmp->right){
+                    tmp = tmp->right;
+                }
+                // 建立根节点和左子树的关系
+                tmp->right = pRootOfTree;
+                pRootOfTree->left = tmp;
             }
-            return result;
+          
+            // 2. 对右子树递归进行转换
+            TreeNode* right_head = Convert(pRootOfTree->right);
+            if(right_head!=NULL){
+                right_head->left = pRootOfTree;
+                pRootOfTree->right = right_head;
+            }
+            
+            return left_head == NULL ? pRootOfTree : left_head;
+        }
+    };
+
+## 28 字符串的排列
+
+输入一个字符串（可能有字符重复），按字典序打印出该字符串中字符的所有排列。例如输入字符串abc，则打印出由字符a, b, c 所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。结果请按字母顺序输出。
+
+    class Solution {
+    public:
+        vector<string> Permutation(string str) {
+            vector<string> ans;
+            sort(str.begin(), str.end());
+            helper(str, 0, ans);
+            return ans;
+        }
+        
+        void helper(string str, int begin, vector<string> &ans){
+            if(begin == str.size()-1){
+                ans.push_back(str);
+                return;
+            }
+            for(int i=begin; i<str.size();i++){
+                if(i!=begin && str[i]==str[begin]){
+                    continue;
+                }
+                swap(str[i], str[begin]);
+                helper(str, begin+1, ans);
+            }
         }
     };
 
@@ -556,66 +589,86 @@
         }
     };
 
-## 39 二叉树的深度 
+# 33 把数组排成最小的数
 
-1. 输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
-
-        class Solution {
-        public:
-            int TreeDepth(TreeNode* pRoot)
-            {
-            	if(pRoot == NULL){
-                    return 0;
-                }
-                return max(TreeDepth(pRoot->left), TreeDepth(pRoot->right)) + 1;
-            }
-        };
-
-2. 输入一棵二叉树，判断该二叉树是否是平衡二叉树。
-
-        class Solution {
-        public:
-            bool IsBalanced_Solution(TreeNode* pRoot) {
-                int height = 0;
-        		return isBalanced(pRoot, height);
-            }
-            
-            // 后序遍历，避免重复访问同一个节点
-            bool isBalanced(TreeNode* node, int &height){
-                if(node == NULL){
-                    height = 0;
-                    return true;
-                }
-                int left_h=0, right_h=0;
-                if(isBalanced(node->left, left_h) && isBalanced(node->right, right_h)){
-                    int diff = left_h - right_h;
-                    if(diff <= 1 && diff >= -1){
-                        height = (left_h > right_h ? left_h : right_h)+1;
-                        return true;
-                    }
-                }
-                return false;
-            }
-        };
-
-# 47 不用加减乘除做加法
-
-写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
+输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
 
     class Solution {
     public:
-        int Add(int num1, int num2)
-        {
-    		int sum, carry;
-            do{
-                sum = num1 ^ num2;
-                carry = (num1&num2) << 1;
-                
-                num1 = sum;
-                num2 = carry;
-            }while(num2!=0);
-            
-            return sum;
+        static bool compare(const string &str1, const string &str2){
+            string s1 = str1 + str2;
+            string s2 = str2 + str1;
+            return s1 < s2;
+        }
+        string PrintMinNumber(vector<int> numbers) {
+            int size = numbers.size();
+            if (size == 0){
+                return "";
+            }
+            vector<string> str_num;
+            for(int i=0;i<size;i++){
+                stringstream s;
+                s << numbers[i];
+                string str = s.str();
+                str_num.push_back(str);
+            }
+    
+            sort(str_num.begin(), str_num.end(), compare);
+            string result = "";
+            for(int i=0;i<size;i++){
+                result += str_num[i];
+            }
+            return result;
         }
     };
+
+## 34 丑数
+
+把只包含因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含因子7。习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。
+
+    class Solution {
+    public:
+        int GetUglyNumber_Solution(int index) {
+        	vector<int> ugly_nums(index, 0);
+            ugly_nums[0]=1;
+            int i=1;
+            int p_2=0, p_3=0, p_5=0;
+            while(i<index){
+                int v_2 = ugly_nums[p_2]*2;
+                int v_3 = ugly_nums[p_3]*3;
+                int v_5 = ugly_nums[p_5]*5;
+                int val = min(v_2, min(v_3, v_5));
+                ugly_nums[i] = val;
+                
+                // 更新指针 
+                if(val==v_2)	p_2++;
+                if(val==v_3)	p_3++;
+                if(val==v_5)	p_5++;
+                i++;
+            }
+            return ugly_nums[index-1];
+        }
+    };
+
+## 35 第一个只出现一次的字符位置
+
+在一个字符串(1<=字符串长度<=10000，全部由字母组成)中找到第一个只出现一次的字符的位置。若为空串，返回-1。位置索引从0开始
+
+    class Solution {
+    public:
+        int FirstNotRepeatingChar(string str) {
+    		int hash[256] = {0};
+            for(auto c : str){
+                hash[c] ++;
+            }
+    		
+            for(int i=0;i<str.size();i++){
+                if(hash[str[i]] == 1){
+                    return i;
+                }
+            }
+            return -1;
+        }
+    };
+
 

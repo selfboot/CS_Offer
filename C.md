@@ -42,9 +42,9 @@
 
     当有如下调用时 next = min (x + y, foo (z)); 宏体被展开成next = ((x + y) < (foo (z)) ? (x + y) : (foo (z))); 可以看到，foo(z)被重复调用了两次，做了重复计算。更严重的是，如果foo是不可重入的(foo内修改了全局或静态变量)，程序会产生逻辑错误。所以，**尽量不要在宏参数中传入函数调用**。
 
-［[对应题目](http://www.nowcoder.com/question/next?pid=1227362&qid=15947&tid=2494453)］
 
-参考： [C语言宏的特殊用法和几个坑](http://hbprotoss.github.io/posts/cyu-yan-hong-de-te-shu-yong-fa-he-ji-ge-keng.html)  
+参考  
+[C语言宏的特殊用法和几个坑](http://hbprotoss.github.io/posts/cyu-yan-hong-de-te-shu-yong-fa-he-ji-ge-keng.html)  
 《Effective C++》 条款02：尽量以const, enum, inline 代替 #define，预处理器不够安全。
 
 ## C 风格字符串的函数
@@ -61,7 +61,8 @@ C 语言标准库提供了一组函数用于操作 C 风格字符串，定义在
 （[c_string_func.cpp](C++_Code/c_string_func.cpp)）
 
 ［[字符串常量赋值](http://www.nowcoder.com/questionTerminal/462f7c3746814b1cadde05a1084f8740)］  
-［[strcpy 拷贝](http://www.nowcoder.com/questionTerminal/74d917fe09a94a2fb03b5371a2417372)］
+［[strcpy 拷贝](http://www.nowcoder.com/questionTerminal/74d917fe09a94a2fb03b5371a2417372)］  
+［[字符串常量和字符数组](http://www.nowcoder.com/questionTerminal/0db8ed5d69464f0bbb98d5eba3c08b9a)］
 
 参考：   
 《C++ Primer》 Page109  
