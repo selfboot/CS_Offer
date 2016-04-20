@@ -80,6 +80,76 @@ TCP(Transmission Control Protocol)为应用程序之间提供面向连接的可�
 ［[拥塞控制算法](http://www.nowcoder.com/questionTerminal/a2b95450f85c4855877a0c4f06c91a72)］  
 ［[状态转换流程](http://www.nowcoder.com/questionTerminal/246945f0e26541b89f4735c79e3f16a2)］  
 
+# TCP三次握手和四次挥手图解
+ ![](http://joshshaw.github.io/2016/04/11/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/tcp.png)
+## 初始介绍
+上图左为tcp连接的状态机，每个圆矩形为一个状态，每个状态有一行或者两行，第一行为该状态的名称，
+第二行（有的话）为该状态能（或者需要）发送的报文。
+虚线箭头路径为服务器的常见状态转移路线。虚线框为关闭连接的状态集合。每个状态转移都是通过事件
+触发，一般为收到一些特定的报文。
+上图右为时间线下的状态转移示意图，分为常见和特殊情况。
+## 状态
+ - [CLOSED](#CLOSED)
+ - [LISTEN](#LISTEN)
+ - [SYN_SENT](#SYN_SENT)
+ - [SYN_RCVD](#SYN_RCVD)
+ - [ESTABLISED](#ESTABLISED)
+ - [FIN_WAIT_1](#FIN_WAIT_1)
+ - [FIN_WAIT_2](#FIN_WAIT_2)
+ - [CLOSING](#CLOSING)
+ - [TIME_WAIT](#TIME_WAIT)
+ - [CLOSE_WAIT](#CLOSE_WAIT)
+ - [LAST_ACK](#LAST_ACK)
+
+## 详解
+
+### CLOSED
+端口未打开时为此状态。相当于初始状态和终止状态。
+
+### LISTEN
+当服务器打开端口监听时，服务器等待客户端进行连接（被动）。  
+
+### SYN_SENT
+客户端主动对服务器进行连接，会向服务器发送SYN报文。  
+有时候，服务器也会从LISTEN状态转到该状态，说明服务器端进行主动连接，但是__极为罕见__。
+此外，主动关闭连接或者客户端在一定时间范围内完全没有接到任何报文（超时）时，该状态会进入
+CLOSED状态，结束连接。
+
+### SYN_RCVD
+服务器处于LISTEN状态，当收到客户端发送的SYN报文时，变为该状态。服务器处于该状态时需要完成
+与客户端的握手流程，将会发送SYN和对此前客户端发送SYN报文的ACK确认。  
+当服务器收到客户端发送的RST报文后，说明客户端希望取消连接，此时服务器会回到LISTEN状态；
+此外，服务器在一定时间范围内完全没有接到任何报文（超时）时，会关闭监听端口，到达CLOSED终止状态，
+服务器主动关闭端口监听时，会进入FIN_WAIT_1状态。
+
+### ESTABLISED
+客户端（服务器）收到服务器（客户端）对自己此前的SYN报文的ACK确认后，进入此状态，表明已经建立了连接。  
+
+### FIN_WAIT_1
+建立连接双方中的一方主动关闭连接时，会发送FIN报文，进入该状态。
+
+### FIN_WAIT_2
+主动关闭连接的一方收到被动方的对FIN的ACK确认报文后，进入该状态。
+
+### CLOSING
+主动关闭连接的一方在监听对自己FIN报文的ACK确认报文期间收到对方的FIN报文时进入该状态。  
+该状态说明双方都在此段时间段内主动请求关闭。
+
+### TIME_WAIT
+主动请求关闭的一方收到对方的FIN报文后，会对该FIN报文进行ACK确认，那么此时进入该状态。  
+该状态等待2MSL的时间，若收不到对方的FIN报文，说明对方已经收到自己发出的ACK确认报文，最终
+连接关闭，进入CLOSED。  
+有时候，FIN_WAIT_1会直接进入该状态，情况在于被动方刚好在发送ACK(FIN)的同时捎带了FIN，表明自己也
+要关闭了，不过此情况也__比较罕见__，并且可以通过先进入FIN_WAIT_2在进入TIME_WAIT来代替。
+
+### CLOSE_WAIT
+被动关闭的一方收到FIN报文时，进入该状态，该状态需要发送对FIN报文的ACK确认。
+
+### LAST_ACK
+被动一方也关闭连接时，将发送FIN报文，进入该状态。收到自己发出的FIN的ACK确认报文后，关闭连接，
+进入CLOSED。
+
+
 详细内容参见 [Network_TCP](more/Network_TCP.md)
  
 ### TCP，UDP区别
