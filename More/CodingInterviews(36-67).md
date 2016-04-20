@@ -1,3 +1,55 @@
+## 36 数组中的逆序对
+
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+
+    class Solution {
+    public:
+        int InversePairs(vector<int> data) {
+            if(data.empty()){
+                return 0;
+            }
+    
+            vector<int> sort_data(data.size(), 0);  // 额外的数组保存排序后的结果
+            return countMergeSort(data, 0, data.size(), sort_data);
+        }
+    
+        // 将 data[begin: end) 排序, 结果保存在result中, 返回逆序对的数目
+        int countMergeSort(vector<int> data, int begin, int end, vector<int>&result){
+            if(begin+1==end){
+                result[0] = data[begin];
+                return 0;
+            }
+            int mid = begin+(end-begin)/2;
+            vector<int> left(mid-begin, 0);
+            vector<int> right(end-mid, 0);
+            int left_i = mid-begin-1;   // 左部分最后一个元素下标
+            int right_i = end-mid-1;    // 右部分最后一个元素下标
+    
+            int left_count = countMergeSort(data, begin, mid, left);
+            int right_count = countMergeSort(data, mid, end, right);
+    
+            int index = end-begin-1;    // 有序数组最后一个元素下标
+            // Merge 操作
+            int count=0;
+            while(left_i>=0 && right_i>=0){
+                if(left[left_i]>right[right_i]){
+                    result[index--]=left[left_i--];
+                    count += right_i+1;
+                }
+                else{
+                    result[index--]=right[right_i--];
+                }
+            }
+            while(left_i>=0){
+                result[index--] = left[left_i--];
+            }
+            while(right_i>=0){
+                result[index--] = right[right_i--];
+            }
+            return left_count+right_count+count;
+        }
+    };
+
 ## 37 链表公共结点
 
 输入两个链表，找出它们的第一个公共结点。
