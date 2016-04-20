@@ -46,6 +46,8 @@
 
 ![][4]
 
+［[可能的出栈序列](http://www.nowcoder.com/questionTerminal/b1e171ec60ac490da8996f39f40a94f9)］  
+
 参考  
 [维基百科卡塔兰数](http://zh.wikipedia.org/wiki/卡塔兰数)    
 [从《编程之美》买票找零问题说起，娓娓道来卡特兰数](http://www.cnblogs.com/wuyuegb2312/p/3016878.html)  

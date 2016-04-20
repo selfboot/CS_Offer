@@ -1,4 +1,6 @@
-# [推箱子](http://hihocoder.com/contest/ntest2015april/problem/1)
+# 2016 实习
+
+## [推箱子](http://hihocoder.com/contest/ntest2015april/problem/1)
 
 推箱子是一款经典游戏。如图所示，灰色格子代表不能通过区域，蓝色方格是箱子，黑色圆形代表玩家，含有圆点的格子代表目标点。
 
@@ -531,4 +533,233 @@
 参考
 
 [连连看——网易游戏2016实习生招聘](http://blog.csdn.net/wangtaoking1/article/details/45035465)
+
+# 2016 校招
+
+## [Amusing Digits](http://hihocoder.com/contest/ntest2015septdev/problem/1)
+
+    #include <iostream>
+    using namespace std;
+    
+    int main() {
+        int T;
+        cin >> T;
+        while(T){
+            string S;
+            int count = 0;
+            cin >> S;
+            int pos = 0, i =0;
+            int start = pos;
+            int len = S.size();
+            string target = "9706";
+            while (pos < len && i<4){
+                if (S[pos] != '9' && S[pos] != '7' && S[pos] != '0' && S[pos] != '6'){
+                    pos += 1;
+                    continue;
+                }
+                if(S[pos] == target[i]){
+                    S[pos] = '#';
+                    if(i==0){
+                        start = pos;
+                    }
+                    if(i==3){
+                        count += 1;
+                        pos = start + 1;
+                        i = 0;
+                        continue;
+                    }
+                    pos++;
+                    i++;
+                }
+                else{
+                    pos += 1;
+                }
+            }
+            cout << count << endl;
+            T--;
+        }
+        return 0;
+    }
+    
+
+## [Best Compression Algorithms](http://hihocoder.com/contest/ntest2015septdev/problem/2)
+
+    #include <iostream>
+    #include <vector>
+    
+    using namespace std;
+    
+    inline bool is_char(const char c){
+        return ((c >= 'A' && c <= 'Z') || c=='(' || c== ')');
+    }
+    
+    int get_num(const string &str, int &i){
+        int len = str.size();
+        int num = 0;
+        for(;i<len;i++){
+            if(!is_char(str[i])){
+                num = num * 10 + (str[i] - '0');
+            }
+            else{
+                // 返回到最后一个数组的下标上面
+                i -= 1;
+                break;
+            }
+        }
+        return num;
+    }
+    
+    int main() {
+        int T;
+        cin >> T;
+        while(T){
+            string pattern;
+            cin >> pattern;
+            vector<char> stack;
+            int all_count = 0, stack_num = 0, i=0;
+            int len = pattern.size();
+            while(i<len){
+                if(pattern[i] == '('){
+                    stack.push_back(pattern[i]);
+                }
+                else if(pattern[i] == ')'){
+                    stack.pop_back();
+                    i += 1;
+                    if(i<len){
+                        if(!is_char(pattern[i])){
+                            int num = get_num(pattern, i);
+                            all_count += stack_num * num;
+                        }
+                    }
+                    else{
+                        all_count += stack_num;
+                    }
+                }
+                else if(!stack.empty()){
+                    if(!is_char(pattern[i])) stack_num += (get_num(pattern, i)-1);
+                    else stack_num += 1;
+                }
+                else{
+                    if(!is_char(pattern[i])) all_count += (get_num(pattern, i)-1);
+                    else all_count += 1;
+                }
+                i += 1;
+            }
+            cout << all_count << endl;
+            T--;
+        }
+        return 0;
+    }
+
+# 2017 实习
+
+    #include <iostream>
+    #include <map>
+    #include <set>
+    #include <vector>
+    #include <algorithm>
+    
+    using namespace std;
+    map<int, vector<int>> Situations = {{1, vector<int>{1, 4}},
+                                     {2, vector<int>{1,2,3,7}},
+                                     {3, vector<int>{5, 6}},
+                                     {4, vector<int>{1, 7, 0}},
+                                     {5, vector<int>{1, 3, 4, 5, 7, 9}},
+                                     {6, vector<int>{2}},
+                                     {7, vector<int>{1, 4, 7}}
+    };
+    int K, N;
+    
+    int get_count(const vector<int> &all, const vector<int> &less, const vector<int> &equal, int pos, bool big){
+        // 计算总数目
+        // cout << "____" << big << endl;
+        int count = 0;
+        if(big){
+            count = 1;
+            for(int j=pos;j<K;j++){
+                // cout << "***" <<all[j] << endl;
+                count *= all[j];
+            }
+            return count;
+        }
+        if(less[pos] > 0){
+            count = less[pos];
+            for(int j=pos+1;j<K;j++) count *= all[j];
+        }
+        if(equal[pos] == 1){
+            if (pos+1 < K){
+                count += get_count(all, less, equal, pos+1, false);
+            }
+        }
+        return count;
+    }
+    
+    
+    int main() {
+        int Cases;
+        cin >> Cases;
+        while(Cases){
+            cin >> K >> N;
+            string str;
+            getline(cin, str);
+            vector<vector<int>> K_nums(K, vector<int>(10, 1));
+            for(int i=0;i<K;i++){
+                getline(cin, str);
+                for(auto c: str){
+                    if(c > '0' && c < '8'){
+                        int up = c - '0';
+                        for(auto num: Situations[up]){
+                            K_nums[i][num] = 0;
+                        }
+                    }
+                }
+                // for(int s=0;s<10;s++)  cout << K_nums[i][s];
+            }
+            // 存放对应的数字
+            vector<int> target(K, 0);
+            int pos = K-1;
+            bool big = false;
+            while(N > 0){
+                if(pos >= 0) target[pos] = N%10;
+                else{
+                    big = true;
+                    break;
+                }
+                N /= 10;
+                pos -= 1;
+            }
+            // 统计每一位可以放的数字数目
+            // 统计每一位比给定值小的数字数目
+            // 统计每一位等于给定值的数字数目
+            vector<int> can_put(K, 0);
+            vector<int> less_than(K, 0);
+            vector<int> equal(K, 0);
+            bool can = true;
+            for(int i=0; i<K;i++){
+                for(int j=0; j<10;j++){
+                    if(K_nums[i][j]){
+                        can_put[i] ++;
+                        if(j < target[i]) less_than[i]++;
+                        if(j == target[i]) equal[i]++;
+                    }
+                }
+                if(can_put[i] == 0){
+                    can = false;
+                }
+                // cout << "AAA" << can_put[i] << endl;
+            }
+            int count = 0;
+            if(can){
+                count = get_count(can_put, less_than, equal, 0, big);
+            }
+    
+            cout << count;
+            if (Cases != 1){
+                cout << endl;
+            }
+            Cases--;
+        }
+        return 0;
+    }
+
 
