@@ -250,6 +250,26 @@ c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面
 ［[指向常量的指针](http://www.nowcoder.com/questionTerminal/524cd1e7926a44e38d9d7c3a3359b822)］  
 ［[指针改变常量的值](http://www.nowcoder.com/questionTerminal/36f828664d2d4d14a1428ae49f701f23)］  
 
+## 函数指针
+
+函数指针指向的`是函数而非对象`，和其他指针一样，函数指针指向某种特定类型。函数的类型由它的返回类型和形参类型共同决定，与函数名无关。
+
+当我们把函数名作为一个值使用时，该函数自动地转换为指针。还可以直接使用指向函数的指针调用该函数，无需提前解引用指针。
+
+指向不同函数类型的指针间不存在转换规则，但是可以为函数指针赋一个 nullptr 或者值为 0 的整型常量表达式。
+
+和数组类似，虽然不能定义函数类型的形参，但是形参可以是指向函数的指针，此时，形参看起来是函数类型，实际上却是当成指针使用。
+
+和数组类似，虽然不能直接返回一个函数，但是能返回指向函数类型的指针。这里，`必须把返回类型写成指针形式`，编译器不会自动地将函数返回类型当成对应的指针类型来处理。
+
+更多内容参见 [C++_Pointer.md](More/C++_Pointer.md)  
+
+［[函数指针定义](http://www.nowcoder.com/questionTerminal/960f8047a9ee4a6f8227768f3bc2734d)］  
+［[函数指针应用](http://www.nowcoder.com/questionTerminal/2c18fc889b924cc1b21ce6ec387fd853)］  
+［[成员函数的函数指针](http://www.nowcoder.com/questionTerminal/648f3eaef4234a34a5d5dbd268a77fa7)］  
+
+《C++ Primer》 P221
+
 # 函数
 
 ## 重载函数
@@ -274,25 +294,6 @@ c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面
 
 ［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］   
 ［[重载函数调用错误的](http://www.nowcoder.com/questionTerminal/a4311c49cc3843249e6b36e05b55edd4)］
-
-## 函数指针
-
-函数指针指向的`是函数而非对象`，和其他指针一样，函数指针指向某种特定类型。函数的类型由它的返回类型和形参类型共同决定，与函数名无关。
-
-当我们把函数名作为一个值使用时，该函数自动地转换为指针。还可以直接使用指向函数的指针调用该函数，无需提前解引用指针。
-
-指向不同函数类型的指针间不存在转换规则，但是可以为函数指针赋一个 nullptr 或者值为 0 的整型常量表达式。
-
-和数组类似，虽然不能定义函数类型的形参，但是形参可以是指向函数的指针，此时，形参看起来是函数类型，实际上却是当成指针使用。
-
-和数组类似，虽然不能直接返回一个函数，但是能返回指向函数类型的指针。这里，`必须把返回类型写成指针形式`，编译器不会自动地将函数返回类型当成对应的指针类型来处理。
-
-更多内容参见 [C++_FunctionPointer.md](More/C++_FunctionPointer.md)  
-
-［[函数指针定义](http://www.nowcoder.com/questionTerminal/960f8047a9ee4a6f8227768f3bc2734d)］  
-［[函数指针应用](http://www.nowcoder.com/questionTerminal/2c18fc889b924cc1b21ce6ec387fd853)］  
-
-《C++ Primer》 P221
 
 # 存储相关
 
@@ -320,6 +321,9 @@ struct 或者 union 成员对齐规则如下：
 
 a 占用 4 个bit，b占用 5 个bit，c占用 7 个bit，正好是两个字节。
 
+值得注意的是，enum 内部是 int 实现的，所以大小为 4。用 typedef 声明指针时，并不为指针分配空间。
+
+［[enum，typedef声明指针](http://www.nowcoder.com/questionTerminal/f12da06f01594f4d8d04a1f242399dc5)］  
 ［[结构体中 : 的含义](http://www.nowcoder.com/questionTerminal/f4e20747a2dd4649bac0c028daa234f4)］    
 
 参考  

@@ -117,26 +117,6 @@
             }
         };
 
-# 47 不用加减乘除做加法
-
-写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
-
-    class Solution {
-    public:
-        int Add(int num1, int num2)
-        {
-    		int sum, carry;
-            do{
-                sum = num1 ^ num2;
-                carry = (num1&num2) << 1;
-                
-                num1 = sum;
-                num2 = carry;
-            }while(num2!=0);
-            
-            return sum;
-        }
-    };
 
 # 40 数组中出现次数超过一半的数字
 
@@ -168,6 +148,219 @@
             }
             return 0;
         }
+    };
+
+## 46 求1+2+3+...+n
+
+求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+
+1. 利用逻辑与的短路特性
+
+        class Solution {
+        public:
+            int Sum_Solution(int n) {
+                int sum=n;
+                n && (sum += Sum_Solution(n-1));
+                return sum;
+            }
+        };
+
+2. 用函数指针做
+
+        class Solution {
+        public:
+            typedef int (*fun_ptr)(int n);
+        
+            int Sum_Solution(int n) {
+                return sum_recursive(n);
+            }
+            static int sum_recursive(int n){
+                fun_ptr f[2]={&Solution::sum_terminate, &Solution::sum_recursive};
+                return n+f[!!n](n-1);
+            }
+            static int sum_terminate(int n){
+                return 0;
+            }
+        };
+
+## 47 不用加减乘除做加法
+
+写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
+
+    class Solution {
+    public:
+        int Add(int num1, int num2)
+        {
+    		int sum, carry;
+            do{
+                sum = num1 ^ num2;
+                carry = (num1&num2) << 1;
+                
+                num1 = sum;
+                num2 = carry;
+            }while(num2!=0);
+            
+            return sum;
+        }
+    };
+    
+## 51 数组中重复的数字
+
+在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是重复的数字2或者3。
+
+    class Solution {
+    public:
+       bool duplicate(int numbers[], int length, int* duplication) {
+            int i=0;
+            while(i<length){
+                while(i!=numbers[i]){
+                    if(numbers[i] == numbers[numbers[i]]){
+                        *duplication = numbers[i];
+                        return true;
+                    }
+                    swap(numbers[i], numbers[numbers[i]]);
+                }
+                i++;
+            }
+            return false;
+        }
+    };    
+
+## 55 字符流中第一个不重复的字符
+
+请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。如果当前字符流没有存在出现一次的字符，返回#字符。
+
+    class Solution
+    {
+    public:
+        Solution():count(1){
+            memset(occurrence, 0, sizeof(occurrence));
+        }
+        //Insert one char from stringstream
+        void Insert(char ch)
+        {
+            if(occurrence[ch]==0){
+                occurrence[ch]=count;
+            }
+            else{
+                occurrence[ch]=-1;
+            }
+            count++;
+        }
+        //return the first appearence once char in current stringstream
+        char FirstAppearingOnce()
+        {
+            int first_occur = numeric_limits<int>::max();
+            char ch='#';
+            for(int i=0; i<256; i++){
+                if(occurrence[i]>0 && occurrence[i]<first_occur){
+                    first_occur = occurrence[i];
+                    ch = char(i);
+                }
+            }
+            return ch;
+        }
+    private:
+        int count;
+        int occurrence[256];
+    };
+
+## 56 链表中环的入口结点
+    
+一个链表中包含环，请找出该链表的环的入口结点。
+
+    class Solution {
+    public:
+        ListNode* EntryNodeOfLoop(ListNode* pHead)
+        {
+            bool hasCycle=false;
+    		ListNode* fast=pHead;
+            ListNode* slow=pHead;
+            while(fast && fast->next){
+                fast=fast->next->next;
+                slow=slow->next;
+                if(fast==slow){
+                    hasCycle=true;
+                    break;
+                }
+            }
+            if(!hasCycle){
+                return NULL;
+            }
+            slow = pHead;
+            while(slow!=fast){
+                slow=slow->next;
+                fast=fast->next;
+            }
+            return fast;
+        }
+    };
+    
+## 63 二叉搜索树的第k个结点
+
+给定一颗二叉搜索树，请找出其中的第k大的结点。
+
+    class Solution {
+    public:
+        TreeNode* KthNode(TreeNode* pRoot, unsigned int k)
+        {
+            unsigned int count = 0;
+            vector<TreeNode*> node_stack;
+            while(pRoot || !node_stack.empty()){
+                if(pRoot!=NULL){
+                    node_stack.push_back(pRoot);
+                    pRoot = pRoot->left;
+                }
+                else{
+                    TreeNode *tmp = node_stack.back();
+                    node_stack.pop_back();
+                    count += 1;
+                    if(count==k){
+                        return tmp;
+                    }
+                    pRoot = tmp->right;
+                }
+            }
+            return NULL;
+        }
+    };
+
+## 64 数据流中的中位数
+
+如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
+
+    class Solution {
+    public:
+        void Insert(int num)
+        {
+            count+=1;
+            // 元素个数是偶数时,将小顶堆堆顶放入大顶堆
+            if(count%2==0){
+                big_heap.push(num);
+                small_heap.push(big_heap.top());
+                big_heap.pop();
+            }
+            else{
+                small_heap.push(num);
+                big_heap.push(small_heap.top());
+                small_heap.pop();
+            }
+        }
+    
+        double GetMedian()
+        {
+            if(count&0x1){
+                return big_heap.top();
+            }
+            else{
+                return double((small_heap.top()+big_heap.top())/2.0);
+            }
+        }
+    private:
+        int count=0;
+        priority_queue<int, vector<int>, less<int>> big_heap;        // 左边一个大顶堆
+        priority_queue<int, vector<int>, greater<int>> small_heap;   // 右边一个小顶堆
+        // 大顶堆所有元素均小于等于小顶堆的所有元素.
     };
 
 

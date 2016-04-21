@@ -42,6 +42,8 @@
     printf("%p\n", &a);     //调用取地址运算符
     printf("%p\n", b);      //调用const取地址运算符
 
+［[声明对象的坑](http://www.nowcoder.com/questionTerminal/95581302aa714466bc766bc51b5524fc)］
+
 参考  
 Effective C++ 05  
 [C++编译器自动生成的函数](http://www.cnblogs.com/xiaoxinxd/archive/2013/01/09/effective_cpp_05.html)

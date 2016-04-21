@@ -226,6 +226,39 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
 
 按照`由内向外`的顺序阅读这条声明语句。看到 f1 有 形参列表，所以 f1 是个函数；f1 前面有*, 所以 f1 返回一个指针；进一步观察，指针的类型本身也包含形参列表，因此指针指向函数，该函数的返回类型是 int。
  
+# 类成员函数指针
+
+具体看下面例子：
+
+    #include <iostream>
+    using namespace std;
+    
+    class Container{
+    public:
+        void fun(){
+            cout << "member func" << endl;
+        }
+        static void static_fun(){
+            cout << "Static func" << endl;
+        };
+    };
+    
+    int main()
+    {
+        void (Container::*f)(); //指明是普通成员函数的指针
+        f = &Container::fun;
+        Container c;
+        (c.*f)();
+    
+        void (*s_f)();         //指明是静态成员函数的指针
+        s_f = &Container::static_fun;
+        s_f();
+        return 0;
+    }
+
+参考  
+[C++ 函数指针 & 类成员函数指针](http://blog.csdn.net/crayondeng/article/details/16868351)  
+
 # 野指针
 
 “野指针”不是NULL指针，是指向“垃圾”内存的指针。“野指针”的成因主要有三种：
