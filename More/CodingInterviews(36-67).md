@@ -226,6 +226,29 @@
         }
     };    
 
+## 52 构建乘积数组
+
+给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0] * A[1] * ... * A[i-1] * A[i+1] * ... * A[n-1]。不能使用除法。
+
+    class Solution {
+    public:
+        vector<int> multiply(const vector<int>& A) {
+            int len=A.size();
+            vector<int> ans(len, 1);
+    
+            // 计算 A[0]*A[1]*...*A[i-1]
+            for(int i=1; i<len; i++){
+                ans[i] = ans[i-1]*A[i-1];
+            }
+            int reverse=1;
+            for(int i=len-2;i>=0;i--){
+                reverse *= A[i+1];
+                ans[i] *= reverse;
+            }
+            return ans;
+        }
+    };
+
 ## 55 字符流中第一个不重复的字符
 
 请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。如果当前字符流没有存在出现一次的字符，返回#字符。
@@ -296,6 +319,43 @@
         }
     };
     
+## 60 把二叉树打印成多行
+
+从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+
+    class Solution {
+    public:
+        vector<vector<int> > Print(TreeNode* pRoot) {
+            vector<vector<int>> ans;
+            if(pRoot==NULL) return ans;
+    
+            deque<TreeNode*> nodes;
+            nodes.push_back(pRoot);
+    
+            while(!nodes.empty()){
+                int index = 0;
+                int level = nodes.size();
+                vector<int> vals;
+    
+                // 一次扫描一整个层次
+                while(index++<level){
+                    TreeNode *head = nodes.front();
+                    nodes.pop_front();
+                    vals.push_back(head->val);
+                    if(head->left!=NULL){
+                        nodes.push_back(head->left);
+                    }
+                    if(head->right!=NULL){
+                        nodes.push_back(head->right);
+                    }
+                }
+    
+                ans.push_back(vals);
+            }
+            return ans;
+        }
+    };
+
 ## 63 二叉搜索树的第k个结点
 
 给定一颗二叉搜索树，请找出其中的第k大的结点。
