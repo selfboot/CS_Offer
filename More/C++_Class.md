@@ -76,6 +76,7 @@ Effective C++ 05
 ［[构造函数中调用虚函数](http://www.nowcoder.com/questionTerminal/adb540e6222b401eb294b093b9fc6f0e)］  
 ［[构造函数调用次数](http://www.nowcoder.com/questionTerminal/bf70aadeb78949c2a61b1b561a0ee784)］  
 ［[析构的顺序](http://www.nowcoder.com/questionTerminal/ad46fe08266341b694d2ab8a78aa071f)］  
+［[析构函数调用delete](http://www.nowcoder.com/questionTerminal/2dc097fd196343f88d7efde6e9447f91)］  
 
 关于异常抛出问题：
 
@@ -148,9 +149,11 @@ More Effective C++ 条款 27
 1. 静态数据成员可以是不完全类型，甚至可以是它所属的类类型。而非静态数据成员则受到限制，只能声明成它所属类的指针或引用；
 2. 可以使用静态数据成员作为默认实参。普通数据成员不能作为默认实参，因为它的值本身属于对象的一部分。
 
-### 成员函数
+## 成员函数
 
+const函数与同名的非const函数是重载函数；const对象只能调用const函数 ，但是非const对象可以调用const函数。
 
+［[const函数的操作](http://www.nowcoder.com/questionTerminal/09ec766d373a43769603963664e231e7)］  
 
 # 继承
 
@@ -206,6 +209,11 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
 
 参考  
 [C++ 虚函数表解析](http://blog.csdn.net/haoel/article/details/1948051)
+
+# 抽象类
+
+
+［[抽象类对象指针](https://www.nowcoder.com/questionTerminal/306811e56957419181789af6787e3d54)］  
 
 # 友元
 

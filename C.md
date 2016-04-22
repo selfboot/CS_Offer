@@ -42,6 +42,7 @@
 
     当有如下调用时 next = min (x + y, foo (z)); 宏体被展开成next = ((x + y) < (foo (z)) ? (x + y) : (foo (z))); 可以看到，foo(z)被重复调用了两次，做了重复计算。更严重的是，如果foo是不可重入的(foo内修改了全局或静态变量)，程序会产生逻辑错误。所以，**尽量不要在宏参数中传入函数调用**。
 
+［[宏定义中存在依赖时展开问题](http://www.nowcoder.com/questionTerminal/c33295e54974412095ebadab0f5bb820)］  
 
 参考  
 [C语言宏的特殊用法和几个坑](http://hbprotoss.github.io/posts/cyu-yan-hong-de-te-shu-yong-fa-he-ji-ge-keng.html)  
