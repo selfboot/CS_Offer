@@ -207,55 +207,6 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
 
 ［[虚函数地址分配](http://www.nowcoder.com/questionTerminal/d50dbed9a0f44e8092f86927cb7c259f)］  
 ［[虚函数表被置为0](http://www.nowcoder.com/questionTerminal/97c2bf56369845528a109bec8cfb3556)］  
-
-## 动态绑定、静态绑定
-
-首先看四个概念：
-
-* 对象的静态类型：对象在声明时采用的类型，是在编译期确定的。
-* 对象的动态类型：目前所指对象的类型，是在运行期决定的。对象的动态类型可以更改，但是静态类型无法更改。
-* 静态绑定：绑定的是对象的静态类型，某些特性依赖于对象的静态类型，发生在编译期。
-* 动态绑定：绑定的是对象的动态类型，某些特性（比如多态）依赖于对象的动态类型，发生在运行期。
-
-假设类B是一个基类，类C继承B，类D继承B，那么：
-
-    D* pD = new D();//pD的静态类型是它声明的类型D*，动态类型也是D*
-    B* pB = pD;     //pB的静态类型是它声明的类型B*，动态类型是pB所指向的对象pD的类型D*
-    C* pC = new C();  
-    pB = pC;        //pB的动态类型是可以更改的，现在它的动态类型是C*
-
-只有虚函数才使用的是动态绑定，其他的全部是静态绑定。当缺省参数和虚函数一起出现的时候情况有点复杂，极易出错。虚函数是动态绑定的，但是为了执行效率，**缺省参数是静态绑定的**。
-
-开下面具体的例子：
-
-    class B
-    {
-    public:
-        virtual void vfun(int i = 10){
-            cout << "B:vfun " << i << endl;
-        }
-    };
-    
-    class D : public B
-    {
-    public:
-        virtual void vfun(int i = 20){
-            cout << "D:vfun " << i << endl;
-        }
-    };
-    
-    int main()
-    {
-        D* pD = new D();
-        B* pB = pD;
-        pD->vfun();     // D:vfun 20
-        pB->vfun();     // D:vfun 10
-    }
-
-pD->vfun()和pB->vfun()调用都是函数D::vfun()，但是缺省参数是静态绑定的，所以 pD->vfun() 时，pD的静态类型是D*，所以它的缺省参数应该是20；同理，pB->vfun()的缺省参数应该是10。
-
-不是很容易接受是吧，所以`绝不要重新定义继承而来的缺省参数`。
-
 ［[缺省参数是静态绑定的](http://www.nowcoder.com/questionTerminal/e4d5fe27a85d43548171f32b3bc8501a)］  
 
 参考  

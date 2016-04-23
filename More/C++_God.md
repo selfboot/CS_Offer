@@ -1,0 +1,86 @@
+# 深处的秘密
+
+## 奇怪的多态？
+
+下面多态函数调用的输出？
+
+    class B
+    {
+    public:
+        virtual void vfun(int i = 10){
+            cout << "B:vfun " << i << endl;
+        }
+    };
+    
+    class D : public B
+    {
+    public:
+        virtual void vfun(int i = 20){
+            cout << "D:vfun " << i << endl;
+        }
+    };
+    
+    
+    int main()
+    {
+        D* pD = new D();
+        B* pB = pD;
+        pD->vfun();
+        pB->vfun();
+    }
+
+为了解释清楚，先来看四个概念：
+
+* 对象的静态类型：对象在声明时采用的类型，是在编译期确定的。
+* 对象的动态类型：目前所指对象的类型，是在运行期决定的。对象的动态类型可以更改，但是静态类型无法更改。
+* 静态绑定：绑定的是对象的静态类型，某些特性依赖于对象的静态类型，发生在编译期。
+* 动态绑定：绑定的是对象的动态类型，某些特性（比如多态）依赖于对象的动态类型，发生在运行期。
+
+假设类B是一个基类，类C继承B，类D继承B，那么：
+
+    D* pD = new D();//pD的静态类型是它声明的类型D*，动态类型也是D*
+    B* pB = pD;     //pB的静态类型是它声明的类型B*，动态类型是pB所指向的对象pD的类型D*
+    C* pC = new C();  
+    pB = pC;        //pB的动态类型是可以更改的，现在它的动态类型是C*
+
+只有虚函数才使用的是动态绑定，其他的全部是静态绑定。当缺省参数和虚函数一起出现的时候情况有点复杂，极易出错。虚函数是动态绑定的，但是为了执行效率，**缺省参数是静态绑定的**。
+
+所以对于上面的例子，pD->vfun()和pB->vfun()调用都是函数D::vfun()，但是缺省参数是静态绑定的，所以 pD->vfun() 时，pD的静态类型是D*，所以它的缺省参数应该是20；同理，pB->vfun()的缺省参数应该是10。
+
+不是很容易接受是吧，所以`绝不要重新定义继承而来的缺省参数`。
+
+# 该死的未定义行为
+
+## abs 并不绝对
+
+下面代码：
+
+    int a = 0x80000000;
+    int b = 0x7fffffff;
+    cout << a << ", " << b << endl;           // -2147483648, 2147483647
+    cout << abs(a) << ", " << abs(b) << endl; // -2147483648, 2147483647
+
+考虑 int 型来说负数的范围比正数大一个，比如32位int，可以表示范围为 -2^31 ~ 2^31 -1。所以abs(-2^31 )并不能表示为2^31 。
+
+C++ 对于这种abs之后超出表示类型的行为`没有定义`，不同编译器有不同的实现，一般返回原值。所以 int 函数原型为
+
+    int abs (int n); 
+
+返回值是int，而不是 unsigned int。
+
+> If the result cannot be represented by the returned type (such as abs(INT_MIN) in an implementation with two's complement signed values), it causes undefined behavior.
+
+参考：[Cplusplus: abs](http://www.cplusplus.com/reference/cstdlib/abs/?kw=abs)
+
+# 语言的细节
+
+## 字符数组、常量字符串
+
+    char a[] = "abcde";
+    char arr[] = {4, 3, 9, 9, 2, 0, 1, 5};
+    cout << sizeof(a)<<endl;        //6
+    cout << sizeof(arr) << endl;    //8
+    cout << strlen(a);              //5
+
+字符串常量后面会有 '\0'，sizeof计算时会加上 '\0' 后计算长度。'\0' 的ASCII码值为0，strlen 计算时遇到 '\0'结束。
+
