@@ -358,7 +358,34 @@
 
 ## 62 按之字形顺序打印二叉树
 
+请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
 
+    class Solution {
+    public:
+        vector<vector<int>> Print(TreeNode* pRoot) {
+            if(pRoot==NULL){
+                return {};
+            }
+            vector<vector<int>> ans;
+            deque<TreeNode*> levels{pRoot};
+            bool order=true;
+            while(!levels.empty()){
+                vector<int> cur_level;
+                int l_size = levels.size();
+                for(int i=0;i<l_size;i++){
+                    TreeNode* cur_node = levels.front();
+                    levels.pop_front();
+                    cur_level.push_back(cur_node->val);
+                    if(cur_node->left)  levels.push_back(cur_node->left);
+                    if(cur_node->right) levels.push_back(cur_node->right);
+                }
+                if(!order)  reverse(cur_level.begin(),cur_level.end());
+                ans.push_back(cur_level);
+                order = !order;
+            }
+            return ans;
+        }
+    };
 
 ## 63 二叉搜索树的第k个结点
 
