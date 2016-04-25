@@ -195,8 +195,15 @@ C 程序由下列几部分组成：
 
 
 
-##  经典布局 和 灵活布局
-##  可执行的链接格式 ELF
+##  可执行链接格式 ELF
+
+ELF(Executable and Linking Format)是一种对象文件的格式，用于定义不同类型的对象文件(Object files)中都放了什么东西、以及都以什么样的格式去放这些东西。它最早在 System V 系统上出现后，被 xNIX 世界所广泛接受，作为缺省的二进制文件格式来使用。
+
+ELF文件有三种类型： 
+
+* 可重定位文件：也就是通常称的目标文件，后缀为.o。
+* 共享文件：也就是通常称的库文件，后缀为.so。
+* 可执行文件：
 
 
 ## 内存泄露检测
@@ -360,16 +367,14 @@ MBR 中的 Boot Loader 程序被读入内存（0x7C00）后，首先将自身复
 * 异常
 * 外围设备的中断
 
-# 作业调度
-
-
-周转时间 = 作业完成时间-作业提交时间
-响应比 =（作业等待时间+作业执行时间）/作业执行时间
-
 
 [响应比高者优先调度](http://www.nowcoder.com/questionTerminal/9a714e7cb8fe4d158aa230ec7277e6a1)
 
 
+# 更多阅读
+
+《现代操作系统》  
+[可执行链接格式 ELF](http://www.xfocus.net/articles/200109/260.html?cm_mc_uid=21124395775614576180143&cm_mc_sid_50200000=1461553081)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_1.jpg
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_2.jpg

@@ -20,7 +20,6 @@
         }
     };
     
-    
     int main()
     {
         D* pD = new D();
@@ -124,4 +123,11 @@ C++ 对于这种abs之后超出表示类型的行为`没有定义`，不同编�
     cout << strlen(a);              //5
 
 字符串常量后面会有 '\0'，sizeof计算时会加上 '\0' 后计算长度。'\0' 的ASCII码值为0，strlen 计算时遇到 '\0'结束。
+
+
+
+# 更多阅读
+
+[What are the common undefined/unspecified behavior for C that you run into?](http://stackoverflow.com/questions/98340/what-are-the-common-undefined-unspecified-behavior-for-c-that-you-run-into)   
+
 
