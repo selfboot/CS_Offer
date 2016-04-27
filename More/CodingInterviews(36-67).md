@@ -356,7 +356,7 @@
         }
     };
 
-## 62 按之字形顺序打印二叉树
+## 61 按之字形顺序打印二叉树
 
 请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
 
@@ -384,6 +384,50 @@
                 order = !order;
             }
             return ans;
+        }
+    };
+
+## 62 序列化二叉树
+
+请实现两个函数，分别用来序列化和反序列化二叉树
+
+    class Solution {
+    public:
+        char* Serialize(TreeNode *root) {
+            ostringstream out;
+            serialize(root, out);
+            const char *str = out.str().c_str();
+            char *ans=new char[strlen(str)];
+            strcpy(ans, str);
+            return ans;
+        }
+        TreeNode* Deserialize(char *str) {
+            string tmp(str);
+            istringstream in(tmp);
+            return deserialize(in);
+        }
+    private:
+        void serialize(TreeNode *root, ostringstream &out){
+            if(root!=NULL){
+                out << root->val << " ";
+                serialize(root->left, out);
+                serialize(root->right, out);
+            }
+            else{
+                out << "# ";
+            }
+        }
+    
+        TreeNode* deserialize(istringstream &in){
+            string val;
+            in >> val;
+            if(val=="#"){
+                return NULL;
+            }
+            TreeNode *root = new TreeNode(stoi(val));
+            root->left = deserialize(in);
+            root->right = deserialize(in);
+            return root;
         }
     };
 
