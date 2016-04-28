@@ -130,6 +130,38 @@
         stack<int> stack2;  // pop
     };
 
+## 8 旋转数组的最小数字
+
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减序列的一个旋转，输出旋转数组的最小元素。例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。
+
+    class Solution {
+    public:
+        int minNumberInRotateArray(vector<int> rotateArray) {
+            if(rotateArray.empty()){
+                return 0;
+            }
+            int left=0;
+            int right=rotateArray.size()-1;
+            while(left<right){
+                // When there is no rotate, just return self.nums[start]
+                if(rotateArray[left] < rotateArray[right])   return rotateArray[left];
+                int mid = left + (right-left)/2;
+                if(rotateArray[left] < rotateArray[mid]){
+                    left = mid+1;
+                }
+                else if(rotateArray[left] > rotateArray[mid]){
+                    right = mid;
+                }
+                // Can't make sure whether left is in the left part or not.
+                // Just move to right for 1 step.
+                else{
+                    left += 1;
+                }
+            }
+            return rotateArray[left];
+        }
+    };
+
 ## 11 数值的整数次方
 
 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
@@ -210,6 +242,65 @@
         }
     };
 
+## 17 合并两个排序的链表
+
+输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+
+递归法
+
+    class Solution {
+    public:
+        ListNode* Merge(ListNode* l1, ListNode* l2)
+        {
+            if(l1==NULL)    return l2;
+            if(l2==NULL)    return l1;
+    
+            ListNode *head = NULL;
+            if(l1->val <= l2->val){
+                head = l1;
+                head->next = Merge(l1->next, l2);
+            }
+            else{
+                head = l2;
+                head->next = Merge(l1, l2->next);
+            }
+            return head;
+        }
+    };
+
+迭代法（注意使用指向头指针的指针！！！）
+
+    class Solution {
+    public:
+        ListNode* Merge(ListNode* l1, ListNode* l2)
+    	{
+            ListNode *pre_head = new ListNode(0);
+            ListNode *cur = pre_head;
+            while(l1!=NULL && l2!=NULL){
+                if(l1->val <= l2->val){
+                    cur->next = l1; // 这里是关键
+                    l1 = l1->next;
+                }
+                else{
+                    cur->next = l2;
+                    l2 = l2->next;
+                }
+                cur = cur->next;    // 更新指针
+            }
+            while(l1!=NULL){
+                cur->next = l1;
+                l1 = l1->next;
+                cur = cur->next;
+            }
+            while(l2!=NULL){
+                cur->next = l2;
+                l2 = l2->next;
+                cur = cur->next;
+            }
+            return pre_head->next;
+        }
+    };
+
 ## 18 树的子结构
 
 输入两颗二叉树A，B，判断B是不是A的子结构。
@@ -246,7 +337,7 @@
         }
     };
 
-## 20 二叉树的镜像
+## 19 二叉树的镜像
 
 操作给定的二叉树，将其变换为源二叉树的镜像。
 
@@ -261,6 +352,54 @@
             pRoot->right = tmp;
             Mirror(pRoot->left);
             Mirror(pRoot->right);
+        }
+    };
+
+## 20 顺时针打印矩阵
+
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16. 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+
+    class Solution {
+    public:
+        vector<int> printMatrix(vector<vector<int> > matrix) {
+            if(matrix.empty() || matrix[0].empty()){
+                return vector<int>{};
+            }
+            int rows = matrix.size();
+            int cols = matrix[0].size();
+            vector<int> ans;
+    
+            int circle_start = 0;
+            while(circle_start*2 < rows && circle_start*2<cols){
+                int end_x = cols - 1 - circle_start;
+                int end_y = rows - 1 - circle_start;
+    
+                // 从左向右打印
+                for(int i=circle_start;i<=end_x;i++){
+                    ans.push_back(matrix[circle_start][i]);
+                }
+    
+                // 从上往下打印(保证高度至少为2)
+                for(int i=circle_start+1;i<=end_y;i++){
+                    ans.push_back(matrix[i][end_x]);
+                }
+    
+                // 从右往左打印(保证宽度, 高度至少为2)
+                if(circle_start < end_y){
+                    for(int i=end_x-1; i>=circle_start;i--){
+                        ans.push_back(matrix[end_y][i]);
+                    }
+                }
+    
+                // 从下往上打印(保证宽度, 高度至少为2)
+                if(circle_start < end_x){
+                    for(int i=end_y-1; i> circle_start; i--){
+                        ans.push_back(matrix[i][circle_start]);
+                    }
+                }
+                circle_start += 1;
+            }
+            return ans;
         }
     };
 
@@ -556,6 +695,38 @@
         }
     };
 
+## 29 数组中出现次数超过一半的数字
+
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+
+    class Solution {
+    public:
+        int MoreThanHalfNum_Solution(vector<int> numbers) {
+            int count = 0, num = 0, size = numbers.size();
+            for(int i=0; i<size; i++){
+                if (count == 0){
+                    num = numbers[i];
+                }
+                if (num == numbers[i]){
+                    count += 1;
+                }
+                else{
+                    count -= 1;
+                }
+            }
+            int num_cnt = 0;
+            for(int i=0; i<size; i++){
+                if(num == numbers[i]){
+                    num_cnt += 1;
+                }
+            }
+            if(num_cnt > size / 2){
+                return num;
+            }
+            return 0;
+        }
+    };
+
 ## 30 最小的K个数
 
 输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8 这8个数字，则最小的4个数字是1,2,3,4。
@@ -589,7 +760,60 @@
         }
     };
 
-# 33 把数组排成最小的数
+## 31 连续子数组的最大和
+
+HZ偶尔会拿些专业问题来忽悠那些非计算机专业的同学。今天测试组开完会后,他又发话了:在古老的一维模式识别中,常常需要计算连续子向量的最大和,当向量全为正数的时候,问题很好解决。但是,如果向量中包含负数,是否应该包含某个负数,并期望旁边的正数会弥补它呢？例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。你会不会被他忽悠住？
+
+    class Solution {
+    public:
+        int FindGreatestSumOfSubArray(vector<int> array) {
+            if(array.empty()){
+                return 0;
+            }
+        	int length = array.size();
+            int pre_sum = array[0];
+            int cur_sum=0;
+            int max_sum = array[0];
+            for(int i=1;i<length;i++){
+                cur_sum = max(array[i], pre_sum+array[i]);
+                max_sum = max(cur_sum, max_sum);
+                pre_sum = cur_sum;
+            }
+            return max_sum;
+        }
+    };
+
+## 32 从1到n整数中1出现的次数
+
+求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,但是对于后面问题他就没辙了。ACMer希望你们帮帮他,并把问题更加普遍化,可以很快的求出任意非负整数区间中1出现的次数。
+
+    class Solution {
+    public:
+        int NumberOf1Between1AndN_Solution(int n)
+        {
+            if(n<=0) return 0;
+            int count = 1;
+            while(n){
+                if(n<10){
+                    break;
+                }
+                int digit = n % 10;
+                n /= 10;
+                count += n;
+                if(digit == 0)	count -= 1;
+                count += NumberOf1Between1AndN_Solution(n-1) * 10;
+    
+                // 最后一行中数组1出现的次数
+                while(n){
+                    if(n%10==1) count += digit+1;
+                    n /= 10;
+                }
+            }
+            return count;
+        }
+    };
+
+## 33 把数组排成最小的数
 
 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
 

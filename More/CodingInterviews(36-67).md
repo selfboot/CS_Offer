@@ -54,14 +54,6 @@
 
 输入两个链表，找出它们的第一个公共结点。
 
-    /*
-    struct ListNode {
-    	int val;
-    	struct ListNode *next;
-    	ListNode(int x) :
-    			val(x), next(NULL) {
-    	}
-    };*/
     class Solution {
     public:
         ListNode* FindFirstCommonNode( ListNode *pHead1, ListNode *pHead2) {
@@ -117,36 +109,138 @@
             }
         };
 
+# 40 数组中只出现一次的数字
 
-# 40 数组中出现次数超过一半的数字
-
-数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
 
     class Solution {
     public:
-        int MoreThanHalfNum_Solution(vector<int> numbers) {
-            int count = 0, num = 0, size = numbers.size();
-            for(int i=0; i<size; i++){
-                if (count == 0){
-                    num = numbers[i];
-                }
-                if (num == numbers[i]){
-                    count += 1;
+        void FindNumsAppearOnce(vector<int> data,int* num1,int *num2) {
+            if(data.size()<2){
+                *num1 = 0, *num2 = 0;
+                return;
+            }
+    		int xor_nums = 0;
+            for(int &n : data){
+                xor_nums ^= n;
+            }
+            xor_nums &= -xor_nums;
+            *num1 = 0, *num2 = 0;
+            for(int &n : data){
+                if(n & xor_nums){
+                    *num1 ^= n;
                 }
                 else{
-                    count -= 1;
+                    *num2 ^= n;
                 }
             }
-            int num_cnt = 0;
-            for(int i=0; i<size; i++){
-                if(num == numbers[i]){
-                    num_cnt += 1;
+            return;
+        }
+    };
+
+## 41 和为S的连续正数序列
+
+输入一个正数 s，打印出所有和为 s 的连续正数序列（至少有两个数字）。例如输入15，由于 1+2+3+4+5=4+5+6=7+8=15，所以结果打印出3个连续序列1～5、4～6和7～8。
+
+    class Solution {
+    public:
+        vector<vector<int> > FindContinuousSequence(int sum) {
+            vector<vector<int>> ans;
+            if(sum < 3){
+                return ans;
+            }
+            int small = 1;
+            int big = 2;
+            int add = small + big;
+            int mid = (sum+1)/2;
+            while(small < mid){
+                if(add == sum){
+                    vector<int> one;
+                    get_vector(small, big, one);
+                    ans.push_back(one);
+                }
+                while (add > sum && small < mid){
+                    add -= small;
+                    small += 1;
+                    if(add == sum){
+                        vector<int> one;
+                        get_vector(small, big, one);
+                        ans.push_back(one);
+                    }
+                }
+                big += 1;
+                add += big;
+            }
+            return ans;
+        }
+    
+    private:
+        void get_vector(int small, int big, vector<int> &arr){
+            for(int i=small; i<=big; i++){
+                arr.push_back(i);
+            }
+        }
+    };
+
+## 42（1）翻转单词顺序列
+
+输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符合和普通字母一样处理。例如输入字符串"I am a student"，则输出 "Student. a am I"。
+
+    class Solution {
+    public:
+        string ReverseSentence(string str) {
+            reverse(str.begin(), str.end());
+            string ans="";
+            int start=0;
+            int i=0;
+            while(i<str.size()){
+                while(i<str.size() && str[i] != ' '){
+                    i++;
+                }
+                string word = str.substr(start, i-start);
+                reverse(word.begin(), word.end());
+                ans += word;
+                while(i<str.size() && str[i]==' '){
+                    start = ++i;
+                    ans += ' ';
                 }
             }
-            if(num_cnt > size / 2){
-                return num;
-            }
-            return 0;
+            return ans;
+        }
+    };
+
+## 42（2）左旋转字符串
+
+字符串的坐旋转操作是把字符串前面的若干个字符移到字符串的尾部。请定义一个函数实现字符串坐旋转操作的功能。比如输入字符串"abcdefg"和2，该函数返回左旋转2位得到的结果"cdefgab"。
+
+笨方法
+
+    class Solution {
+    public:
+        string LeftRotateString(string str, int n) {
+            if(n<=0)    return str;
+            if(str.size()==0)   return string();
+            n %= str.size();
+            string pre_half = str.substr(0, n);
+            reverse(pre_half.begin(), pre_half.end());
+            string post_half = str.substr(n, str.size()-n);
+            reverse(post_half.begin(), post_half.end());
+            string ans = pre_half + post_half;
+            reverse(ans.begin(), ans.end());
+            return ans;
+        }
+    };
+
+`机智的方法`
+
+    class Solution {
+    public:
+        string LeftRotateString(string str, int n) {
+            int len = str.length();
+            if(len == 0) return "";
+            n = n % len;
+            str += str;
+            return str.substr(n, len);
         }
     };
 

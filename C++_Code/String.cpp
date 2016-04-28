@@ -54,15 +54,28 @@ String::String(const String &str)
     strcpy(m_data,str.m_data);
 }
 
-//赋值函数
+//赋值函数，异常安全的构造函数
+String& String::operator =(const String &str)
+{
+    if(this != &str){
+        String tmp(str);
+
+        char* data = tmp.m_data;
+        tmp.m_data = m_data;
+        m_data = data;
+    }
+    return *this;
+}
+
+/*
 String& String::operator =(const String &str)
 {
     //输入参数为const型
     if (this==&str) //检查自赋值
         return *this;
-    int length=strlen(str.m_data);
     delete [] m_data;//释放原来的内存资源
-    m_data= new char[length+1];
+    m_data = NULL;
+    m_data = new char[strlen(str.m_data)+1];
     if (m_data==NULL)
     {//内存是否申请成功
         std::cout<<"申请内存失败！"<<std::endl;
@@ -71,15 +84,10 @@ String& String::operator =(const String &str)
     strcpy(m_data,str.m_data);
     return *this;//返回本对象的引用
 }
+*/
 
 //析构函数
 String::~String()
 {
     delete [] m_data;
-}
-
-int main(){
-    String a;
-    String b("abc");
-    return 0;
 }
