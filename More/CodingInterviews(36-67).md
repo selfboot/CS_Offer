@@ -244,6 +244,47 @@
         }
     };
 
+## 44 扑克牌顺子
+
+从扑克牌中随机抽取 5 张牌，判断是不是一个顺子，即这5张牌是不是连续的。2～10 为数字本身，A 为 1，J 为 11，Q 为12，K 为13，而大、小王可以看成任意数字。
+
+    class Solution {
+    public:
+        bool IsContinuous( vector<int> numbers ) {
+            if(numbers.size()!=5)   return false;
+            sort(numbers.begin(), numbers.end());
+            int zero_cnt = 0;
+            for(auto &n: numbers){
+                if(n == 0)  zero_cnt += 1;
+                else        break;
+            }
+            int gap_cnt = 0;
+            for(int i=zero_cnt+1;i<5;i++){
+                if(numbers[i]==numbers[i-1] && numbers[i]!=0)
+                    return false;
+                gap_cnt += numbers[i] - numbers[i-1] - 1;
+            }
+            return zero_cnt >= gap_cnt;
+        }
+    };
+
+## 45 圆圈中最后剩下的数
+
+0,1,...,n-1 这 n 个数字排成一个圆圈，从数字0开始每次从这个圆圈里删除第 m 个数字。求出这个圆圈里剩下的最后一个数字。
+
+    class Solution {
+    public:
+        int LastRemaining_Solution(unsigned int n, unsigned int m)
+        {
+            if(n<1 || m<1)  return -1;
+            int remain = 0;
+            for(int i=2;i<=n;i++){
+                remain = (remain + m) % i;
+            }
+            return remain;
+        }
+    };
+
 ## 46 求1+2+3+...+n
 
 求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。

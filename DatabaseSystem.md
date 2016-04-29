@@ -91,8 +91,20 @@ GroupBy语句从英文的字面意义上理解就是“根据(by)一定的规则
 
 ［[Group By子句作用](http://www.nowcoder.com/questionTerminal/a1403ec16dc245ebbed0f88f7479dd92)］  
 
+标准的 SQL 的解析顺序为: 
+
+1. FROM 子句, 组装来自不同数据源的数据
+2. WHERE 子句, 基于指定的条件对记录进行筛选
+3. GROUP BY 子句, 将数据划分为多个分组
+4. 使用聚合函数进行计算
+5. 使用 HAVING 子句筛选分组
+6. 计算Select所有的表达式
+7. 使用 ORDER BY 对结果集进行排序
+
+［[分组后满足指定条件的查询](http://www.nowcoder.com/questionTerminal/a42d4a67d0b0471a8dfd7e9b3892afee)］  
 
 ## 数据库的修改
+
 
 ## 视图
 
@@ -304,6 +316,8 @@ SQL 中用 create view 命令来定义视图，为了定义视图，必须给它
 
 ［[候选关键字](http://www.nowcoder.com/questionTerminal/088587c25467478884128c0cb31eeeb8)］  
 ［[主键、外键](http://www.nowcoder.com/questionTerminal/70100692594e4130a6b3efe344ef3874)］  
+
+# Mysql 常用命令
 
 
 # 高级主题
