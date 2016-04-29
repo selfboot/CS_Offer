@@ -453,7 +453,57 @@
             return fast;
         }
     };
-    
+
+## 58 二叉树的下一个结点
+
+给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+
+    class Solution {
+    public:
+        TreeLinkNode* GetNext(TreeLinkNode* pNode)
+        {
+            if(pNode==NULL) return NULL;
+            if(pNode->right!=NULL){
+                TreeLinkNode *right_node = pNode->right;
+                while(right_node->left!=NULL){
+                    right_node = right_node->left;
+                }
+                return right_node;
+            }
+            else{
+                TreeLinkNode* parent_node = pNode->next;
+                TreeLinkNode* cur_node = pNode;
+                while(parent_node!=NULL && parent_node->left != cur_node){
+                    cur_node = parent_node;
+                    parent_node = parent_node->next;
+                }
+                return parent_node;
+            }
+        }
+    };
+
+## 59 对称的二叉树
+
+请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+
+    class Solution {
+    public:
+        bool isSymmetrical(TreeNode* pRoot)
+        {
+            return  isSym(pRoot, pRoot);
+        }
+        bool isSym(TreeNode* l, TreeNode* r){
+            if(l == NULL || r == NULL){
+                return l==r;
+            }
+            if(l->val != r->val){
+                return false;
+            }
+            
+            return isSym(l->left, r->right) && isSym(l->right, r->left);
+        }
+    };
+
 ## 60 把二叉树打印成多行
 
 从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
@@ -633,4 +683,120 @@
         // 大顶堆所有元素均小于等于小顶堆的所有元素.
     };
 
+## 65 滑动窗口的最大值
+
+给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个： [2,3,4], [3,4,2], [4,2,6], [2,6,2], [6,2,5], [2,5,1]。
+
+    class Solution {
+    public:
+        vector<int> maxInWindows(const vector<int>& num, unsigned int size)
+        {
+            vector<int> ans;
+            if(num.size()<size || size<=0) return ans;
+            deque<int> may_value;
+            for (int i = 0; i < size; i++) {
+                while(!may_value.empty() && num[may_value.back()]<=num[i])
+                    may_value.pop_back();
+                may_value.push_back(i);
+            }
+            ans.push_back(num[may_value.front()]);
+            for(int i=size; i<num.size(); i++){
+                while(!may_value.empty() && num[may_value.back()] <= num[i])
+                    may_value.pop_back();
+                // 可能需要删除已经不在滑动窗口中的队列头
+                if(!may_value.empty() && may_value.front() <= i-size)
+                    may_value.pop_front();
+                may_value.push_back(i);
+                ans.push_back(num[may_value.front()]);
+            }
+            return ans;
+        }
+    };
+
+## 66 矩阵中的路径
+
+请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。 例如 a b c e s f c s a d e e 矩阵中包含一条字符串"bcced"的路径，但是矩阵中不包含"abcb"路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。
+
+    class Solution {
+    public:
+        bool helper(char *matrix, int rows, int cols, int r, int l, char *str, int length, vector<vector<bool>> &visited){
+            if(str[length] == '\0') return true;
+            bool has_path = false;
+            if(r>=0 && r <rows && l>=0 && l<cols && matrix[r*cols+l]==str[length] && !visited[r][l]){
+                visited[r][l]= true;
+                has_path = helper(matrix, rows, cols, r-1, l, str, length+1, visited) ||
+                           helper(matrix, rows, cols, r+1, l, str, length+1, visited) ||
+                           helper(matrix, rows, cols, r, l+1, str, length+1, visited) ||
+                           helper(matrix, rows, cols, r, l-1, str, length+1, visited);
+                if(!has_path){
+                    visited[r][l]=false;
+                }
+            }
+            return has_path;
+        }
+    
+        bool hasPath(char* matrix, int rows, int cols, char* str)
+        {
+            if(matrix==NULL || rows <1 || cols < 1 || str==NULL){
+                return false;
+            }
+            vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+            for(int i=0;i<rows;i++){
+                for(int j=0;j<cols;j++){
+                    if(helper(matrix, rows, cols, i, j, str, 0, visited)){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    };
+
+## 67 机器人的运动范围
+
+地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+
+    class Solution {
+    public:
+        int digit_sum(int num){
+            int sum=0;
+            while(num){
+                sum += num%10;
+                num /= 10;
+            }
+            return sum;
+        }
+    
+        void check_sum(int threshold, int rows, int cols, vector<vector<bool>> &can_visit){
+            for(int i=0;i<rows;i++){
+                for(int j=0;j<cols;j++){
+                    if(digit_sum(i)+digit_sum(j) > threshold){
+                        can_visit[i][j] = false;
+                    }
+                }
+            }
+        }
+    
+        void moving_helper(int rows, int cols, int r, int l, vector<vector<bool>> &visited, const vector<vector<bool>> &can_visit, int &count)
+        {
+            if(r>=0 && r<rows && l>=0 && l<cols && can_visit[r][l] && !visited[r][l]){
+                count += 1;
+                visited[r][l]=true;
+                moving_helper(rows, cols, r-1, l, visited, can_visit, count);
+                moving_helper(rows, cols, r+1, l, visited, can_visit, count);
+                moving_helper(rows, cols, r, l-1, visited, can_visit, count);
+                moving_helper(rows, cols, r, l+1, visited, can_visit, count);
+            }
+        }
+        int movingCount(int threshold, int rows, int cols)
+        {
+            vector<vector<bool>> can_visit(rows, vector<bool>(cols, true));
+            vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+            check_sum(threshold, rows, cols, can_visit);
+            int count = 0;
+            moving_helper(rows, cols, 0, 0, visited, can_visit, count);
+            return count;
+        }
+    
+    };
 
