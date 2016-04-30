@@ -454,6 +454,31 @@
         }
     };
 
+## 57 删除链表中重复的结点
+
+在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+
+    class Solution {
+    public:
+        ListNode* deleteDuplication(ListNode* pHead)
+        {
+            if(pHead==NULL || pHead->next==NULL){
+                return pHead;
+            }
+            if(pHead->val==pHead->next->val){
+                ListNode* cur_node = pHead->next->next;
+                while(cur_node && cur_node->val==pHead->val){
+                    cur_node = cur_node->next;
+                }
+                return deleteDuplication(cur_node);
+            }
+            else{
+                pHead->next = deleteDuplication(pHead->next);
+                return pHead;
+            }
+        }
+    };
+
 ## 58 二叉树的下一个结点
 
 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
