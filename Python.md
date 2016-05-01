@@ -264,7 +264,9 @@ Python使用lambda关键字创造匿名函数。所谓匿名，意即不再使�
 
 ## 排序函数
 
-`s.sort`：sort the items of s(mutable sequence types) in place.
+> `s.sort`：sort the items of s(mutable sequence types) in place.  Starting with Python 2.2, sorts are guaranteed to be stable.
+
+用法如下
 
     sort([cmp[, key[, reverse]]])
 
@@ -292,9 +294,31 @@ sorted 中cmp, key, reverse 和 sort 的用法一样，不过它返回一个排�
     >>> sorted_d
     [('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)]
 
-参考：
+### key 的神级用法
+
+> key parameter to specify a function to be called on each list element prior to making comparisons.  The value of the key parameter should be a function that takes a single argument and returns a key to use for sorting purposes. 
+
+通俗点讲，**key 用来决定什么在排序算法被 cmp 函数拿来比较，key 可以是任何可被比较的内容，比如元组（python 中元组是可被比较的）**。
+
+给定一个只包含大小写字母，数字的字符串，对其进行排序，保证：
+
+* 所有的小写字母在大写字母前面，
+* 所有的字母在数字前面
+* 所有的奇数在偶数前面
+
+像下面这样用 sorted 函数即可。
+
+    >>> s = "Sorting1234"
+    >>> "".join(sorted(s, key=lambda x: (x.isdigit(), x.isdigit() and int(x) % 2 == 0, x.isupper(), x.islower(), x)))
+    'ginortS1324'
+
+这里，lambda 函数将输入的某个字符转换为一个元组，然后 `sorted 函数将根据元组`（而不是字符）来判断每个字符的前后顺序。这里可以理解为，根据字符生成的元组重新定义了排序的依据。
+
+参考  
+[Sorting Mini-HOW TO](https://wiki.python.org/moin/HowTo/Sorting)  
 [python里方法sort()中cmp参数的用法](https://segmentfault.com/q/1010000000405289)
- 
+[hackerrank: ginortS](https://www.hackerrank.com/challenges/ginorts/forum)  
+
 # 深入 Python 机制
  
 ## Python 程序执行原理

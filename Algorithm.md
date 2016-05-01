@@ -33,9 +33,12 @@
 |归并排序  |nlogn    | nlogn  | n    | **稳定** |
 |基数排序  |d(r+n)   |d(r+n)  |rd+n  | **稳定** |
 
+排序算法的更多内容参见 [Algorithm_Sort.md](More/Algorithm_Sort.md)
+
 ［[5排序函数，最大3位](http://www.nowcoder.com/questionTerminal/7cd79ea790ca4fa1a06dbd93dcf58d7d)］  
 ［[大量数据中获取前十名](http://www.nowcoder.com/questionTerminal/2ff38817ad074579ae9e07d7d2143fc8)］  
-［[加减数字组成一个范围](http://www.nowcoder.com/questionTerminal/1ed7b4017caf4e79ab0621089b4e3d0d)］
+［[加减数字组成一个范围](http://www.nowcoder.com/questionTerminal/1ed7b4017caf4e79ab0621089b4e3d0d)］  
+［[找最大的两个数理论最少比较次数](http://www.nowcoder.com/questionTerminal/179136c55476476eada95e3e690dc17d)］  
 
 # 经典算法思想
 
@@ -85,7 +88,6 @@ KMP 算法
 
 《剑指 Offer》  
 《编程之美》  
-
 [数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)  
 [为什么我反对纯算法面试题](http://coolshell.cn/articles/8138.html)  
 
