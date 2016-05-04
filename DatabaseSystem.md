@@ -67,6 +67,10 @@ SQL 是使用最为广泛的查询语言，有以下几个部分：
 SQL 查询基本结构由三个子句构成：select、from 和 where，查询的输入是在 from 子句中列出的关系，在这些关系上进行 where 和 select 子句中指定的运算，然后产出一个关系作为结果。
 
 
+多表连接没有指定连接条件时，对应集合的笛卡尔积连接。
+
+［[多表查询笛卡尔积](http://www.nowcoder.com/questionTerminal/686aa444c67b4f0c9ca774a50caa494a)］  
+
 ### 附加的基本运算
 
 `字符串运算`：在字符串上可以使用`like 操作符`来实现模式匹配（大小写敏感）。
@@ -105,6 +109,62 @@ GroupBy语句从英文的字面意义上理解就是“根据(by)一定的规则
 
 ## 数据库的修改
 
+SQL 支持对数据库的修改操作，包括删除、更新、插入操作。这些操作都可以用 where 指定谓语，where 子句可以包含 select 语句的 where 子句中的任何合法结构（包括嵌套的select）。**where 语句中嵌套的select可以引用待更新的关系**。
+
+### 删除
+
+只能删除整个元组，而不能只删除某些属性上的值。
+
+> delete from r  
+> where P;
+
+其中 P 代表一个谓词，r代表一个关系。delete 语句首先从 r 中找出所有使P(t)为真的元组，然后把它们从 r 中删除。如果省略where子句，则r中所有元组将被删除。
+
+delete 请求可以引用包含嵌套的select，该 select 引用待删除元组的关系。假如想删除工资低于大学平均工资的教师记录，可以写出如下语句：
+
+    delete from instructor
+    where salary < (select avg(salary)
+                    from instructor);
+
+该 delete 语句首先测试 instructor 关系中的每一个元组，检查其工资是否小于大学教师的平均工资，然后再删除所有符合条件的元组。注意，这里在**执行任何删除之前先进行所有元组的测试**至关重要。
+
+### 插入
+
+要往关系中插入数据，可以指定待插入的元组，或者写一条查询语句来生成待插入的元组集合。必须保证待插入元组的属性值必须在相应属性的域中。insert 语句中可以指定属性，也可以不指定，不指定属性时，插入值的排序和关系模式中属性排列的顺序一致。
+
+    insert into course
+        values('CS-437','Database System', 'Comp. Sci', 4);
+        
+    insert into course(course_id, title, dept_name, credits)
+        values('CS-437','Database System', 'Comp. Sci', 4);
+        
+    insert into course(title, course_id, dept_name, credits)
+        values('Database System', 'CS-437', 'Comp. Sci', 4);
+
+### 更新
+
+update 语句可以在不改变整个元组的情况下改变其部分属性的值。假如要进行年度工资增长，如下：
+
+    update instructor
+    set salary=salary*1.5
+
+上面更新语句将在instructor关系的每个元组上执行一次。update 语句中嵌套的 select 语句可以引用待更新的关系，对工资低于平均工资的教师涨 5% 的工资，可以写成如下形式：
+
+    update instructor
+    set salary=salary*1.05
+    where salary < (select avg(salary)
+                    from instructor);
+
+SQL 语句提供case 语句，可以利用它在一条语句中执行多种更新，避免更新次序发生的问题。
+
+    update instructor
+    set salary=case
+        when salary = 7000 then salary * 1.05
+        when salary < 7000 then salary * 1.15
+        else salary * 1.03
+        end
+
+SQL 的更多高级内容参见 [DataBase_SQL.md](More/DataBase_SQL.md)
 
 # 关系数据库设计
 
@@ -280,6 +340,11 @@ GroupBy语句从英文的字面意义上理解就是“根据(by)一定的规则
 
 ［[事物并发丢失修改](http://www.nowcoder.com/questionTerminal/ea4505062668488c8048a82368e3d9e2)］  
 
+数据库中有可能会存在不一致的数据。造成数据不一致的原因主要有：
+
+* `数据冗余`: 如果数据库中存在冗余数据，比如两张表中都存储了用户的地址，在用户的地址发生改变时，如果只更新了一张表中的数据，那么这两张表中就有了不一致的数据。
+* `并发控制不当`: 比如某个订票系统中，两个用户在同一时间订同一张票，如果并发控制不当，可能会导致一张票被两个用户预订的情况。当然这也与元数据的设计有关。
+* `故障和错误`: 如果软硬件发生故障造成数据丢失等情况，也可能引起数据不一致的情况。因此我们需要提供数据库维护和数据恢复的一些措施。
 
 # 更多阅读
 
