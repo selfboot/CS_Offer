@@ -393,8 +393,6 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
 2. Python 是解释型语言，C++是编译型的。
 3. Python 的对象模型导致低效的内存访问。
 
-更多内容参见 XXX
-
 参考  
 [Why Python is Slow: Looking Under the Hood](https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/)  
 
