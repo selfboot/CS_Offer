@@ -88,7 +88,7 @@
 ![][9]
 
 ## 参考
-
+《STL源码剖析》  
 [数据结构之红黑树](http://dongxicheng.org/structure/red-black-tree/)  
 [Wiki：红黑树](https://zh.wikipedia.org/wiki/红黑树)
 

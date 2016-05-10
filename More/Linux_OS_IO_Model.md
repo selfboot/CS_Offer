@@ -193,7 +193,7 @@ epoll是对select和poll的改进，避免了上述的三个缺点。我们先�
 [IO多路复用之epoll总结](http://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html)  
 [Linux IO模式及 select、poll、epoll详解](https://segmentfault.com/a/1190000003063859)  
 [使用事件驱动模型实现高效稳定的网络服务器程序](http://www.ibm.com/developerworks/cn/linux/l-cn-edntwk/index.html?ca=drs-)  
-
+[聊聊 Linux 中的五种 IO 模型](http://blog.jobbole.com/99905/)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
