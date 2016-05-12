@@ -51,7 +51,7 @@ Umask是设置系统创建文件时的默认权限，umask是从权限中“拿�
 * 创建软链接时，链接计数 i_nlink 不会增加；
 * 删除软链接并不影响被指向的文件，但若被指向的原文件被删除，则相关软连接被称为死链接（即 dangling link，若被指向路径文件被重新创建，死链接可恢复为正常的软链接）。
 
-硬链接可由命令 link 或 ln 和 -s 选项创建，`ln -s source_file target_file`，如下例子：
+软链接可以用 ln -s 选项创建，`ln -s source_file target_file`，如下例子：
 
     $ ln -s demo.o softlink
     $ ls -li demo.o softlink
