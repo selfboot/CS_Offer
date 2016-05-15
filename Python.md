@@ -1,80 +1,6 @@
 # Python 类
 
-## Python 类方法
-
-Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classmethod)和实例方法，如下:
-
-    def foo(x):
-        print "executing foo(%s)"%(x)
-    
-    class A(object):
-        def foo(self,x):
-            print "executing foo(%s,%s)"%(self,x)
-    
-        @classmethod
-        def class_foo(cls,x):
-            print "executing class_foo(%s,%s)"%(cls,x)
-    
-        @staticmethod
-        def static_foo(x):
-            print "executing static_foo(%s)"%x
-    
-    a=A()
-    print(a.static_foo)
-    # <function static_foo at 0xb7d479cc>
-    
-这个self和cls是对类或者实例的绑定，对于一般的函数来说我们可以这么调用foo(x)，这个函数就是最常用的，它的工作跟任何东西(类，实例)无关。
-
-对于实例方法，我们知道在类里每次定义方法的时候都需要绑定这个实例，就是foo(self, x)。为什么要这么做呢？因为实例方法的调用离不开实例，我们需要把实例自己传给函数，调用的时候是这样的a.foo(x)(其实是foo(a, x))。类方法一样，只不过它传递的是类而不是实例，A.class_foo(x)。注意这里的self和cls可以替换别的参，但是python的约定是这俩，还是不要改的好。
-
-对于静态方法其实和普通的方法一样，不需要对谁进行绑定，唯一的区别是调用的时候需要使用a.static_foo(x) 或者 A.static_foo(x)来调用。（Staticmethods are used to group functions which have some logical connection with a class to the class.）
-
-|       | 实例方法 | 类方法           |  静态方法           |
-|-------| --------| -------         |  -------          |
-|a = A()| a.foo(x)| a.class_foo(x)  |  a.static_foo(x)  |
-| A     | 不可用   | A.class_foo(x)  |  A.static_foo(x)  |
-
-参考：  
-[What is the difference between @staticmethod and @classmethod in Python?](http://stackoverflow.com/questions/136097/what-is-the-difference-between-staticmethod-and-classmethod-in-python)
-
-## Python 类变量
-
-    class Person:
-        name="aaa"
-    
-    p1=Person()
-    p2=Person()
-    p1.name="bbb"
-    print p1.name  # bbb
-    print p2.name  # aaa
-    print Person.name  # aaa
-
-类变量就是供类使用的变量，实例变量就是供实例使用的。
-
-这里p1.name="bbb"是实例调用了类变量，p1.name一开始是指向的类变量name="aaa"，但是在实例的作用域里把类变量的引用改变了，就变成了一个实例变量。self.name不再引用Person的类变量name了。
-
-    class Person:
-        name=[]
-    
-    p1=Person()
-    p2=Person()
-    p1.name.append(1)
-    print p1.name  # [1]
-    print p2.name  # [1]
-    print Person.name  # [1]
-
-## 元类
-
-`Python 中类也是一种对象`。只要你使用关键字class，Python解释器在执行的时候就会创建一个对象。于是乎你可以对它做如下的操作：
-
-1. 你可以将它赋值给一个变量
-2. 你可以拷贝它
-3. 你可以为它增加属性
-4. 你可以将它作为函数参数进行传递
-
-**元类就是用来创建类的“东西”**。你创建类就是为了创建类的实例对象，但是我们已经学习到了Python中的类也是对象。好吧，元类就是用来创建这些类（对象）的，元类就是类的类。
-
-更多详细内容见 [Python_Metaclass.md](More/Python_Metaclass.md)
+有关 Python 类的详细内容参见 [Python_Class.md](More/Python_Class.md)
 
 # python 性能调优
 
@@ -319,6 +245,59 @@ sorted 中cmp, key, reverse 和 sort 的用法一样，不过它返回一个排�
 [python里方法sort()中cmp参数的用法](https://segmentfault.com/q/1010000000405289)  
 [hackerrank: ginortS](https://www.hackerrank.com/challenges/ginorts/forum)  
 
+## Python 单元测试
+
+单元测试是用来对一个模块、一个函数或者一个类来进行正确性检验的测试工作。比如我们自己编写了一个Dict类，这个类的行为和dict一致，但是可以通过属性来访问，那么可以编写出以下几个测试函数：
+
+    def test_init(self):
+    def test_key(self):
+    def test_attr(self):
+    def test_keyerror(self):
+    def test_attrerror(self):
+
+
+把上面的测试用例放到一个测试模块里，就是一个完整的单元测试。如果单元测试通过，说明我们测试的这个函数能够正常工作。如果单元测试不通过，要么函数有bug，要么测试条件输入不正确，总之，需要修复使单元测试能够通过。
+
+单元测试通过后有什么意义呢？如果我们对代码做了修改，只需要再跑一遍单元测试，如果通过，说明我们的修改不会对函数原有的行为造成影响，如果测试不通过，说明我们的修改与原有行为不一致，要么修改代码，要么修改测试。
+
+为了编写单元测试，我们需要引入Python自带的 `unittest` 模块，编写mydict_test.py 如下：
+
+    import unittest
+    
+    from mydict import Dict
+    
+    class TestDict(unittest.TestCase):
+    
+        def test_init(self):
+            d = Dict(a=1, b='test')
+            self.assertEquals(d.a, 1)
+            self.assertEquals(d.b, 'test')
+            self.assertTrue(isinstance(d, dict))
+
+编写单元测试时，我们需要编写一个测试类，从unittest.TestCase继承。
+以test开头的方法就是测试方法，不以test开头的方法不被认为是测试方法，测试的时候不会被执行。
+
+对每一类测试都需要编写一个test_xxx()方法。由于unittest.TestCase提供了很多内置的条件判断，我们只需要调用这些方法就可以断言输出是否是我们所期望的。最常用的断言就是 `assertEquals()`：
+
+    self.assertEquals(abs(-1), 1) # 断言函数返回的结果与1相等
+
+另一种重要的断言就是期待抛出指定类型的Error，比如通过d['empty']访问不存在的key时，断言会抛出KeyError：
+
+    with self.assertRaises(KeyError):
+        value = d['empty']
+
+一旦编写好单元测试，我们就可以运行单元测试。最简单的运行方式是在mydict_test.py的最后加上两行代码：
+
+    if __name__ == '__main__':
+        unittest.main()
+    
+这样就可以把mydict_test.py当做正常的python脚本运行：
+
+    $ python mydict_test.py
+
+参考  
+[单元测试：廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00140137128705556022982cfd844b38d050add8565dcb9000)  
+
 # 深入 Python 机制
  
 ## Python 程序执行原理
@@ -461,4 +440,6 @@ Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块
 
 [关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)  
 [How do I pass a variable by reference?](http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference)
+
+
 
