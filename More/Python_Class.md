@@ -1,5 +1,15 @@
 面向对象重要的概念就是类（Class）和实例（Instance），必须牢记类是抽象的模板，比如Student类，而实例是根据类创建出来的一个个具体的“对象”，每个对象都拥有相同的方法，但各自的数据可能不同。
 
+先回顾下 OOP 的常用术语：
+
+* 类：对具有相同数据和方法的一组对象的描述或定义。
+* 对象：对象是一个类的实例。
+* 实例(instance)：一个对象的实例化实现。
+* 实例属性（instance attribute）：一个对象就是一组属性的集合。
+* 实例方法(instance method)：所有存取或者更新对象某个实例一条或者多条属性的函数的集合。
+* 类属性（classattribute）：属于一个类中所有对象的属性，不会只在某个实例上发生变化
+* 类方法（classmethod）：那些无须特定的对象实例就能够工作的从属于类的函数。
+
 # [Class 概述](https://docs.python.org/2/tutorial/classes.html)
 
 在Python中，定义类是通过class关键字：
@@ -68,9 +78,9 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     print(a.static_foo)
     # <function static_foo at 0xb7d479cc>
     
-这个self和cls是对类或者实例的绑定，对于一般的函数来说我们可以这么调用foo(x)，这个函数就是最常用的，它的工作跟任何东西(类，实例)无关。
+对于一般的函数来说我们可以这么调用foo(x)，这个函数就是最常用的，它的工作跟任何东西(类，实例)无关。
 
-对于实例方法，我们知道在类里每次定义方法的时候都需要绑定这个实例，就是foo(self, x)。为什么要这么做呢？因为实例方法的调用离不开实例，我们需要把实例自己传给函数，调用的时候是这样的a.foo(x)(其实是foo(a, x))。类方法一样，只不过它传递的是类而不是实例，A.class_foo(x)。注意这里的self和cls可以替换别的参，但是python的约定是这俩，还是不要改的好。
+对于实例方法，在类里每次定义方法的时候都需要绑定这个实例，就是foo(self, x)。为什么要这么做呢？因为实例方法的调用离不开实例，我们需要把实例自己传给函数，调用的时候是这样的a.foo(x)(其实是foo(a, x))。类方法一样，只不过它传递的是类而不是实例，A.class_foo(x)。注意这里的self和cls可以替换别的参，但是python的约定是self和cls，最好不要改。
 
 对于静态方法其实和普通的方法一样，不需要对谁进行绑定，唯一的区别是调用的时候需要使用a.static_foo(x) 或者 A.static_foo(x)来调用。（Staticmethods are used to group functions which have some logical connection with a class to the class.）
 
@@ -84,6 +94,8 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 
 # Python 类变量
 
+直接定义在类体中的变量叫类变量，而在类的方法中定义的变量叫实例变量。类变量就是供类使用的变量，实例变量就是供实例使用的。
+
     class Person:
         name="aaa"
     
@@ -94,9 +106,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     print p2.name  # aaa
     print Person.name  # aaa
 
-类变量就是供类使用的变量，实例变量就是供实例使用的。
-
-这里p1.name="bbb"是实例调用了类变量，p1.name一开始是指向的类变量name="aaa"，但是在实例的作用域里把类变量的引用改变了，就变成了一个实例变量。self.name不再引用Person的类变量name了。
+上面程序中，p1.name="bbb"是实例调用了类变量，p1.name一开始是指向的类变量name="aaa"，但是在实例的作用域里把类变量的引用改变了，就变成了一个实例变量。self.name不再引用Person的类变量name了。
 
     class Person:
         name=[]
@@ -107,6 +117,78 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     print p1.name  # [1]
     print p2.name  # [1]
     print Person.name  # [1]
+
+# 特殊的类方法
+
+类中经常有一些方法用两个下划线包围来命名，下图给出一些例子。合理地使用它们可以对类添加一些“魔法”的行为。
+
+![][1]
+
+## 构造与析构
+
+当我们调用 x = SomeClass() 的时候，第一个被调用的函数是 ` __new__` ，这个方法创建实例。接下来可以用 `__init__` 来指明一个对象的初始化行为。当这个对象的生命周期结束的时候， `__del__` 会被调用。
+
+* `__new__(cls,[...])` 是对象实例化时第一个调用的方法，它只取下 cls 参数，并把其他参数传给init。
+* `__init__(self,[...])` 为类的初始化方法。它获取任何传给构造器的参数（比如我们调用 x = SomeClass(10, ‘foo’) ，init 函数就会接到参数 10 和 ‘foo’） 。
+* `__del__(self)`：new和init是对象的构造器， del则是对象的销毁器。它并非实现了语句 del x (因此该语句不等同于 `x.__del__()`)，而是定义当对象被回收时的行为。
+	
+## 操作符
+
+利用特殊方法可以构建一个拥有Python内置类型行为的对象，这意味着可以避免使用非标准的、丑陋的方式来表达简单的操作。在一些语言中，这样做很常见:
+
+    if instance.equals(other_instance):
+        # do something
+
+Python中当然也可以这么做，但是这样做让代码变得冗长而混乱。不同的类库可能对同一种比较操作采用不同的方法名称，这让使用者需要做很多没有必要的工作。因此我们可以定义方法`__eq__`，然后就可以像下面这样使用：
+
+    if instance == other_instance:
+        # do something
+
+Python 有许多特殊的函数对应到常用的操作符上，比如：
+
+* `__cmp__(self, other)`：定义了所有比较操作符的行为。应该在 self < other 时返回一个负整数，在 self == other 时返回0，在 self > other 时返回正整数。
+* `__eq__(self, other)`：定义等于操作符(==)的行为。
+* `__ne__(self, other)`：定义不等于操作符(!=)的行为（**定义了 eq 的情况下也必须再定义 ne**！）
+* `__le__(self, other)`：定义小于等于操作符(<)的行为。
+* `__ge__(self, other)`：定义大于等于操作符(>)的行为。
+
+## 数值操作符
+
+就像可以使用比较操作符来比较类的实例，也可以定义数值操作符的行为。可以分成五类：一元操作符，常见算数操作符，反射算数操作符，增强赋值操作符，和类型转换操作符，下面为一些例子：
+
+* `__pos__(self)` 实现取正操作，例如 +some_object
+* `__invert__(self)` 实现取反操作符 ~
+* `__add__(self, other)` 实现加法操作
+* `__sub__(self, other)` 实现减法操作
+* `__radd__(self, other)` 实现反射加法操作
+* `__rsub__(self, other)` 实现反射减法操作
+* `__floordiv__(self, other)` 实现使用 // 操作符的整数除法
+* `__iadd__(self, other)` 实现加法赋值操作。
+* `__isub__(self, other)` 实现减法赋值操作。
+* `__int__(self)` 实现到int的类型转换。
+* `__long__(self)` 实现到long的类型转换。
+
+反射运算符方法和它们的常见版本做的工作相同，只不过是处理交换两个操作数之后的情况。类型转换操作符，主要用于实现类似 float() 这样的内建类型转换函数的操作。
+
+## 类的表示
+
+使用字符串来表示类是一个相当有用的特性。在Python中有一些内建方法可以返回类的表示，相对应的，也有一系列特殊方法可以用来自定义在使用这些内建函数时类的行为。
+
+* `__str__(self)` 定义对类的实例调用 str() 时的行为。
+* `__repr__(self)` 定义对类的实例调用 repr() 时的行为。 str() 和 repr() 最主要的差别在于“目标用户”，repr() 的作用是产生机器可读的输出（大部分情况下，其输出可以作为有效的Python代码），而 str() 则产生人类可读的输出。
+* `__dir__(self)` 定义对类的实例调用 dir() 时的行为，这个方法应该向调用者返回一个属性列表。如果重定义了 `__getattr__` 或者使用动态生成的属性，以实现类的交互式使用，那么这个方法是必不可少的。
+
+## 属性控制
+
+    __getattr__(self, name)
+
+当用户试图访问一个根本不存在（或者暂时不存在）的属性时，你可以通过这个魔法方法来定义类的行为。
+
+## 自定义序列
+
+有许多办法可以让 Python 类表现得像是内建序列类型（字典，元组，列表，字符串等）。
+
+在Python中实现自定义容器类型需要用到一些协议。首先，不可变容器类型有如下协议：想实现一个不可变容器，你需要定义 `__len__` 和 `__getitem__`。可变容器的协议除了上面提到的两个方法之外，还需要定义 `__setitem__` 和 `__delitem__` 。如果你想让你的对象可以迭代，你需要定义 `__iter__` ，这个方法返回一个迭代器。迭代器必须遵守迭代器协议，需要定义 `__iter__` （返回它自己）和 next 方法。
 
 # 元类
 
@@ -127,5 +209,8 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 [Difference between @staticmethod and @classmethod in Python](http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/)  
 [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)  
 [类和实例——廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00138682004077376d2d7f8cc8a4e2c9982f92788588322000)  
+[Python面向对象详解](http://blog.csdn.net/carolzhang8406/article/details/6903556)  
+
+[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 
 

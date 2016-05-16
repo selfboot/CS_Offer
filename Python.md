@@ -1,4 +1,3 @@
-# Python 类
 
 有关 Python 类的详细内容参见 [Python_Class.md](More/Python_Class.md)
 
@@ -254,7 +253,6 @@ sorted 中cmp, key, reverse 和 sort 的用法一样，不过它返回一个排�
     def test_attr(self):
     def test_keyerror(self):
     def test_attrerror(self):
-
 
 把上面的测试用例放到一个测试模块里，就是一个完整的单元测试。如果单元测试通过，说明我们测试的这个函数能够正常工作。如果单元测试不通过，要么函数有bug，要么测试条件输入不正确，总之，需要修复使单元测试能够通过。
 
