@@ -118,6 +118,65 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     print p2.name  # [1]
     print Person.name  # [1]
 
+更加详细的解释看： [关于Python类属性与实例属性的讨论](https://segmentfault.com/a/1190000002671941)  
+
+# Python 类的继承
+
+Python 是面向对象语言，支持类的继承（包括单重和多重继承），继承的语法如下：
+
+    class DerivedClass(BaseClass1, [BaseClass2...]):
+        <statement-1>
+        .
+        <statement-N>
+
+子类可以覆盖父类的方法，此时有两种方法来调用父类中的函数：
+
+1. 调用父类的未绑定的构造方法。在调用一个实例的方法时，该方法的self参数会被自动绑定到实例上（称为绑定方法）。但如果直接调用类的方法（比如A.__init），那么就没有实例会被绑定。这样就可以自由的提供需要的self参数，这种方法称为`未绑定(unbound)方法`。大多数情况下是可以正常工作的，但是多重继承的时候可能会重复调用父类。
+2. 通过 `super(type, obj).method()` 调用父类函数，super函数返回一个super对象，这个对象负责进行方法解析，解析过程其会自动查找所有的父类以及父类的父类。这里基类必须继承自object类，这样才能使用super函数，因为这是python的“`新式类`”支持的特性。当前的类和对象可以作为super函数的参数使用，调用函数返回的对象的任何方法都是调用超类的方法，而不是当前类的方法。
+
+未绑定(unbound)方法调用如下：
+
+    class Base(object):
+        def __init__(self):
+            print("Base.__init__")
+    
+    class Derived(Base):
+        def __init__(self):
+            Base.__init__(self)
+            print("Derived.__init__")
+  
+supper 调用如下：
+
+    class Base(object):
+        def __init__(self):
+            print "Base.__init__"
+    
+    
+    class Derived(Base):
+        def __init__(self):
+            super(Derived, self).__init__()
+            print "Derived.__init__"
+    
+    
+    class Derived_2(Derived):
+        def __init__(self):
+            super(Derived_2, self).__init__()
+            print "Derived_2.__init__"
+
+## 继承机制 MRO
+
+在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。
+
+注意这里的 super，MRO 都是针对 new-style class，如果不是 new-style class，只能老老实实用父类的类名去调用函数。
+
+关于 super，更深入的理解在 [Python’s super() considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)。
+
+# 多态
+
+多态即多种形态，在运行时确定其状态，在编译阶段无法确定其类型，这就是多态。Python中的多态和Java以及C++中的多态有点不同，Python中的变量是弱类型的，在定义时不用指明其类型，它会根据需要在运行时确定变量的类型。
+
+Python本身是一种解释性语言，不进行预编译，因此它就只在运行时确定其状态，故也有人说Python是一种多态语言。在Python中很多地方都可以体现多态的特性，比如 内置函数len(object)，len函数不仅可以计算字符串的长度，还可以计算列表、元组等对象中的数据个数，这里在运行时通过参数类型确定其具体的计算过程，正是多态的一种体现。
+
 # 特殊的类方法
 
 类中经常有一些方法用两个下划线包围来命名，下图给出一些例子。合理地使用它们可以对类添加一些“魔法”的行为。
@@ -207,9 +266,11 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 [Python @classmethod and @staticmethod for beginner?](http://stackoverflow.com/questions/12179271/python-classmethod-and-staticmethod-for-beginner)  
 [Difference between @staticmethod and @classmethod in Python](http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/)  
+[Python Object Oriented](http://www.tutorialspoint.com/python/python_classes_objects.htm)  
 [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)  
 [类和实例——廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00138682004077376d2d7f8cc8a4e2c9982f92788588322000)  
 [Python面向对象详解](http://blog.csdn.net/carolzhang8406/article/details/6903556)  
+[知乎：supper 方法](https://www.zhihu.com/question/20040039)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 
