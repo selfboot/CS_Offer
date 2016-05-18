@@ -55,6 +55,32 @@ class后面紧接着是类名，即Student，类名通常是大写开头的单�
     
 和普通的函数相比，在类中定义的对象函数（还有静态方法，类方法）只有一点不同，就是第一个参数永远是实例变量self，并且，调用时不用传递该参数。
 
+## 新式类、旧式类
+
+python的新式类是2.2版本引进来的，之前的类叫做经典类或者旧类。Python 2.x 中如果一个类继承于一个基类（可以是自定义类或者其它类）或者继承自 object，则该类为`新式类`；没有继承的类为`经典类`。Python 3.x 则全部为新式类。
+
+新式类被赋予了很多新的特性（如：统一了types和classes），并改变了以往经典类的一些内容（如：改变了多继承下方法的执行顺序）。
+
+关于统一类(class)和类型(type)，具体看下面的例子
+
+    class OldClass():
+        pass
+    
+    o = OldClass()
+    print o.__class__   # __main__.OldClass
+    print type(o)       # <type 'instance'>
+    
+    
+    class newClass(object):
+        pass
+    
+    n = newClass()
+    print n.__class__   # <class '__main__.newClass'>
+    print type(n)       # <class '__main__.newClass'>
+
+参考  
+[What is the difference between old style and new style classes in Python?](http://stackoverflow.com/questions/54867/what-is-the-difference-between-old-style-and-new-style-classes-in-python)
+
 # Python 类方法
 
 Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classmethod)和实例方法，如下:
@@ -163,9 +189,13 @@ supper 调用如下：
             super(Derived_2, self).__init__()
             print "Derived_2.__init__"
 
-## 继承机制 MRO
+## 继承机制 MRO（Method Resolution Order）
 
 在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。
+
+MRO 主要用于在多继承时判断调的属性的路径(来自于哪个类)。在新式类中，查找一个要调用的函数或者属性的时候，是广度优先搜搜的。在旧式类当中，是深度优先搜索的。如下图所示：
+
+![][2]
 
 注意这里的 super，MRO 都是针对 new-style class，如果不是 new-style class，只能老老实实用父类的类名去调用函数。
 
@@ -271,7 +301,10 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 [类和实例——廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00138682004077376d2d7f8cc8a4e2c9982f92788588322000)  
 [Python面向对象详解](http://blog.csdn.net/carolzhang8406/article/details/6903556)  
 [知乎：supper 方法](https://www.zhihu.com/question/20040039)  
+[NewClass Vs ClassicClass](https://wiki.python.org/moin/NewClassVsClassicClass)  
+[python类学习以及mro--多继承属性查找机制](http://blog.csdn.net/imzoer/article/details/8737642)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
+[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png
 
 
