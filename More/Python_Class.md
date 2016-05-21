@@ -118,9 +118,49 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 参考：  
 [What is the difference between @staticmethod and @classmethod in Python?](http://stackoverflow.com/questions/136097/what-is-the-difference-between-staticmethod-and-classmethod-in-python)
 
-# Python 类变量
+# Python 数据属性
 
-直接定义在类体中的变量叫类变量，而在类的方法中定义的变量叫实例变量。类变量就是供类使用的变量，实例变量就是供实例使用的。
+下面创建了一个Student的类，并且实现了这个类的初始化函数"`__init__`":
+
+    class Student(object):
+        count = 0
+        books = []
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+在上面的Student类中，count, books, name 和 age 都被称为类的数据属性，但是它们又分为`类数据属性`和`实例数据属性`。直接定义在类体中的属性叫类属性，而在类的方法中定义的属性叫实例属性。
+
+首先看下面代码，展示了对类数据属性和实例数据属性的访问：
+
+    Student.books.extend(["python", "javascript"])  
+    print "Student book list: %s" %Student.books    
+    # class can add class attribute after class defination
+    Student.hobbies = ["reading", "jogging", "swimming"]
+    print "Student hobby list: %s" %Student.hobbies    
+    print dir(Student)
+    
+    # class instance attribute
+    wilber = Student("Wilber", 28) 
+    print "%s is %d years old" %(wilber.name, wilber.age)   
+    # class instance can add new attribute 
+    # "gender" is the instance attribute only belongs to wilber
+    wilber.gender = "male"
+    print "%s is %s" %(wilber.name, wilber.gender)
+       
+    # class instance can access class attribute    
+    wilber.books.append("C#")
+    print wilber.books 
+
+通过内建函数dir()，或者访问类的字典属性`__dict__`，这两种方式都可以查看类或者实例有哪些属性。对于类数据属性和实例数据属性，可以总结为：
+
+* 类数据属性属于类本身，可以通过类名进行访问/修改；
+* 类数据属性也可以被类的所有实例访问/修改；
+* 在类定义之后，可以通过类名动态添加类数据属性，新增的类属性也被类和所有实例共有；
+* 实例数据属性只能通过实例访问；
+* 在实例生成后，还可以动态添加实例数据属性，但是这些实例数据属性只属于该实例；
+
+再看下面的程序
 
     class Person:
         name="aaa"
@@ -145,6 +185,17 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     print Person.name  # [1]
 
 更加详细的解释看： [关于Python类属性与实例属性的讨论](https://segmentfault.com/a/1190000002671941)  
+
+## 特殊的类属性
+
+对于所有的类，都有一组特殊的属性：
+
+![][3]
+
+通过这些属性，可以得到 Student类的一些信息，如下：
+
+![][4]
+
 
 # Python 类的继承
 
@@ -306,5 +357,7 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png
+[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_3.png
+[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_4.png
 
 
