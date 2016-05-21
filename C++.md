@@ -670,9 +670,12 @@ Lambda、变参模板、auto、decltype、constexpr、智能指针、列表初�
 《Effective C++》   
 《More Effective C++》
 
+[C++_More](More/C++_More.md)
 [C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)  
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
 [Can we change the value of a constant through pointers?](http://stackoverflow.com/questions/3801557/can-we-change-the-value-of-a-constant-through-pointers/3801601#3801601)   
+
+
 
 
 
