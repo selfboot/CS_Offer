@@ -97,9 +97,10 @@
     
     回答样本二：我觉的我是一个比较随和的人，与不同的人都可以友好相处。在我与人相处时，我总是能站在别人的角度考虑问题。
 
-# 参考
+# 更多阅读
 
 [谈谈面试技巧](http://taosay.net/index.php/2014/07/31/谈谈面试技巧/)  
+[纯干货！程序员面试的技巧](http://blog.jobbole.com/99830/)  
 [求职面试时常被问到的65个问题与技巧性回答](http://www.ipc.me/65-interview-qna.html)  
 [面试心得与总结---BAT、网易、蘑菇街](http://www.nowcoder.com/discuss/3043?type=2&order=0&pos=5&page=2)  
 [纪念那些“坚持到最后但没有笑到最后”的校园招聘](http://www.nowcoder.com/discuss/3196?type=0&order=0&pos=3&page=2)  
@@ -107,4 +108,6 @@
 [我是如何同时拿到阿里和腾讯offer的](https://segmentfault.com/a/1190000002627927)   
 [让 BAT 的 Offer 不再难拿](http://www.jianshu.com/p/ee15c1cf9c16)  
 [2014校招后台开发(服务端开发)经验总结](http://www.oserror.com/backend/438.html)  
+[纯干货！面试官如何面试程序员](http://blog.jobbole.com/99830/)  
+
 
