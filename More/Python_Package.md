@@ -138,6 +138,6 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
 [Python 101: All about imports](http://www.blog.pythonlibrary.org/2016/03/01/python-101-all-about-imports/)  
 [极客学院：模块与包](http://wiki.jikexueyuan.com/project/python3-cookbook/module-and-pack.html)  
 [Python 的 import 机制](https://loggerhead.me/posts/python-de-import-ji-zhi.html)  
-[Import From Parent Folder](https://xxx-cook-book.gitbooks.io/python-cook-book/content/Import/ImportFromParentFolder.html)
-
+[Import From Parent Folder](https://xxx-cook-book.gitbooks.io/python-cook-book/content/Import/ImportFromParentFolder.html)   
+[Python Cookbook：模块与包](http://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p10_modules_and_packages.html)
 
