@@ -1,3 +1,24 @@
+# 函数参数
+
+为了能让一个函数接受任意数量的位置参数，可以使用一个 `* 参数`。例如 
+
+    def avg(first, *args):
+        return (first + sum(args)) / (1 + len(args)) 
+    # Sample use     avg(1, 2) # 1
+    avg(1, 2, 3, 4) # 2
+
+args 是由所有其他位置参数组成的元组。然后我们在代码中把它当成了一个序列来进行后续的计算。 为了接受任意数量的关键字参数，使用一个以 `** 参数`。 
+
+    def get_first(first, **kwargs):
+      if first in kwargs:
+          return kwargs[first]
+      else:
+          return "Nope"
+       
+    print get_first("name", name="John") # John
+
+在这里，kwargs 是一个包含所有被传入进来的关键字参数的字典。 
+
 # 特别注意！
 ## lambda 匿名函数捕获值
 
@@ -151,6 +172,7 @@ Return True if any element of the iterable is true. If the iterable is empty, re
 # 高级用法
 
 ## 函数闭包
+
 
 
 # 更多阅读
