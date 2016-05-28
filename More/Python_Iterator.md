@@ -90,6 +90,7 @@ Python 中可以被next()函数调用并不断返回下一个值的对象称为�
 [What exactly are Python's iterator, iterable, and iteration protocols?](http://stackoverflow.com/questions/9884132/what-exactly-are-pythons-iterator-iterable-and-iteration-protocols)  
 [廖雪峰：迭代器](http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143178254193589df9c612d2449618ea460e7a672a366000)  
 [Python迭代器和生成器](http://python.jobbole.com/81881/)  
+[Python 迭代器小结](http://python.jobbole.com/85240/)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Iterator_1.png
 
