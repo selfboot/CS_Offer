@@ -1,25 +1,128 @@
+# 函数概述
+
+函数是重用的程序段。允许给一块语句一个名称，然后可以在你的程序的任何地方使用这个名称任意多次地运行这个语句块。这被称为`调用函数`。
+
+Python 中通过def关键字定义函数，def关键字后跟一个函数的 标识符名称，然后跟一对圆括号。圆括号之中可以包括一些变量名，该行以冒号结尾。接下来是一块语句，它们是函数体。
+
 # 函数参数
 
-为了能让一个函数接受任意数量的位置参数，可以使用一个 `* 参数`。例如 
+## 参数传递方式
 
-    def avg(first, *args):
-        return (first + sum(args)) / (1 + len(args)) 
-    # Sample use     avg(1, 2) # 1
-    avg(1, 2, 3, 4) # 2
+在C++中，函数传递方式有`值传递`和`引用传递`两种方式。python中参数传递类似于引用传递，因为 python中一切都是对象，变量全部是对象的引用。但是要区分参数是不可变对象，还是可变对象。
 
-args 是由所有其他位置参数组成的元组。然后我们在代码中把它当成了一个序列来进行后续的计算。 为了接受任意数量的关键字参数，使用一个以 `** 参数`。 
+当函数参数为不可变对象（整数，字符串，元组）时，函数体内的参数在被改变之前，会一直持有该对象的引用，但当参数发生改变时，由于该对象为不可变对象，必须生成一份新的拷贝作为函数的本地变量，函数对该本地变量的修改不会影响函数调用者的变量值，这一点有点类似 C++ 函数的值传递。
 
-    def get_first(first, **kwargs):
-      if first in kwargs:
-          return kwargs[first]
-      else:
-          return "Nope"
-       
-    print get_first("name", name="John") # John
+    def func_pass_value(x):
+        print "before: x=", x, " id=", id(x)
+        x = 2
+        print "after: x=", x, " id=", id(x)
+    >>> x = 1
+    >>> func_pass_value(x)
+    before: x= 1  id= 5363912
+    after: x= 2  id= 5363888
+    >>> x, id(x)
+    (1, 5363912)
 
-在这里，kwargs 是一个包含所有被传入进来的关键字参数的字典。 
+当函数参数为可变对象（列表，字典）时，除非发生赋值操作，函数体类的参数会一直持有该对象的引用，函数对该参数的修改也会影响到函数调用者的变量值，类似于C++函数中的引用传递。但在函数体内发生赋值操作时，也会生成一份新的拷贝作为函数的本地变量，函数对该本地变量的修改不会影响到函数调用者的变量值。
 
+    def func_pass_ref1(list):
+        print list
+        list = [4, 5]
+        print list
+    
+    def func_pass_ref2(list):
+        print list
+        list += [4, 5]
+        print list
+    >>> al = [1, 2, 3]
+    >>> func_pass_ref1(al)
+    [1, 2, 3]
+    [4, 5]
+    >>> al
+    [1, 2, 3]
+    >>> func_pass_ref2(al)
+    [1, 2, 3]
+    [1, 2, 3, 4, 5]
+    >>> al
+    [1, 2, 3, 4, 5]
 
+## 函数参数类型
+
+python函数传递参数类型比较多，按照是否确定参数数目可分为定长参数变长参数，按照是否引入关键字分为普通参数和关键字参，可以从以下五个方面进行介绍：
+
+* 定长普通参数
+* 定长关键字参数
+* 变长普通参数
+* 变长关键字参数
+* 复合参数
+
+`定长普通参数`为最常见的参数传递方式，参数传递时要求实参和虚参的个数相同，顺序也必须相同，否则会出现错误。如果要设置默认参数，默认参数应该放在参数链表的尾部, 否则在函数调用时会给默认参数指定实参，从而使默认参数的设置失去意义。定长普通参数对`参数位置`要求严格，为了摆脱位置对参数的束缚，python引入了关键字参数。
+
+`定长关键字参数`进行参数传递时，必须设定指定参数的名字，函数调用时将以键值对的方式进行传递，若要给某个参数设定缺省值，在函数定义时直接指定缺省键值对即可，且不受位置的束缚，在函数调用时则不需要设定指定参数的键值对。
+
+    def fun2(Name='Tom', Age=20, Sex="Male"):
+        print 'Name:', Name
+        print 'Age:', Age
+        print 'Sex:', Sex
+    if __name__ == "__main__":
+        fun2(Name="Alice", Sex="Female")
+        fun2(Name="Bob", Age=22)
+
+有些情况我们在定义一个函数时，并不能能够确定接受的参数的个数，只是知道需要对所接受的参数依次进行处理，这种情况下需要使用变长参数进行参数传递，python在定义变长参数时引入了`*`，定义变长普通参数时在参数名前面放在 *，如 `*args`，定义变长关键字参数时在参数前面放两个`*`号，如`**kargs`。
+
+`变长普通参数`只需要在参数前面放一个*号即可，在函数体内部把形参当作一个元组来处理。在函数调用时可以把一个元组当作参数，不过需要对元组进行unpack，即在相应参数前面加 * 即可。
+
+    def foo(*args):
+        for arg in args:
+            print arg
+        
+    if __name__ == "__main__":
+        foo(1, 2, 3, "good")
+        arglist = 1, 2, 3, "good"
+        foo(*arglist)
+    
+注意在**函数定义时变长参数（包括后面介绍的变长关键字参数）必须设置在定长参数后面**。
+
+变长关键字长参数类似于变长普通参数，只是变长关键字参数在函数定义时在参数前面加 ** 号，在函数体内部把参数当作一个参数字典来处理。在函数调用时可以把一个字典当作参数，不过需要对字典进行unpack，即在字典参数前面加 ** 。
+
+    def foo(**kwargs):
+        for k, v in kwargs.items():
+            print k, v
+    if __name__ == "__main__":
+        foo(Name="Jim", Age=22, Sex="Male")
+        argDict = {"Name": "Jim", "Age": 22, "Sex": "Male"}
+        foo(**argDict)
+
+对于变长关键字参数，我们可以任意指定关键字的名字，函数调用的内部会去获取关键字的名字和值。
+
+在实际编程的过程当中，我们可能面临这样一种情况，函数定义时不能够确定会接受到什么样参数，包括参数的数目，参数的类型等，这个时候，我们就会用到这里介绍的复合参数，复合参数及前面介绍的四种参数的混搭形式。
+
+    def foo(firstname, lastname="John", *args, **kwargs):
+        print firstname
+        print "LastName: ", lastname
+        for arg in args:
+            print arg
+        for k, v in kwargs.items():
+            print k, v
+    
+    if __name__ == "__main__":
+        arglist = 1, 2, 3, "good"
+        argDict = {"Name": "Jim", "Sex": "Male"}
+        foo("Jim", "Jack", *arglist, **argDict)
+    
+只是在函数定义时对参数的顺序特定的要求：
+
+* 关键字参数必须在普通参数后面
+* 变长普通参数必须放在定长参数的后面
+* 变长关键字参数必须放在变长普通参数的后面
+
+函数调用时赋值的过程为：
+
+1. 依次为普通参数赋值  
+2. 为关键字参数赋值  
+3. 将多余出的零散实参打包成一个元组传递给赋给变长普通参数 *args 
+4. 将多余的键值对形式的实参打包成一个字典传递给变长关键字参数 **kargs
+	
 # 特别注意！
 
 ## lambda 匿名函数捕获值
@@ -180,8 +283,10 @@ Return True if any element of the iterable is true. If the iterable is empty, re
 # 更多阅读
 
 《Python Cookbook 3》  
+[python参数传递介绍](http://brionas.github.io/2014/03/25/Introduction-python-parameters-pass/)  
 [Lambda, filter, reduce and map](http://www.python-course.eu/lambda.php)  
 [Python 使用 list 作为函数参数时，参数是否会初始化？](http://www.zhihu.com/question/21924859#answer-11532338)    
+[陷阱！python参数默认值](http://selfboot.cn/2014/10/27/python_default_values/)  
 [More on Defining Functions](https://docs.python.org/2.7/tutorial/controlflow.html#more-on-defining-functions)  
 [How can I read python build-in func source code? eg filter, map, reduce](http://stackoverflow.com/questions/6760899/in-eclipse-how-can-i-read-python-build-in-func-source-code-eg-filter-map-red)  
 
