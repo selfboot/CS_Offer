@@ -278,6 +278,19 @@ Return True if any element of the iterable is true. If the iterable is empty, re
 
 ## 函数闭包
 
+在计算机科学中，闭包（Closure）是`词法闭包（Lexical Closure）`的简称，**是指引用了自由变量的函数**。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。所以，有另一种说法认为闭包是由函数和与其相关的引用环境组合而成的实体。
+
+Python中 如果调用函数A，它返回函数B。这个返回的函数B就叫做闭包，在调用函数A的时候传递的参数就是`自由变量`。举个例子：
+
+    def func(name):
+        def inner_func(age):
+            print 'name:', name, 'age:', age
+        return inner_func
+    
+    bb = func('the5fire')
+    bb(26)  # name: the5fire age: 26
+
+这里面调用func的时候就产生了一个闭包——inner_func,并且该闭包持有自由变量——name，因此这也意味着，当函数func的生命周期结束之后，name这个变量依然存在，因为它被闭包引用了，所以不会被回收。（闭包并不是Python中特有的概念，所有把函数作为一等公民的语言均有闭包的概念。）
 
 
 # 更多阅读
@@ -288,8 +301,9 @@ Return True if any element of the iterable is true. If the iterable is empty, re
 [Python 使用 list 作为函数参数时，参数是否会初始化？](http://www.zhihu.com/question/21924859#answer-11532338)    
 [陷阱！python参数默认值](http://selfboot.cn/2014/10/27/python_default_values/)  
 [More on Defining Functions](https://docs.python.org/2.7/tutorial/controlflow.html#more-on-defining-functions)  
-[How can I read python build-in func source code? eg filter, map, reduce](http://stackoverflow.com/questions/6760899/in-eclipse-how-can-i-read-python-build-in-func-source-code-eg-filter-map-red)  
-
+[How can I read python build-in func source code? eg filter, map, reduce](http://stackoverflow.com/questions/6760899/in-eclipse-how-can-i-read-python-build-in-func-source-code-eg-filter-map-red)   
+[Python中的闭包](http://www.the5fire.com/closure-in-python.html)   
+[Why aren't python nested functions called closures?](http://stackoverflow.com/questions/4020419/why-arent-python-nested-functions-called-closures)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Function_1.png
 
