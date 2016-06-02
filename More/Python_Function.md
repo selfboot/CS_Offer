@@ -6,7 +6,7 @@ Python 中通过def关键字定义函数，def关键字后跟一个函数的 标
 
 函数参数在函数定义的圆括号内指定，用逗号分割，当我们调用函数的时候，以同样的方式提供值。函数参数有多种类型，下面会详细说明。
 
-在函数体内声明的变量，与函数外具有相同名称的其他变量没有任何关系，称之为`局部变量`。它的作用域从被定义的点开始，直到定义的块的结束。如果想在函数内部，给全局变量赋值，那么必须用 global 关键字声明该变量是全局的变量。
+在函数体内声明的变量，与函数外具有相同名称的其他变量没有任何关系，称之为`局部变量`。它的作用域从被定义的点开始，直到定义的块的结束。如果想在函数内部，给全局变量赋值，那么必须用 global 关键字声明该变量是全局的变量。(关于 Python 作用域的 LEGB 解析规则，可以参考 [Short Description of Python Scoping Rules](http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules))
 
 	l1, l2, l3 = [1, 2, 3], [1, 2, 3], [1, 2, 3]
 	
@@ -375,6 +375,7 @@ Python中 如果调用函数A，它返回函数B。这个返回的函数B就叫�
 [How can I read python build-in func source code? eg filter, map, reduce](http://stackoverflow.com/questions/6760899/in-eclipse-how-can-i-read-python-build-in-func-source-code-eg-filter-map-red)   
 [Python中的闭包](http://www.the5fire.com/closure-in-python.html)   
 [Why aren't python nested functions called closures?](http://stackoverflow.com/questions/4020419/why-arent-python-nested-functions-called-closures)  
+[Short Description of Python Scoping Rules](http://stackoverflow.com/questions/291978/short-description-of-python-scoping-rules)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Function_1.png
 
