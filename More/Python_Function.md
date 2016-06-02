@@ -346,8 +346,23 @@ Python中 如果调用函数A，它返回函数B。这个返回的函数B就叫�
 
 如果需要减少某个函数的参数个数，可以使用 functools.partial() 。 partial() 函数允许给一个或多个参数设置固定的值，减少接下来被调用时的参数个数。假设有下面的函数：
 
+    def spam(a, b, c, d):
+        print(a, b, c, d)
 
+现在使用 partial() 函数来固定某些参数值：
 
+    >>> from functools import partial
+    >>> s1 = partial(spam, 1) # a = 1
+    >>> s1(2, 3, 4)
+    1 2 3 4
+    >>> s2 = partial(spam, d=42) # d = 42
+    >>> s2(1, 2, 3)
+    1 2 3 42
+    >>> s3 = partial(spam, 1, 2, d=42) # a = 1, b = 2, d = 42
+    >>> s3(3)
+    1 2 3 42
+
+可以看出，partial() 固定某些参数并返回一个新的callable对象。这个新的callable接受未赋值的参数，然后跟之前已经赋值过的参数合并起来，最后将所有参数传递给原始函数。
 
 # 更多阅读
 
