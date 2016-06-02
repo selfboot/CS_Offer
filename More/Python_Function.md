@@ -24,7 +24,7 @@ Python 中通过def关键字定义函数，def关键字后跟一个函数的 标
 
 想明白上面的输出就基本理解了局部变量，以及global 关键字了。
 
-** lambda 匿名函数 **
+**lambda 匿名函数**
 
 如果函数体是一个单独的return expression语句，可以选择使用特殊的lambda表达式：
 
@@ -37,7 +37,7 @@ lambda表达式相当于函数体为单个return语句的普通函数的匿名�
 	>>> filter(lambda x, l=low, h=high: h>x>l, aList)
 	[4, 5, 6]
 
-** 文档字符串 **
+**文档字符串**
 
 在函数的第一个逻辑行的字符串是这个函数的`文档字符串`。文档字符串的惯例是一个多行字符串，它的首行以大写字母开始，句号结尾。第二行是空行，从第三行开始是详细的描述，在函数中使用文档字符串时尽量遵循这个惯例，一个例子：
 
@@ -342,10 +342,16 @@ Python中 如果调用函数A，它返回函数B。这个返回的函数B就叫�
 
 这里面调用func的时候就产生了一个闭包——inner_func,并且该闭包持有自由变量——name，因此这也意味着，当函数func的生命周期结束之后，name这个变量依然存在，因为它被闭包引用了，所以不会被回收。（闭包并不是Python中特有的概念，所有把函数作为一等公民的语言均有闭包的概念。）
 
+## partial 函数封装
+
+如果需要减少某个函数的参数个数，可以使用 functools.partial() 。 partial() 函数允许给一个或多个参数设置固定的值，减少接下来被调用时的参数个数。假设有下面的函数：
+
+
+
 
 # 更多阅读
 
-《Python Cookbook 3》  
+《Python Cookbook 3》 Chapter 7: Function  
 [python参数传递介绍](http://brionas.github.io/2014/03/25/Introduction-python-parameters-pass/)  
 [Lambda, filter, reduce and map](http://www.python-course.eu/lambda.php)  
 [Python 使用 list 作为函数参数时，参数是否会初始化？](http://www.zhihu.com/question/21924859#answer-11532338)    
