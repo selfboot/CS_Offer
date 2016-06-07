@@ -10,7 +10,7 @@
 * 类属性（classattribute）：属于一个类中所有对象的属性，不会只在某个实例上发生变化
 * 类方法（classmethod）：那些无须特定的对象实例就能够工作的从属于类的函数。
 
-# [Class 概述](https://docs.python.org/2/tutorial/classes.html)
+# [类概述](https://docs.python.org/2/tutorial/classes.html)
 
 在Python中，定义类是通过class关键字：
 
@@ -342,6 +342,33 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 **元类就是用来创建类的“东西”**。你创建类就是为了创建类的实例对象，但是我们已经学习到了Python中的类也是对象。好吧，元类就是用来创建这些类（对象）的，元类就是类的类。
 
 更多详细内容见 [Python_Metaclass.md](More/Python_Metaclass.md)
+
+# 上下文管理
+
+`上下文管理协议（Context Management Protocol）`包含方法 `__enter__()` 和 `__exit__()`，支持
+该协议的对象要实现这两个方法。
+
+* enter: 进入上下文管理器的运行时上下文。如果指定了 as 子句的话，返回值赋值给 as 子句中的 target。
+* exit: 退出与上下文管理器相关的运行时上下文。返回一个布尔值表示是否对发生的异常进行处理。
+
+在执行with语句包裹起来的代码块之前会调用上下文管理器的 enter 方法，执行完语句体之后会执行 exit 方法。
+
+with 语句的语法格式如下：
+
+    with context_expression [as target(s)]:
+        with-body
+
+Python 对一些内建对象进行改进，加入了对上下文管理器的支持，可以用于 with 语句中，比如可以自动关闭文件、线程锁的自动获取和释放等。如下面例子：
+
+    >>> with open("etc/CS.json") as d:
+    ...:     print d
+    <open file 'etc/CS.json', mode 'r' at 0x109344540>
+    >>> print d
+    <closed file 'etc/CS.json', mode 'r' at 0x109344540>
+    >>> print dir(d)
+    ['__class__', '__delattr__', '__doc__', '__enter__', '__exit__', ...]
+
+通过使用 with 语句，不管在处理文件过程中是否发生异常，都能保证 with 语句执行完毕后已经关闭了打开的文件句柄。
 
 # 更多阅读
 

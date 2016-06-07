@@ -27,7 +27,7 @@ C语言、C++语言没有自动内存回收机制，关于内存的操作的安�
 # 更多阅读
 
 [C++ 引用计数技术及智能指针的简单实现](http://www.cnblogs.com/QG-whz/p/4777312.html)  
-
+[智能指针（现代 C++）](https://msdn.microsoft.com/zh-cn/library/hh279674.aspx)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_SmartPoint_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_SmartPoint_2.png

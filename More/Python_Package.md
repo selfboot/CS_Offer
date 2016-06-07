@@ -58,7 +58,7 @@
     import sys
     sys.path.append("..")
     import mod1
-    import mod2.mod2
+    import lib.mod2
 
 项目中具体如何设置模块，如何设置导入，要考虑的问题比较多，具体可以参考极客学院的 [模块与包](http://wiki.jikexueyuan.com/project/python3-cookbook/module-and-pack.html) 这篇文章。
 
@@ -83,7 +83,7 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
             return sys.modules[module_name]
         else:
             module_path = find(module_name)
-    
+
             if module_path:
                 module = load(module_path)
                 sys.modules[module_name] = module
@@ -103,21 +103,21 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
 如果你创建两个模块，二者相互导入对方，那么就会出现循环导入。例如创建 a.py如下：
 
     import b
-    
+
     def a_test():
         print("in a_test")
         b.b_test()
-    
+
     a_test()
-    
+
 然后在同个文件夹中创建另一个模块，将其命名为b.py。
-    
+
     import a
-    
+
     def b_test():
         print('In test_b"')
         a.a_test()
-    
+
     b_test()
 
 运行任意一个模块，都会引发AttributeError，这是因为这两个模块都在试图导入对方。
@@ -127,7 +127,7 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
 当创建的模块与标准库中的模块同名时，如果导入这个模块，就会出现覆盖导入。举个例子，创建一个名叫math.py的文件，在其中写入如下代码：
 
     import math
-    
+
     def square_root(number):
         return math.sqrt(number)
 
@@ -135,9 +135,12 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
 
 # 更多阅读
 
-[Python 101: All about imports](http://www.blog.pythonlibrary.org/2016/03/01/python-101-all-about-imports/)  
-[极客学院：模块与包](http://wiki.jikexueyuan.com/project/python3-cookbook/module-and-pack.html)  
-[Python 的 import 机制](https://loggerhead.me/posts/python-de-import-ji-zhi.html)  
-[Import From Parent Folder](https://xxx-cook-book.gitbooks.io/python-cook-book/content/Import/ImportFromParentFolder.html)   
-[Python Cookbook：模块与包](http://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p10_modules_and_packages.html)
+[Python 101: All about imports](http://www.blog.pythonlibrary.org/2016/03/01/python-101-all-about-imports/)
+[极客学院：模块与包](http://wiki.jikexueyuan.com/project/python3-cookbook/module-and-pack.html)
+[Python 的 import 机制](https://loggerhead.me/posts/python-de-import-ji-zhi.html)
+[Import From Parent Folder](https://xxx-cook-book.gitbooks.io/python-cook-book/content/Import/ImportFromParentFolder.html)
+[Python Cookbook：模块与包](http://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p10_modules_and_packages.html)  
+[Python relative imports - the hard way](http://melitamihaljevic.blogspot.jp/2013/04/python-relative-imports-hard-way.html)        
+[Attempted relative import in non-package even with init.py](http://stackoverflow.com/questions/11536764/attempted-relative-import-in-non-package-even-with-init-py)  
+
 
