@@ -380,7 +380,8 @@ Python 对一些内建对象进行改进，加入了对上下文管理器的支�
 [Python面向对象详解](http://blog.csdn.net/carolzhang8406/article/details/6903556)  
 [知乎：supper 方法](https://www.zhihu.com/question/20040039)  
 [NewClass Vs ClassicClass](https://wiki.python.org/moin/NewClassVsClassicClass)  
-[python类学习以及mro--多继承属性查找机制](http://blog.csdn.net/imzoer/article/details/8737642)  
+[python类学习以及mro--多继承属性查找机制](http://blog.csdn.net/imzoer/article/details/8737642)   
+[PEP 343: The "with" Statement](https://www.python.org/dev/peps/pep-0343/)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png

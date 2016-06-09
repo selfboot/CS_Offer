@@ -365,7 +365,7 @@ Linux进程的 4GB 地址空间，3G-4G是内核态的地址空间，存放整�
 参考  
 [What is Linux System Calls and Library Functions?](http://www.thegeekstuff.com/2012/07/system-calls-library-functions/)  
 
-## 共享内存的实现原理（共享内存段被映射进进程空间之后，存在于进程空间的什么位置？共享内存段最大限制是多少？）
+## 共享内存的实现原理
 
 
 
