@@ -1,3 +1,4 @@
+
 有关 Python 类的详细内容参见 [Python_Class.md](More/Python_Class.md)
 
 # python 性能调优
@@ -433,10 +434,13 @@ Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块
 * first class functions：这个技术可以让你的函数就像变量一样来使用。也就是说，你的函数可以像变量一样被创建，修改，并当成变量一样传递，返回或是在函数中嵌套函数。
 * 尾递归优化：我们知道递归的害处，那就是如果递归很深的话，stack受不了，并会导致性能大幅度下降。所以，我们使用尾递归优化技术——每次递归时都会重用stack，这样一来能够提升性能，当然，这需要语言或编译器的支持。Python就不支持。  
 
-参考
+更多阅读
 
 [关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)  
-[How do I pass a variable by reference?](http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference)
-
+[Python 简要面试问题](http://blog.sivagao.com/2016-02/guide-python/)  
+[Python面试必须要看的15个问题]  (http://codingpy.com/article/essential-python-interview-questions/)  
+[How do I pass a variable by reference?](http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference)  
+[如何面试Python后端工程师](https://www.zhihu.com/question/33398583)  
+[Ten Things Python Programmers Should Know](http://danieltakeshi.github.io/2013/07/05/ten-things-python-programmers-should-know/)  
 
 
