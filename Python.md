@@ -456,4 +456,3 @@ Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块
 [Ten Things Python Programmers Should Know](http://danieltakeshi.github.io/2013/07/05/ten-things-python-programmers-should-know/)  
 [Python 简要面试问题](http://blog.sivagao.com/2016-02/guide-python/)  
 
-
