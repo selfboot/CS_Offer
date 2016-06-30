@@ -270,6 +270,7 @@ Linux中，与IPC相关的命令包括：ipcs、ipcrm（释放IPC）。IPCS命�
 
 # 更多阅读
 
+《UNIX网络编程》
 《现代操作系统》
 《UNIX 环境高级编程》  
 [进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)  

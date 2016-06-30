@@ -68,13 +68,16 @@
 
 因为协程是一个线程执行，那怎么利用多核CPU呢？最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。
 
-Python 语言内置了协程的支持，也就是我们一般用来制作迭代器的“`生成器”（Generator）`。生成器本身不是一个完整的协程实现，所以 Python 的第三方库中还有一个优秀的替代品 [greenlet](https://github.com/python-greenlet/greenlet)。
-
-
-
 # yield 与生成器
 
-要想理解协程的实现机制，需要先了解 Python 中的 yield 关键字和生成器。
+Python 语言内置了对协程的支持，主要是利用了 yield 和 生成器，关于 yield 和生成器的详细解释，可以参考 [Python_Iterator_Generator_Yield.md] (Python_Iterator_Generator_Yield.md)。
+
+
+
+
+# Greenlet, Gevent
+
+生成器本身不是一个完整的协程实现，所以 Python 的第三方库中还有一个优秀的替代品 [greenlet](https://github.com/python-greenlet/greenlet)。
 
 
 # 更多阅读
@@ -85,6 +88,11 @@ Python 语言内置了协程的支持，也就是我们一般用来制作迭代�
 [利用python yielding创建协程将异步编程同步化](http://www.jackyshen.com/2015/05/21/async-operations-in-form-of-sync-programming-with-python-yielding/)  
 [Python Doc：Yield expressions](https://docs.python.org/2/reference/expressions.html#yield-expressions)  
 [Python yield 使用浅析](http://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/)  
+[Greenlet Vs. Threads](http://stackoverflow.com/questions/15556718/greenlet-vs-threads)  
+[gevent程序员指南](http://xlambda.com/gevent-tutorial/)  
+[用 greenlet 协程处理异步事件](https://blog.tonyseek.com/post/event-manage-with-greenlet/)  
+
+
 
 
 

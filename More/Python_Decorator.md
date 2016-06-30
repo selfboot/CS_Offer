@@ -13,6 +13,7 @@
 [How you implemented your Python decorator is wrong](https://github.com/GrahamDumpleton/wrapt/blob/master/blog/01-how-you-implemented-your-python-decorator-is-wrong.md)  
 [python装饰器详解](http://selfboot.cn/2014/08/10/python_decorator/)  
 [5个理由告诉你为什么要学习使用Python装饰器](http://python.jobbole.com/85393/)  
+[How does the @property decorator work?](http://stackoverflow.com/questions/17330160/how-does-the-property-decorator-work)  
 
 
 
