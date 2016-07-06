@@ -61,6 +61,8 @@ InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截�
 
 [MySQL: InnoDB 还是 MyISAM?](http://coolshell.cn/articles/652.html)   
 [MySQL索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)  
+[MySQL索引原理及慢查询优化](http://tech.meituan.com/mysql-index.html)  
+
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/DB_Engine_1.png
