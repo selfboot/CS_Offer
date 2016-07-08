@@ -384,9 +384,21 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
 参考  
 [Why Python is Slow: Looking Under the Hood](https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/)  
 
-# Python 常用库
+# 常用库或者模块
 
-## requests 库
+## 自带模块
+
+Python作为一个“内置电池”的编程语言，标准库里面拥有非常多好用的模块，比如 collections。我们都知道，Python拥有一些内置的数据类型，比如str, int, list, tuple, dict等， collections 模块在这些内置数据类型的基础上，提供了几个额外的数据类型：
+
+* namedtuple(): 生成可以使用名字来访问元素内容的tuple子类
+* deque: 双端队列，可以快速的从另外一侧追加和推出对象
+* Counter: 计数器，主要用来计数
+* OrderedDict: 有序字典
+* defaultdict: 带有默认值的字典
+
+## 优秀的第三方库
+
+### requests 库
 
 `Requests` 是一个 HTTP 库，用 Python 编写，真正的为人类着想。Python 标准库中的 urllib2 模块提供了你所需要的大多数 HTTP 功能，但是它的 API 太渣了。它需要巨量的工作，甚至包括各种方法覆盖，来完成最简单的任务。
 
@@ -406,7 +418,7 @@ Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃
 
 使用BeautifulSoup解析一段 HTML 代码，得到一个 BeautifulSoup 的对象，然后就可以浏览结构化数据。
 
-## matplotlib 库：
+### matplotlib 库：
 
 Matplotlib 是Python最流行的绘图库之一，使用起来非常方便，可以高度定制绘图模型，允许用户绘制点线图、条线图/直方图、3D图形，甚至是更复杂的图表。
 
@@ -422,18 +434,6 @@ pylab 是 matplotlib 面向对象绘图库的一个接口，考虑用默认配�
     
     show()
 
-## Numpy 库
-
-Numpy 是一个用python实现的科学计算包。包括：
-
-- 一个强大的N维数组对象Array；
-- 比较成熟的函数库；
-- 用于整合C/C++和Fortran代码的工具包；
-- 实用的线性代数、傅里叶变换和随机数生成函数。
-
-## SciPy 库
-
-Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块有最优化、线性代数、积分、插值、快速傅里叶变换其他科学与工程中常用的计算。
 
 #  Python 中的函数式编程
 
@@ -454,4 +454,5 @@ Scipy 是一个开源的Python算法库和数学工具包，SciPy包含的模块
 [如何面试Python后端工程师](https://www.zhihu.com/question/33398583)  
 [Ten Things Python Programmers Should Know](http://danieltakeshi.github.io/2013/07/05/ten-things-python-programmers-should-know/)  
 [Python 简要面试问题](http://blog.sivagao.com/2016-02/guide-python/)  
+
 
