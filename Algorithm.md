@@ -90,6 +90,8 @@ KMP 算法
 《编程之美》  
 [数学之美番外篇：快排为什么那样快](http://mindhacks.cn/2008/06/13/why-is-quicksort-so-quick/)  
 [为什么我反对纯算法面试题](http://coolshell.cn/articles/8138.html)  
+[十道海量数据处理面试题与十个方法大总结](http://blog.csdn.net/v_JULY_v/article/details/6279498)  
+[Bloom Filter详解](http://zheming.wang/blog/2014/07/22/2B59B3D3-6AF2-4759-8585-3B9B7C480C33/)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_1.jpg
