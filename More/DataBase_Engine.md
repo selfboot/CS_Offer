@@ -57,6 +57,7 @@ InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截�
 * 外键约束；
 * 行锁定。
 
+
 # 更多阅读
 
 [MySQL: InnoDB 还是 MyISAM?](http://coolshell.cn/articles/652.html)   

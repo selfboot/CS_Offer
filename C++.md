@@ -386,19 +386,6 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 参考    
 [sizeof() a vector](http://stackoverflow.com/questions/2373189/sizeof-a-vector)
 
-## C++内存堆栈
-
-堆区，栈区的区别：
-
-* 管理方式：对于栈来讲，是由编译器自动管理；对于堆来说，分配释放工作由程序员控制，容易造成内存泄露。
-* 空间大小：一般来讲在32位系统下，堆内存可以达到4G的空间，从这个角度来看堆内存几乎是没有什么限制的。但是对于栈来讲，一般都是有一定的空间大小的。
-* 碎片问题：对于堆来讲，频繁的new/delete势必会造成内存空间的不连续，从而造成大量的碎片，使程序效率降低。对于栈来讲，则不会存在这个问题。
-* 生长方向：对于堆来讲，向着内存地址增加的方向增长；对于栈来讲，向着内存地址减小的方向增长。
-* 分配方式：堆都是动态分配（运行期）的，没有静态分配（编译期）的堆。栈有2种分配方式：静态分配和动态分配（alloca()函数可以动态分配栈的内存空间，释放的时候由编译器自己释放）。
-* 分配效率：计算机在底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。堆则是C/C++函数库提供的，它的机制是很复杂的，效率比栈要低得多。
-
-［[栈空间分布，printf 函数参数](http://www.nowcoder.com/questionTerminal/b5e03f2361f04631b2eaf567029385c6)］  
-
 ## 常见的内存错误
 
 常见内存错误以及解决办法:
@@ -445,14 +432,39 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 ［[内存管理错误代码](http://www.nowcoder.com/questionTerminal/84598a88502c499d995db941c5fb62a2)］  
 ［[delete 内存泄漏](http://www.nowcoder.com/questionTerminal/9fb652d48bee45bcb47771b2e3c6f690)］  
 
+## malloc 和 free 操作
+
+`void *malloc(long NumBytes)` 分配 NumBytes 个字节，并返回了指向这块内存的首指针。如果分配失败，则返回一个空指针（NULL）。分配失败的原因有多种，比如说空间不足就是一种。malloc() 是从堆里面分配空间，也就是说函数返回的指针是指向堆里面的一块内存。操作系统中有一个记录空闲内存地址的链表。当操作系统收到程序的申请时，就会遍历该链表，然后就寻找第一个空间大于所申请空间的堆结点，然后就将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。
+
+malloc()分配的存储空间比所要求的要稍大一些，额外的空间用来记录管理信息——分配块的长度，分配块是否已经可用（free 掉）。用结构体来记录管理信息，如下：
+
+    struct mem_control_block { 
+        int is_available;    //该块是否可用；
+        int size;            //该块可用空间的大小 
+    };
+
+`void free(void *FirstByte)` 将之前用malloc分配的空间还给程序或者是操作系统，也就是释放了这块内存，让它重新得到自由。free()释放的是`指针指向的内存`！指针并没有被释放，指针仍然指向原来的存储空间。指针是一个变量，只有程序结束时才被销毁。释放了内存空间后，原来指向这块空间的指针还是存在！只不过现在指针指向的内容是未定义的，因此，释放内存后最好把指针指向NULL，防止后面不小心又解引用该指针了。
+
+free()函数非常简单，只有一个参数，只要把指向申请空间的指针传递给free()即可。这是因为 free 是根据结构体 mem_control_block 的信息来释放malloc()申请的空间。
+
+    void free(void *ptr)  
+    { 
+        struct mem_control_block *free; 
+        free = ptr - sizeof(struct mem_control_block); 
+        free->is_available = 1; 
+        return; 
+    }
+
+malloc 的一个具体使用例子在 [gist](https://gist.github.com/xuelangZF/573b1da0fbe0e7c6a568bd9530456766) 上。
+
 ## new 和 malloc 的对比
 
 1. new/delete是C++操作符，malloc/free是C/C++函数。
 2. 使用new操作符申请内存分配时无须指定内存块的大小，编译器会根据类型信息自行计算，而malloc则需要显式地指出所需内存的尺寸。
-3. new/delete会调用对象的构造函数/析构函数以完成对象的构造/析构。而malloc只分配空间。
-4. new 操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void * ，需要通过强制类型转换将 void* 指针转换成我们需要的类型。
+3. new/delete会调用对象的构造函数/析构函数以完成对象的构造/析构，而malloc只负责分配空间。
+4. new 操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void *，需要通过强制类型转换将 void* 指针转换成我们需要的类型。
 5. 效率上：malloc的效率高一点，因为只分配了空间。
-6. opeartor new /operator delete 可以被重载，而malloc/free并不允许重载。
+6. opeartor new /operator delete 可以被重载，而 malloc/free 并不允许重载。
 
 参考  
 [细说new与malloc的10点区别](http://www.cnblogs.com/QG-whz/p/5140930.html)
