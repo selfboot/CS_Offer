@@ -1,8 +1,4 @@
-# Stackoverflow 精选（Python 相关）
-
-标签（空格分隔）： Python
-
----
+Stackoverflow 上面Python相关问题精选。
 
 # Semantic
 
@@ -14,6 +10,7 @@
 [Explain Python's slice notation][6]  
 [What does ** (double star) and * (star) do for Python parameters?][7]  
 [Determine the type of an object?][8]  
+[How to define two-dimensional array in python](http://stackoverflow.com/questions/6667201/how-to-define-two-dimensional-array-in-python)  
 
 # Class 
 

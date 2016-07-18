@@ -225,12 +225,25 @@ ssthresh（slow start threshold）是一个上限，当cwnd >= ssthresh时，就
 TCP Reno：[RFC5681](http://tools.ietf.org/html/rfc5681)
 TCP New Reno：[RFC682](http://tools.ietf.org/html/rfc6582)
 
+# QQ 通信协议选择：UDP
+
+QQ 为什么采用 UDP 协议？
+
+最本质上UDP的优势还是`带宽的利用`。这一切要回归到99~03年的网络状况，当时网络的特点就是接入带宽很窄而且抖动特别厉害。所谓抖动可能是多方面的，例如延时突发性地暴增、也有可能是由于路由层面的变化突然导致路由黑洞，还各种等等等等的问题。TCP因为拥塞控制、保证有序等原因，在这种网络状态上对带宽的利用是非常低的。而且因为网络抖动的原因，应用层心跳超时（一般不依靠keepalive）应用层主动断掉socket之后TCP需要三次握手才能重新建立链接，一旦出现频繁的小抖动就会使得带宽利用更低。而等待四次挥手的时间，也会占用服务器上宝贵的资源。总结来说，当网络差到一定程度了，TCP的优势反而会成为劣势。
+
+使用UDP对抗网络抖动，说到底就是在应用层比TCP更快地探测和重传，一旦超过一定的时间没有收到回复，客户端可以选择马上重试，在服务器端则可以果断地断掉socket。而可以应用UDP的时候，往往是你的应用层协议本身已经具备了一定的面向连接的特性。如果你应用层的协议已经达到了一定程度的消息幂等，客户端可以几乎无脑地进行重传，这样就可以尽可能地降低网络抖动的影响，同时也可以尽可能地利用整个带宽。而刚好QQ的协议，就具备类似的特点。
+
+简单来说就是我们可以使用UDP实现一个面向连接协议，这个协议可以很好地适应当时的网络状况和QQ本身的业务。但凡事都有成本，成本就是你的应用层协议本身需要去实现抵抗网络异常带来的问题。例如`乱序`、重传，业务数据的分片和重组、网络状态探测等。
+
+（当然，也可能是因为当时没有epoll这种可以支持成千上万tcp并发连接的技术，所以他们使用了udp，然后在udp上面封装了模拟tcp，解决大并发的问题。）
+
 ## 参考
 
 [图解TCP-IP协议](http://www.cricode.com/3568.html)  
 [简析TCP的三次握手与四次分手](http://www.jellythink.com/archives/705)  
 [TCP 的那些事儿（上）](http://coolshell.cn/articles/11564.html)  
 [TCP 的那些事儿（下）](http://coolshell.cn/articles/11609.html)  
+[QQ 为什么采用 UDP 协议，而不采用 TCP 协议实现](https://www.zhihu.com/question/20292749)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_2.png

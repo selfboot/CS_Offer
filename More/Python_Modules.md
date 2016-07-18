@@ -2,7 +2,171 @@
 
 # [itertools](https://docs.python.org/2.7/library/itertools.html)
 
+itertools 模块实现了许多可以创建不同功能迭代器的函数，此模块中的所有函数返回的迭代器都可以与for循环语句以及其他包含迭代器（如生成器和生成器表达式）的函数联合使用，主要有以下函数组成：
 
+![][1]
+
+## 无限迭代器
+
+### itertools.count(start=0, step=1)
+
+创建一个迭代器，生成从n开始的连续整数，如果忽略n，则从0开始计算，经常和 imap()，izip() 一起使用。
+
+    for i in izip(count(1), ['a', 'b', 'c']):
+        print i
+    
+    (1, 'a')
+    (2, 'b')
+    (3, 'c')
+
+### itertools.cycle(iterable)
+
+创建一个迭代器，对iterable中的元素反复执行循环操作，内部会生成iterable中的元素的一个副本，此副本用于返回循环中的重复项。
+
+    i = 0
+    for item in cycle(['a', 'b', 'c']):
+        i += 1
+        if i == 6:
+            break
+        print (i, item)
+    
+    (1, 'a')
+    (2, 'b')
+    (3, 'c')
+    (4, 'a')
+    (5, 'b')
+    (6, 'c')
+
+### itertools.repeat(object[, times])
+
+创建一个迭代器，重复生成object，times（如果已提供）指定重复计数，如果未提供times，将无止尽返回该对象。
+
+    >>> list(imap(pow, xrange(10), repeat(2)))
+    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+## 处理输入序列迭代器
+
+### itertools.product(*iterables[, repeat])¶
+
+创建一个迭代器，生成表示item1，item2等中的项目的`笛卡尔积`的元组，repeat是一个关键字参数，指定重复生成序列的次数。
+
+    a = (1, 2)
+    b = ('A', 'B')
+    c = itertools.product(a,b)
+    for elem in c:
+        print elem
+    
+    (1, 'A')
+    (1, 'B')
+    (2, 'A')
+    (2, 'B')
+
+### itertools.permutations(iterable[, r])
+
+创建一个迭代器，返回iterable中任意取r个元素做排列的元组，如果省略了r，那么序列的长度与iterable中的项目数量相同。
+
+    >>> print list(permutations([1,1,2,3], 3))
+    [(1, 1, 2), (1, 1, 3), (1, 2, 1), (1, 2, 3), (1, 3, 1), (1, 3, 2), (1, 1, 2), (1, 1, 3), (1, 2, 1), (1, 2, 3), (1, 3, 1), (1, 3, 2), (2, 1, 1), (2, 1, 3), (2, 1, 1), (2, 1, 3), (2, 3, 1), (2, 3, 1), (3, 1, 1), (3, 1, 2), (3, 1, 1), (3, 1, 2), (3, 2, 1), (3, 2, 1)]
+
+### itertools.combinations(iterable, r)
+
+创建一个迭代器，返回iterable中任意取r个元素做组合的元组，如果省略了r，那么序列的长度与iterable中的项目数量相同。
+
+    >>> print list(combinations([1,1,2,3], 3))
+    [(1, 1, 2), (1, 1, 3), (1, 2, 3), (1, 2, 3)]
+
+## 组合生成器
+
+### itertools.imap(function, *iterables)
+
+创建一个迭代器，生成项function(i1, i2, ..., iN)，其中i1，i2...iN 分别来自可迭代对象 iter1，iter2 ... iterN，如果function为None，则返回(i1, i2, ..., iN)形式的元组，只要提供的任何一个可迭代对象不再生成值，迭代就会停止。
+
+    print 'Doubles:'
+    for i in imap(lambda x:2*x, xrange(5)):
+        print i
+    
+    print 'Multiples:'
+    for i in imap(lambda x,y:(x, y, x*y), xrange(5), xrange(5,10)):
+        print '%d * %d = %d' % i
+
+### itertools.ifilter(predicate, iterable)
+
+返回一个迭代器，只包括测试函数 predicate 返回true时的项，类似于内置函数 filter()。如果 predicate 为 None，范围 iterable 中为 True 的对象。具体实现等价于下面程序：
+
+    def ifilter(predicate, iterable):
+        # ifilter(lambda x: x%2, range(10)) --> 1 3 5 7 9
+        if predicate is None:
+            predicate = bool
+        for x in iterable:
+            if predicate(x):
+                yield x
+
+### itertools.chain(*iterables)
+
+将多个可迭代对象作为参数，返回单个迭代器，它产生所有可迭代对象的内容，就好像他们是来自于一个单一的序列。
+
+    for i in chain([1, 2, 3], ['a', 'b', 'c']):
+        print i
+    1
+    2
+    3
+    a
+    b
+    c
+
+### itertools.compress(data, selectors)
+
+提供一个选择列表，对原始数据进行筛选，实现如下：
+
+    def compress(data, selectors):
+        # compress('ABCDEF', [1,0,1,0,1,1]) --> A C E F
+        return (d for d, s in izip(data, selectors) if s)
+
+### itertools.groupby(iterable[, key])
+
+返回一个产生按照key进行分组后的值集合的迭代器：
+
+    >>> a = ['aa', 'ab', 'abc', 'bcd', 'abcde']
+    >>> for i, k in groupby(a, len):
+    ...     print i, list(k)
+    ...
+    2 ['aa', 'ab']
+    3 ['abc', 'bcd']
+    5 ['abcde']
+
+再来看一个稍微复杂的例子：
+
+    from itertools import groupby
+    
+    d = dict(a=1, b=2, c=1, d=2, e=1, f=2, g=3)
+    di = sorted(d.iteritems(), key=lambda x: x[1])
+    for k, g in groupby(di, key=lambda x: x[1]):
+        print k, map(lambda x: x[1], g)
+    # 1 [1, 1, 1]
+    # 2 [2, 2, 2]
+    # 3 [3]
+
+### itertools.islice(iterable, start, stop[, step])
+
+返回的迭代器，包含输入可迭代对象根据索引来选取的项。
+
+    print 'Stop at 5:'
+    for i in islice(count(), 5):
+        print i
+    
+    print 'Start at 5, Stop at 10:'
+    for i in islice(count(), 5, 10):
+        print i
+
+### itertools.izip(*iterables)
+
+返回一个合并了多个可迭代对象为一个元组的迭代器，元组(i1, i2, ... iN)，其中i1，i2 ... iN 分别来自可迭代对象iter1，iter2 ... iterN，只要提供的某个可迭代对象不再生成值，迭代就会停止。类似于内置函数zip()，只是它返回的是一个迭代器而不是一个列表。
+
+    for i in izip([1, 2, 3], ['a', 'b', 'c']):
+        print i
+    (1, 'a')
+    (2, 'b')
+    (3, 'c')
 
 # [collections](https://docs.python.org/2.7/library/collections.html)
 
@@ -67,18 +231,18 @@ deque（double-ended queue），双端队列实现了从队列头部 O(1) 时间
 
 maxlen 用来声明 deque 的最长长度。没有给定 maxlen 时，deque 可以为任意长度。当给定 maxlen 时，deque 中元素个数最多为 maxlen个，当队列满后，在队列一端添加元素导致队列另一段头部被弹出。下面是一个简单的示例：
 
->>> from collections import deque
->>> d = deque('ghi')                 # make a new deque with three items
->>> d.append('j')                    # add a new entry to the right side
->>> d.appendleft('f')                # add a new entry to the left side
->>> d                                # show the representation of the deque
-deque(['f', 'g', 'h', 'i', 'j'])
->>> d.pop()                          # return and remove the rightmost item
-'j'
->>> d.popleft()                      # return and remove the leftmost item
-'f'
->>> list(d)                          # list the contents of the deque
-['g', 'h', 'i']
+    >>> from collections import deque
+    >>> d = deque('ghi')                 # make a new deque with three items
+    >>> d.append('j')                    # add a new entry to the right side
+    >>> d.appendleft('f')                # add a new entry to the left side
+    >>> d                                # show the representation of the deque
+    deque(['f', 'g', 'h', 'i', 'j'])
+    >>> d.pop()                          # return and remove the rightmost item
+    'j'
+    >>> d.popleft()                      # return and remove the leftmost item
+    'f'
+    >>> list(d)                          # list the contents of the deque
+    ['g', 'h', 'i']
 
 ### [namedtuple](https://docs.python.org/2.7/library/collections.html#namedtuple-factory-function-for-tuples-with-named-fields)
 
@@ -140,4 +304,6 @@ namedtuple主要用来产生可以使用名称来访问元素的数据对象，�
 
 
 
+
+[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Modules_1.png
 
