@@ -86,8 +86,8 @@
 [浅谈计算机中的存储模型（一）存储体系](http://blog.csdn.net/wwh578867817/article/details/48985335)  
 [浅谈计算机中的存储模型（二）物理内存](http://blog.csdn.net/wwh578867817/article/details/48986097)  
 [浅谈计算机中的存储模型（三）虚拟存储器](http://blog.csdn.net/wwh578867817/article/details/48998213)  
-[分段，分页与段页式存储管理](http://blog.csdn.net/zephyr_be_brave/article/details/8944967)
-
+[分段，分页与段页式存储管理](http://blog.csdn.net/zephyr_be_brave/article/details/8944967)  
+[探究操作系统的内存分配（malloc）对齐策略](http://www.cnblogs.com/Creator/archive/2012/04/05/2433386.html)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_1.png
 

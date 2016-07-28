@@ -10,7 +10,7 @@ Python的特点？
 * Python用途非常广泛——网络应用，自动化，科学建模，大数据应用等等。它也常被用作“胶水语言”，帮助其他语言和组件改善运行状况。
 * Python让困难的事情变得容易，因此程序员可以专注于算法和数据结构的设计，而不用处理底层的细节。
 
-有关 Python 类的详细内容参见 [Python_Class.md](More/Python_Class.md)
+有关 Python 类的详细内容参见 [Class.md](Class.md)
 
 # python 性能调优
 
@@ -313,7 +313,7 @@ sorted 中cmp, key, reverse 和 sort 的用法一样，不过它返回一个排�
 
 简单来说，Python先把代码（.py文件）编译成字节码，交给字节码虚拟机，然后虚拟机一条一条执行字节码指令，从而完成程序的执行。这里字节码在Python虚拟机程序里对应的是PyCodeObject对象，.pyc文件是字节码在磁盘上的表现形式。
 
-更多内容参见 [Python_HowToRun.md](More/Python_HowToRun.md)
+更多内容参见 [HowToRun.md](HowToRun.md)
 
 ## Python 垃圾回收机制
 

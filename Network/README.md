@@ -64,7 +64,7 @@ OSI(Open System Interconnect)，即开放式系统互联。 一般都叫 OSI 参
 
 socket起源于UNIX，在Unix`一切皆文件`哲学的思想下，socket是一种"打开—读/写—关闭"模式的实现，服务器和客户端各自维护一个"文件"，在建立连接打开后，可以向自己文件写入内容供对方读取或者读取对方内容，通讯结束时关闭文件。
 
-详细内容参见 [Network_Socket](more/Network_Socket.md)
+详细内容参见 [Socket](Socket.md)
 
 参考：  
 [Socket通信原理简介](http://www.jianshu.com/p/90348ef3f41e)  
@@ -80,7 +80,7 @@ TCP(Transmission Control Protocol)为应用程序之间提供面向连接的可�
 ［[拥塞控制算法](http://www.nowcoder.com/questionTerminal/a2b95450f85c4855877a0c4f06c91a72)］  
 ［[状态转换流程](http://www.nowcoder.com/questionTerminal/246945f0e26541b89f4735c79e3f16a2)］  
 
-详细内容参见 [Network_TCP](more/Network_TCP.md)
+详细内容参见 [TCP](TCP.md)
  
 ### TCP，UDP区别
 
@@ -106,7 +106,7 @@ TCP协议和UDP协议特性区别，主要从连接性、可靠性、有序性�
 GET     | HTTP包头 |  明文  |  不安全  |  长度较小 | 查询数据
 POST    | HTTP正文 | 可明可密|  安全   | 支持较大数据传输 |修改数据
 
-详细内容参见 [Network_HTTP](More/Network_HTTP.md)
+详细内容参见 [HTTP](HTTP.md)
 
 ## 访问网页过程
 
