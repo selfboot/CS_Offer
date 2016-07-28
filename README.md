@@ -4,25 +4,25 @@
 
 主要包含的计算机基础有以下几个大方向：
 
-* [DataBase](DataBase／)
-* [DataStructure](DataStructure／)
-* [Linux_OS](Linux_OS／)
-* [Network](Network)
-* [Algorithm](Algorithm)
-* [Math](Math)
+* [DataBase](DataBase/)
+* [DataStructure](DataStructure/)
+* [Linux_OS](Linux_OS/)
+* [Network](Network/)
+* [Algorithm](Algorithm/)
+* [Math](Math/)
 
 编程语言目前有：
 
-* [Python](Python)
-* [C++](C++)
-* [Java](Java)
+* [Python](Python/)
+* [C++](C++/)
+* [Java](Java/)
 
 此外，还有几个目录：
 
-* [C++_Code](C++_Code)：一些 C++ 的代码
-* [OnlineJudge](OnlineJudge)：一些 OJ 的解题代码
-* [Offer](Offer)：主要分享一些和找工作相关的内容
-* [Others](Others)：一些无法归类，但是可能有用的东西
+* [C++_Code](C++_Code/)：一些 C++ 的代码
+* [OnlineJudge](OnlineJudge/)：一些 OJ 的解题代码
+* [Offer](Offer/)：主要分享一些和找工作相关的内容
+* [Others](Others/)：一些无法归类，但是可能有用的东西
 
 最后，[Questions](Questions.md) 文件列出了一些重要的知识点，可以用来自检，看看自己有没有遗漏一些重要知识点。
 
