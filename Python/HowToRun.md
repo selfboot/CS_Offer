@@ -12,11 +12,17 @@ PyCodeObject 对象的创建时机是模块加载的时候，即import。例如�
 Python提供了内置函数compile可以编译Python代码和查看PyCodeObject对象，如下：
 
 
+# Python 运行慢的原因
+  
+我们知道和 C/C++ 相比，Python效率确实不高，那么有哪些原因导致了Python 的低效呢？
 
+1. Python 是动态类型，C++ 是静态类型；
+2. Python 是解释型语言，C++是编译型的。
+3. Python 的对象模型导致低效的内存访问。
 
+# 更多阅读
 
-参考  
 [Python程序的执行原理](http://tech.uc.cn/?p=1932)  
 [谈谈 Python 程序的运行原理](http://www.restran.net/2015/10/22/how-python-code-run/)  
-
+[Why Python is Slow: Looking Under the Hood](https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/)  
 

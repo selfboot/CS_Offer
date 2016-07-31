@@ -147,7 +147,6 @@ gevent是一个基于libev的并发库。它为各种并发和网络相关的任
     import gevent
     import urllib2
     
-    
     def f(url):
         print('GET: %s' % url)
         resp = urllib2.urlopen(url)
