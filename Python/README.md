@@ -8,6 +8,13 @@ Python的特点：
 * Python用途非常广泛——网络应用，自动化，科学建模，大数据应用等等。它也常被用作“胶水语言”，帮助其他语言和组件改善运行状况。
 * Python让困难的事情变得容易，因此程序员可以专注于算法和数据结构的设计，而不用处理底层的细节。
 
+Python 最大的缺点：
+
+* 执行速度：虽然 Cpython 也会先将代码编译为字节码，然后交给解释器执行，但是速度还是比纯编译型语言慢。
+* GIL 全局锁：Cpython 实现中，为了保证多线程程序中的线程安全，加入了 GIL 锁，因此 Python 并不能实现多线程并行计算。
+
+Python 目前主要有两个大的版本，2.x 和 3.x。这里主要讨论 2.x，关于2.x 和 3.x 的区别，可以参考 [py2vs3](py2Vs3.md)
+
 # 函数
 
 函数是重用的程序段。允许给一块语句一个名称，然后可以在你的程序的任何地方使用这个名称任意多次地运行这个语句块。这被称为`调用函数`。
@@ -180,6 +187,16 @@ python里面提供了另一个比较好玩的东西：协程（Coroutine）。�
 
 更多内容参考 [Test](Test.md)
  
+# 缺陷与陷阱
+
+Python 简单，但又危机四伏，充满陷阱，[StackOverFlow 上面有一个问题](http://stackoverflow.com/questions/530530/python-2-x-gotchas-and-landmines)总结了一些常见的缺陷，主要有下面这些：
+
+* 函数参数带默认值
+* lambda 参数捕获
+* 创建嵌套数组
+
+更多内容参考 [Gotchas](Gotchas.md)
+
 # 代码的优化
 
 虽然运行速度慢是 Python 与生俱来的特点，大多数时候我们用 Python 就意味着放弃对性能的追求。但是，就算是用纯 Python 完成同一个任务，老手写出来的代码可能会比菜鸟写的代码块几倍，甚至是几十倍（这里不考虑算法的因素，只考虑语言方面的因素）。
@@ -214,9 +231,13 @@ Python 中 list 类似于 C++ STL中 vector 的实现。在需要的时候扩容
 
 更多内容参见 [More](More.md)
 
+# 更多问题
+
+想了解别人在 Python 开发中遇到了哪些问题，可以查看 StackOverflow 上面经典的 python 问题。整理了一份问题清单，放在 [StackOverflow](StackOverflow.md)
 
 # 更多阅读
 
+[Hidden features of Python](http://stackoverflow.com/questions/101268/hidden-features-of-python)  
 [关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)  
 [Python 简要面试问题](http://blog.sivagao.com/2016-02/guide-python/)  
 [Python面试必须要看的15个问题]  (http://codingpy.com/article/essential-python-interview-questions/)  

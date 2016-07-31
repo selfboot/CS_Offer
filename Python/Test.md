@@ -45,7 +45,11 @@
 
     $ python mydict_test.py
 
-参考  
+# mock
+
+ 
+# 更多阅读
+
 [单元测试：廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00140137128705556022982cfd844b38d050add8565dcb9000)  
 
 
