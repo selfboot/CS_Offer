@@ -100,27 +100,65 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
 
 ## 循环导入
 
-如果你创建两个模块，二者相互导入对方，那么就会出现循环导入。例如创建 a.py如下：
+如果你创建两个模块，二者相互导入对方，那么有可能会出现`循环导入`。例如创建 a.py如下：
 
     import b
-
+    
     def a_test():
-        print("in a_test")
-        b.b_test()
-
+        print "in a_test"
+        print b.x
+    
     a_test()
 
 然后在同个文件夹中创建另一个模块，将其命名为b.py。
 
     import a
-
+    x = 1
+    
     def b_test():
-        print('In test_b"')
+        print 'In test_b'
         a.a_test()
-
+    
     b_test()
 
-运行任意一个模块，都会引发AttributeError，这是因为这两个模块都在试图导入对方。
+当我们导入 a 模块时，会引发AttributeError，这是因为导入a时，在开始时导入 b 模块，而 b 模块调用 b_test 时需要a的 a_test，这时候 a 模块的 a_test 并没有成功加载。
+
+注意不是所有的互相导入都会引发 AttributeError，[官方文档](https://docs.python.org/2/faq/programming.html#what-are-the-best-practices-for-using-import-in-a-module)这样说：
+
+> Circular imports are fine where both modules use the “import <module>” form of import. They fail when the 2nd module wants to grab a name out of the first (“from module import name”) and the import is at the top level. That’s because names in the 1st are not yet available, because the first module is busy importing the 2nd.
+
+继续以上面的两个模块为例，如果将 a.py 和 b.py 改为下面代码，就不会出现循环导入的错误：
+
+a.py
+
+    def a_test():
+        import b
+        print "in a_test"
+        print b.x
+    
+    a_test()
+
+b.py
+
+    x = 1
+    
+    def b_test():
+        import a
+        print 'In test_b'
+        a.a_test()
+    
+    b_test()
+
+这样的话，先导入 a，再导入 b 的结果如下：
+
+    >>> import a
+    In test_b
+    in a_test
+    1
+    in a_test
+    1
+    >>> import b
+    >>> 
 
 ## 覆盖导入
 
@@ -136,12 +174,12 @@ Python 提供了 import 语句来实现类库的引用，当我们执行一行 `
 
 # 更多阅读
 
-[Python 101: All about imports](http://www.blog.pythonlibrary.org/2016/03/01/python-101-all-about-imports/)
+[Python 101: All about imports](http://www.blog.pythonlibrary.org/2016/03/01/python-101-all-about-imports/)  
 [极客学院：模块与包](http://wiki.jikexueyuan.com/project/python3-cookbook/module-and-pack.html)
-[Python 的 import 机制](https://loggerhead.me/posts/python-de-import-ji-zhi.html)
-[Import From Parent Folder](https://xxx-cook-book.gitbooks.io/python-cook-book/content/Import/ImportFromParentFolder.html)
-[Python Cookbook：模块与包](http://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p10_modules_and_packages.html)  
-[Python relative imports - the hard way](http://melitamihaljevic.blogspot.jp/2013/04/python-relative-imports-hard-way.html)        
-[Attempted relative import in non-package even with init.py](http://stackoverflow.com/questions/11536764/attempted-relative-import-in-non-package-even-with-init-py)  
+[Python 的 import 机制](https://loggerhead.me/posts/python-de-import-ji-zhi.html)  
+[Import From Parent Folder](https://xxx-cook-book.gitbooks.io/python-cook-book/content/Import/ImportFromParentFolder.html)  
+[Python Cookbook：模块与包](http://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p10_modules_and_packages.html)    
+[Python relative imports - the hard way](http://melitamihaljevic.blogspot.jp/2013/04/python-relative-imports-hard-way.html)          
+[Attempted relative import in non-package even with init.py](http://stackoverflow.com/questions/11536764/attempted-relative-import-in-non-package-even-with-init-py)    
 
 

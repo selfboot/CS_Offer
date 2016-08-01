@@ -192,8 +192,14 @@ python里面提供了另一个比较好玩的东西：协程（Coroutine）。�
 Python 简单，但又危机四伏，充满陷阱，[StackOverFlow 上面有一个问题](http://stackoverflow.com/questions/530530/python-2-x-gotchas-and-landmines)总结了一些常见的缺陷，主要有下面这些：
 
 * 函数参数带默认值
+* 类变量的使用
 * lambda 参数捕获
 * 创建嵌套数组
+* 捕捉多个异常
+* 遍历的同时进行修改
+* 循环加载模块
+* LEGB 作用域解析
+* 不可变对象 tuple 的赋值
 
 更多内容参考 [Gotchas](Gotchas.md)
 

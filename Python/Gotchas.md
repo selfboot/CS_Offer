@@ -192,7 +192,11 @@ Python的作用域解析是基于叫做LEGB（Local（本地），Enclosing（�
       File "<stdin>", line 2, in foo
     UnboundLocalError: local variable 'x' referenced before assignment
 
-这是因为，在一个作用域里面给一个变量赋值的时候，Python自动认为这个变量是这个作用域的本地变量，并屏蔽作用域外的同名的变量。很多时候可能在一个函数里添加一个赋值的语句会让你从前本来工作的代码得到一个UnboundLocalError。
+这是因为，在一个作用域里面给一个变量赋值的时候，Python自动认为这个变量是这个作用域的本地变量，并屏蔽作用域外的同名的变量。很多时候可能在一个函数里添加一个赋值的语句会让你从前本来工作的代码得到一个`UnboundLocalError`。
+
+下面的是文档中的解释：
+
+> This is because when you make an assignment to a variable in a scope, that variable becomes local to that scope and shadows any similarly named variable in the outer scope. 
 
 在使用列表（lists）的时候，很容易就触发这种错误。看下面这个例子：
 
@@ -291,6 +295,72 @@ Python的作用域解析是基于叫做LEGB（Local（本地），Enclosing（�
     1	# 第一次输出，因为模块a在最后调用了‘print f()’
     1	# 第二次输出，这是我们调用g
 
+# 不可变对象 tuple 的赋值
+
+我们知道 tuple 是不可变对象，所以下面的程序运行正常：
+
+    >>> a_tuple = (1, 2)
+    >>> a_tuple[0] += 1
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: 'tuple' object does not support item assignment
+    >>> a_tuple
+    (1, 2)
+
+`a_tuple[0] += 1` 理所当然地引起异常，它实际上和下面的语句等效：
+
+    >>> result = a_tuple[0] + 1
+    >>> a_tuple[0] = result
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: 'tuple' object does not support item assignment
+
+那么，再来看下面的代码：
+
+    >>> a_tuple = (['foo'], 'bar')
+    >>> a_tuple[0] += ['item']
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: 'tuple' object does not support item assignment
+
+到这里也没有问题，tuple 不可变，对其进行赋值会引起异常。但是，当我们读取 a_tuple 的值时，发现它被改变了，如下：
+
+    >>> a_tuple
+    (['foo', 'item'], 'bar')
+
+为了解释这里的怪异现象，需要知道以下两点：
+
+1. 如果一个对象实现了 Magic Method: `__iadd__`，当使用 += 操作符时实际调用了该函数，`然后返回值被用于赋值操作`；
+2. 对于 list 来说，`__iadd__` 等同于 extend 方法。
+
+所以
+
+    >>> a_list = []
+    >>> a_list += [1]
+    >>> a_list
+    [1]
+
+等同于下面的句子：
+
+    >>> result = a_list.__iadd__([1])
+    >>> a_list = result     # 赋值操作
+
+这里 a_list 指向的对象已经被改变，result 指向改变后的对象，然后 a_list 又指向 result。这里 `a_list = result` 其实没有任何意义，因为 a_list 和 result 本来就是指向同一个对象。但是，这个赋值操作确实存在。这就可以解释上面的错误了：
+
+    >>> result = a_tuple[0].__iadd__(['item'])
+    >>> a_tuple[0] = result
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: 'tuple' object does not support item assignment
+
+__iadd__ 操作没有问题，成功了添加了元素。接着，虽然 result 和 a_tuple[0] 已经指向了同一个对象，不过赋值操作依旧存在，又因为 tuple 是不可变对象，所以导致抛出异常。
+
+如果改用 extend 就不会有这个问题，如下：
+
+    >>> a_tuple = (['foo'], 'bar')
+    >>> a_tuple[0].extend(['item'])
+    >>> a_tuple
+    (['foo', 'item'], 'bar')
 
 # 更多阅读
 [Python 2.x gotcha's and landmines](http://stackoverflow.com/questions/530530/python-2-x-gotchas-and-landmines)  
@@ -300,5 +370,5 @@ Python的作用域解析是基于叫做LEGB（Local（本地），Enclosing（�
 [Python Gotchas](http://www.ferg.org/projects/python_gotchas.html)  
 [Python程序员的10个常见错误](http://python.jobbole.com/68256/)  
 [Why am I getting an UnboundLocalError when the variable has a value?](https://docs.python.org/2/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value)  
-
+[Programming FAQ](https://docs.python.org/2/faq/programming.html)  
 
