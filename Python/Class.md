@@ -1,4 +1,4 @@
-面向对象重要的概念就是类（Class）和实例（Instance），必须牢记类是抽象的模板，比如Student类，而实例是根据类创建出来的一个个具体的“对象”，每个对象都拥有相同的方法，但各自的数据可能不同。
+面向对象重要的概念就是类（Class）和实例（Instance），类是抽象的模板，而实例是根据类创建出来的一个个具体的“对象”，每个对象都拥有相同的方法，但各自的数据可能不同。
 
 先回顾下 OOP 的常用术语：
 
@@ -135,7 +135,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 
     Student.books.extend(["python", "javascript"])  
     print "Student book list: %s" %Student.books    
-    # class can add class attribute after class defination
+    # class can add class attribute after class definition
     Student.hobbies = ["reading", "jogging", "swimming"]
     print "Student hobby list: %s" %Student.hobbies    
     print dir(Student)
@@ -208,7 +208,7 @@ Python 是面向对象语言，支持类的继承（包括单重和多重继承�
 
 子类可以覆盖父类的方法，此时有两种方法来调用父类中的函数：
 
-1. 调用父类的未绑定的构造方法。在调用一个实例的方法时，该方法的self参数会被自动绑定到实例上（称为绑定方法）。但如果直接调用类的方法（比如A.__init），那么就没有实例会被绑定。这样就可以自由的提供需要的self参数，这种方法称为`未绑定(unbound)方法`。大多数情况下是可以正常工作的，但是多重继承的时候可能会重复调用父类。
+1. 调用父类的未绑定的构造方法。在调用一个实例的方法时，该方法的self参数会被自动绑定到实例上（称为绑定方法）。但如果直接调用类的方法（比如A.__init__），那么就没有实例会被绑定。这样就可以自由的提供需要的self参数，这种方法称为`未绑定(unbound)方法`。大多数情况下是可以正常工作的，但是多重继承的时候可能会重复调用父类。
 2. 通过 `super(type, obj).method()` 调用父类函数，super函数返回一个super对象，这个对象负责进行方法解析，解析过程其会自动查找所有的父类以及父类的父类。这里基类必须继承自object类，这样才能使用super函数，因为这是python的“`新式类`”支持的特性。当前的类和对象可以作为super函数的参数使用，调用函数返回的对象的任何方法都是调用超类的方法，而不是当前类的方法。
 
 未绑定(unbound)方法调用如下：
@@ -240,23 +240,44 @@ supper 调用如下：
             super(Derived_2, self).__init__()
             print "Derived_2.__init__"
 
-## 继承机制 MRO（Method Resolution Order）
+## 继承机制 MRO
 
-在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。
+MRO 主要用于在多继承时判断调用的属性来自于哪个类。
 
-MRO 主要用于在多继承时判断调的属性的路径(来自于哪个类)。在新式类中，查找一个要调用的函数或者属性的时候，是广度优先搜搜的。在旧式类当中，是深度优先搜索的。如下图所示：
+Python2.2以前的类为经典类，它是一种没有继承的类，实例类型都是type类型，如果经典类被作为父类，子类调用父类的构造函数时会出错。这时MRO的方法为DFS（深度优先搜索），子节点顺序：从左到右。inspect.getmro（A）可以查看经典类的MRO顺序。
 
-![][2]
+![DFS MRO][2]
 
-注意这里的 super，MRO 都是针对 new-style class，如果不是 new-style class，只能老老实实用父类的类名去调用函数。
+两种继承模式在DFS下的优缺点:
 
-关于 super，更深入的理解在 [Python’s super() considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)。
+* 第一种，两个互不相关的类的多继承，这种情况DFS顺序正常，不会引起任何问题；
+* 第二种，棱形继承模式，存在公共父类（D）的多继承，这种情况下DFS必定经过公共父类（D）。如果这个公共父类（D）有一些初始化属性或者方法，但是子类（C）又重写了这些属性或者方法，那么按照DFS顺序必定是会先找到D的属性或方法，那么C的属性或者方法将永远访问不到，导致C`只能继承无法重写（override）`。这也就是新式类不使用DFS的原因，因为他们都有一个公共的祖先object。
+
+为了使类和内置类型更加统一，Python2.2版本引入了`新式类`。新式类的每个类都继承于一个基类，可以是自定义类或者其它类，默认承于object，子类可以调用父类的构造函数。可以用 `A.__mro__` 可以查看新式类的顺序。
+
+在 2.2 中，有两种MRO的方法：
+
+1. 如果是经典类MRO为DFS；
+2. 如果是新式类MRO为BFS（广度优先搜索），子节点顺序：从左到右。
+
+![BFS MRO][5]
+
+两种继承模式在BFS下的优缺点:
+
+* 第一种，正常继承模式。比如B明明继承了D的某个属性（假设为foo），C中也实现了这个属性foo，那么BFS明明先访问B然后再去访问C，但是A的foo属性是c，这个问题称为`单调性问题`。
+* 第二种，棱形继承模式，BFS的查找顺序解决了DFS顺序中的只能继承无法重写的问题。
+
+因为DFS 和 BFS 都存在较大的问题，所以从Python2.3开始新式类的MRO采用了C3算法，解决了单调性问题，和只能继承无法重写的问题。MRO的C3算法顺序如下图：
+
+![C3 MRO][6]
+
+C3 采用图的拓扑排序算法，具体实现可以参考[官网文档](https://www.python.org/download/releases/2.3/mro/#bad-method-resolution-orders)。
 
 # 多态
 
-多态即多种形态，在运行时确定其状态，在编译阶段无法确定其类型，这就是多态。Python中的多态和Java以及C++中的多态有点不同，Python中的变量是弱类型的，在定义时不用指明其类型，它会根据需要在运行时确定变量的类型。
+多态即多种形态，在运行时确定其状态，在编译阶段无法确定其类型，这就是多态。Python中的多态和Java以及C++中的多态有点不同，Python中的变量是动态类型的，在定义时不用指明其类型，它会根据需要在运行时确定变量的类型。
 
-Python本身是一种解释性语言，不进行预编译，因此它就只在运行时确定其状态，故也有人说Python是一种多态语言。在Python中很多地方都可以体现多态的特性，比如 内置函数len(object)，len函数不仅可以计算字符串的长度，还可以计算列表、元组等对象中的数据个数，这里在运行时通过参数类型确定其具体的计算过程，正是多态的一种体现。
+Python本身是一种解释性语言，不进行预编译，因此它就只在运行时确定其状态，故也有人说Python是一种多态语言。在Python中很多地方都可以体现多态的特性，比如内置函数len(object)，len函数不仅可以计算字符串的长度，还可以计算列表、元组等对象中的数据个数，这里在运行时通过参数类型确定其具体的计算过程，正是多态的一种体现。
 
 # 特殊的类方法
 
@@ -328,7 +349,9 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 有许多办法可以让 Python 类表现得像是内建序列类型（字典，元组，列表，字符串等）。
 
-在Python中实现自定义容器类型需要用到一些协议。首先，不可变容器类型有如下协议：想实现一个不可变容器，你需要定义 `__len__` 和 `__getitem__`。可变容器的协议除了上面提到的两个方法之外，还需要定义 `__setitem__` 和 `__delitem__` 。如果你想让你的对象可以迭代，你需要定义 `__iter__` ，这个方法返回一个迭代器。迭代器必须遵守迭代器协议，需要定义 `__iter__` （返回它自己）和 next 方法。
+在Python中实现自定义容器类型需要用到一些协议。首先，不可变容器类型有如下协议：想实现一个不可变容器，你需要定义 `__len__` 和 `__getitem__`。
+
+可变容器的协议除了上面提到的两个方法之外，还需要定义 `__setitem__` 和 `__delitem__` 。如果你想让你的对象可以迭代，你需要定义 `__iter__` ，这个方法返回一个迭代器。迭代器必须遵守迭代器协议，需要定义 `__iter__` （返回它自己）和 next 方法。
 
 # 元类
 
@@ -341,7 +364,7 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 **元类就是用来创建类的“东西”**。你创建类就是为了创建类的实例对象，但是我们已经学习到了Python中的类也是对象。好吧，元类就是用来创建这些类（对象）的，元类就是类的类。
 
-更多详细内容见 [Python_Metaclass.md](More/Python_Metaclass.md)
+更多内容见 [Metaclass.md](Metaclass.md)
 
 # 上下文管理
 
@@ -380,12 +403,18 @@ Python 对一些内建对象进行改进，加入了对上下文管理器的支�
 [Python面向对象详解](http://blog.csdn.net/carolzhang8406/article/details/6903556)  
 [知乎：supper 方法](https://www.zhihu.com/question/20040039)  
 [NewClass Vs ClassicClass](https://wiki.python.org/moin/NewClassVsClassicClass)  
-[python类学习以及mro--多继承属性查找机制](http://blog.csdn.net/imzoer/article/details/8737642)   
+[python类学习以及 MRO--多继承属性查找机制](http://blog.csdn.net/imzoer/article/details/8737642)   
+[你真的理解 Python 中 MRO 算法吗？](http://xymlife.com/2016/05/22/python_mro/)  
 [PEP 343: The "with" Statement](https://www.python.org/dev/peps/pep-0343/)  
+[The Python 2.3 Method Resolution Order](https://www.python.org/download/releases/2.3/mro/#bad-method-resolution-orders)  
+[Python’s super() considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)
+
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png
 [3]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_3.png
 [4]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_4.png
+[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_5.png
+[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_6.png
 
 

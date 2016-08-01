@@ -4,7 +4,7 @@
 
 # 容器(container)
 
-容器是一种把多个元素组织在一起的数据结构，容器中的元素可以逐个地迭代获取，可以用in, not in关键字判断元素是否包含在容器中。通常这类数据结构把所有的元素存储在内存中（也有一些特列并不是所有的元素都放在内存）在Python中，常见的容器对象有：
+容器是一种把多个元素组织在一起的数据结构，容器中的元素可以逐个地迭代获取，可以用in, not in关键字判断元素是否包含在容器中。通常这类数据结构把所有的元素存储在内存中（也有一些特列并不是所有的元素都放在内存）。在Python中，常见的容器对象有：
 
 * list, deque, ....
 * set, frozensets, ....
@@ -231,7 +231,8 @@ fib和普通的python函数的区别在于函数体中没有return关键字，�
 [What does the yield keyword do in Python?](http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python)  
 [How to make class iterable?](http://stackoverflow.com/questions/19151/how-to-make-class-iterable)    
 [Difference between Python's Generators and Iterators](http://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators)  
-[Python 迭代器和生成器](http://python.jobbole.com/81881/)  
+[Python 迭代器和生成器](http://python.jobbole.com/81881/)    
+
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Iterator_1.png
 

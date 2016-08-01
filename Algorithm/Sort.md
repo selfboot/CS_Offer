@@ -195,10 +195,6 @@ Python 实现如下：
 # 基数排序
 
 
-# partition 操作
-
-
-
 # 参考
 
 [冒泡排序](https://zh.wikipedia.org/wiki/冒泡排序)  

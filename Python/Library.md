@@ -1,8 +1,44 @@
-## 数组属性
+Python 有着大量优秀的三方库，功能十分强大。可以在 [Awesome Python](https://github.com/vinta/awesome-python) 上找自己需要的库，下面列出几个经典的库。
 
-Numpy是Python的一个科学计算的库，提供了矩阵运算的功能，其一般与Scipy、matplotlib一起使用。
+# requests 库
 
-NumPy 的主要对象是同种元素的多维数组（numpy.ndarray）。在NumPy中维度(dimensions)叫做轴(axes)，轴的个数叫做秩(rank)。
+`Requests` 是一个 HTTP 库，用 Python 编写，真正的为人类着想。Python 标准库中的 urllib2 模块提供了你所需要的大多数 HTTP 功能，但是它的 API 太渣了。它需要巨量的工作，甚至包括各种方法覆盖，来完成最简单的任务。
+
+    >>> r = requests.get('https://api.github.com/user', auth=('user', 'pass'))
+    >>> r.status_code
+    200
+    >>> r.headers['content-type']
+    'application/json; charset=utf8'
+    >>> r.encoding
+    'utf-8'
+    >>> r.text
+    u'{"type":"User"...'
+
+爬过豆瓣的音乐库，还有Coursera的课程下载脚本，还有V2EX的自动登录脚本。
+
+`Beautiful Soup` 是一个可以从 HTML 或 XML 文件中提取数据的Python库。它能够通过你喜欢的转换器实现惯用的文档导航，查找，修改文档的方式。
+
+使用BeautifulSoup解析一段 HTML 代码，得到一个 BeautifulSoup 的对象，然后就可以浏览结构化数据。
+
+# Matplotlib 库
+
+Matplotlib 是Python最流行的绘图库之一，使用起来非常方便，可以高度定制绘图模型，允许用户绘制点线图、条线图/直方图、3D图形，甚至是更复杂的图表。
+
+pylab 是 matplotlib 面向对象绘图库的一个接口，考虑用默认配置在同一张图上绘制正弦和余弦函数图像，如下：
+
+    from pylab import *
+    
+    X = np.linspace(-np.pi, np.pi, 256,endpoint=True)
+    C,S = np.cos(X), np.sin(X)
+    
+    plot(X,C)
+    plot(X,S)
+    
+    show()
+
+# Numpy
+
+Numpy是Python的一个科学计算的库，提供了矩阵运算的功能，其一般与Scipy、matplotlib一起使用。NumPy 的主要对象是同种元素的多维数组（numpy.ndarray）。在NumPy中维度(dimensions)叫做轴(axes)，轴的个数叫做秩(rank)。
 
 ndarray对象属性有：
 
@@ -12,7 +48,7 @@ ndarray对象属性有：
 * ndarray.dtype：一个用来描述数组中元素类型的对象，可以通过创造或指定dtype使用标准Python类型。另外NumPy提供它自己的数据类型。
 * ndarray.itemsize：数组中每个元素的字节大小。例如，一个元素类型为float64的数组itemsiz属性值为8(float64占用64个bits，每个字节长度为8，所以64/8，占用8个字节）。
 
-## 创建数组
+### 创建数组
 
 可以使用array函数从常规的Python列表和元组创造数组。所创建的数组类型由原序列中的元素类型推导而来。
 
@@ -63,7 +99,7 @@ NumPy 还提供一个类似range的函数（arange）返回一个数列形式的
     array([-1.        , -0.83333333, -0.66666667, -0.5       , -0.33333333,
            -0.16666667,  0.        ])
 
-## 输出数组
+### 输出数组
 
 当输出一个数组时，NumPy以特定的布局用类似嵌套列表的形式显示： 
 
@@ -83,7 +119,7 @@ NumPy 还提供一个类似range的函数（arange）返回一个数列形式的
         [ 6  7  8]  
         [ 9 10 11]]　　　  
   
-## 数组运算
+### 数组运算
 
 数组的算术运算是按元素逐个运算。数组运算后将创建包含运算结果的新数组(有些操作符如+=和*=用来更改已存在数组而不创建一个新的数组)。
 
@@ -106,7 +142,7 @@ NumPy 还提供一个类似range的函数（arange）返回一个数列形式的
     array([[ 60,  70],
            [160, 195]])
 
-## 索引，切片和迭代
+### 索引，切片和迭代
 
 和Python中列表一样，一维数组可以进行索引、切片和迭代操作。多维数组可以每个轴有一个索引，这些索引由一个逗号分割的元组给出。当少于提供的索引数目少于轴数时，已给出的数值按秩的顺序复制，确失的索引则默认为是整个切片：
 
@@ -127,7 +163,7 @@ NumPy 还提供一个类似range的函数（arange）返回一个数列形式的
     array([[ 3,  4,  5],
            [ 9, 10, 11]])
 
-## 矩阵操作
+### 矩阵操作
 
     >>> m_a = np.matrix('1 2 3; 4 5 6')
     >>> m_b = np.matrix('1 2; 3 4; 5 6')
@@ -142,7 +178,9 @@ NumPy 还提供一个类似range的函数（arange）返回一个数列形式的
             [2, 5],
             [3, 6]])
 
-参考：  
+
+# 更多阅读
+
 [Numpy 学习](https://www.zybuluo.com/tankle/note/51606)  
 [DOC: numpy.matrix](http://docs.scipy.org/doc/numpy-1.10.1/reference/generated/numpy.matrix.html)  
 
