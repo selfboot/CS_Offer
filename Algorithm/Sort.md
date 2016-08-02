@@ -99,24 +99,25 @@ Python 实现如下：
 
 Python 实现如下：
 
-    def partition(array, begin, end):
-        pivot = array[begin]
+    def partition(L, begin, end):
+        pivot = L[begin]
         pivot_index = begin
         for i in range(begin + 1, end):
-            if array[i] <= pivot:
+            if L[i] <= pivot:
                 pivot_index += 1
                 if pivot_index != i:
-                    array[pivot_index], array[i] = array[i], array[pivot_index]
-        array[begin], array[pivot_index] = array[pivot_index], array[begin]
+                    L[pivot_index], L[i] = L[i], L[pivot_index]
+        L[begin], L[pivot_index] = L[pivot_index], L[begin]
         return pivot_index
-
-    def quick_sort(array, begin, end):
-        # Sort the array: [start, end).  Here pivot is the first number in L.
+    
+    
+    def quick_sort(L, begin, end):
+        # Sort the L: [start, end).  Here pivot is the first number in L.
         if begin >= end - 1:
             return
-        pivot_pos = partition(array, begin, end)
-        quick_sort(array, begin, pivot_pos)
-        quick_sort(array, pivot_pos+1, end)
+        pivot_pos = partition(L, begin, end)
+        quick_sort(L, begin, pivot_pos)
+        quick_sort(L, pivot_pos + 1, end)
     
 这里选择序列第一个元素为pivot，不使用新的空间（内部交换）来进行排序。首先用 partition 函数来将整个数组分解为两部分L1 和 L2，两个子部分可以为空。partition 返回轴 pivot 最后的位置，也就是说轴之前的元素（如果有的话）全部小于等于pivot，之后的元素全部大于（如果有的话）pivot。
 

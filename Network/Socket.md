@@ -1,5 +1,3 @@
-# Socket 套接字
-
 Socket 起源于 Unix，而Unix基本哲学之一就是`一切皆文件`，都可以用“`打开open –> 读写write/read –> 关闭close`”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传输是一种特殊的I/O，Socket也是一种文件描述符。Socket也具有一个类似于打开文件的函数调用：Socket()，该函数返回一个整型的Socket描述符，随后的连接建立、数据传输等操作都是通过该Socket实现的。
 
 使用TCP/IP协议的应用程序通常采用应用编程接口：UNIX BSD的套接字（socket）和UNIX System V的TLI（已经被淘汰），来实现网络进程之间的通信。
@@ -207,9 +205,13 @@ UDP通信流程图如下：
     client.close()
 
 
-参考：  
+# 更多阅读
+ 
+[Socket通信原理简介](http://www.jianshu.com/p/90348ef3f41e)  
+[简单理解Socket](http://www.cnblogs.com/dolphinX/p/3460545.html)  
 [Python爬虫(三)-Socket网络编程](http://www.jianshu.com/p/e062b3dd110c)  
-[Linux Socket编程（不限Linux）](http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html)
+[Linux Socket编程（不限Linux）](http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html)  
+
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_2.png
