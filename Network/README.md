@@ -149,8 +149,8 @@ HTTP 有两个主要的版本 HTTP 1.0 和 HTTP 1.1，1.1 版本在带宽优化�
 [《计算机网络》这门课为何如此之难？](https://www.zhihu.com/question/19718686)    
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_2.jpg
+[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_01.png
+[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_02.jpg
 
 
 
