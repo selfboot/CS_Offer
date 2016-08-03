@@ -1,6 +1,26 @@
+内存管理是C++最令人切齿痛恨的问题，也是C++最有争议的问题，C++高手从中获得了更好的性能，更大的自由，C++菜鸟的收获则是一遍一遍的检查代码和对C++的痛恨，但内存管理在C++中无处不在，内存泄漏几乎在每个C++程序中都会发生。
 
+在C++中，程序占用的内存分成5个区：
 
-## new 和 delete 操作
+1. 正文(text)段：正文段是用来存放可执行文件的操作指令，也就是说是它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只准许读取操作，而不允许写入（修改）操作——它是不可写的。
+2. `DATA段（数据段）`：初始化数据段包含程序中明确地赋初值的变量，例如初始化后的全局变量和静态局部变量。
+3. `BSS段（未初始化数据段）`：BSS段包含了程序中未初始化的全局变量，程序开始执行前，内核将此段中的数据初始化为0或者空指针。
+4. 堆（heap）：堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）
+5. 栈：栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的后进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。
+
+下图显示了这些段的一种典型安排方式：
+
+![][1]
+
+看下面例子：
+
+    void f() { 
+        int* p=new int[5]; 
+    }
+
+在栈内存中存放了一个指向一块堆内存的指针p。程序首先确定在堆中分配内存的大小，然后调用operator new分配内存，然后返回这块内存的首地址，放入栈中指针 p。
+
+# 内存分配回收
 
 有时候需要一次为很多对象分配/释放内存，为此 C++ 提供了 new/delete 操作符。为了让 new 分配一个对象数组，需要在类型名后跟一对方括号，在其中指明要分配的对象的数目。
 
@@ -51,30 +71,30 @@ malloc()分配的存储空间比所要求的要稍大一些，额外的空间用
 
 free()函数非常简单，只有一个参数，只要把指向申请空间的指针传递给free()即可。这是因为 free 是根据结构体 mem_control_block 的信息来释放malloc()申请的空间。
 
-    void free(void *ptr)  
-    { 
-        struct mem_control_block *free; 
-        free = ptr - sizeof(struct mem_control_block); 
-        free->is_available = 1; 
-        return; 
-    }
+    void free(void *ptr)
+    {
+        struct mem_control_block *free;
+        free = ptr - sizeof(struct mem_control_block);
+        free->is_available = 1;
+        return;
+    }
 
 malloc 的一个具体使用例子在 [gist](https://gist.github.com/xuelangZF/573b1da0fbe0e7c6a568bd9530456766) 上。
 
 ## new 和 malloc 的对比
 
 1. new/delete是C++操作符，malloc/free是C/C++函数。
-2. 使用new操作符申请内存分配时无须指定内存块的大小，编译器会根据类型信息自行计算，而malloc则需要显式地指出所需内存的尺寸。
+2. 使用new操作符申请内存分配时无须指定内存块的大小，编译器会根据类型信息自行计算，而malloc则需要显式地指出所需内存的大小。
 3. new/delete会调用对象的构造函数/析构函数以完成对象的构造/析构，而malloc只负责分配空间。
-4. new 操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void *，需要通过强制类型转换将 void* 指针转换成我们需要的类型。
+4. new 操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无须进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void * ，需要通过强制类型转换将 void* 指针转换成我们需要的类型。
 5. 效率上：malloc的效率高一点，因为只分配了空间。
-6. opeartor new /operator delete 可以被重载，而 malloc/free 并不允许重载。
+6. operator new /operator delete 可以被重载，而 malloc/free 并不允许重载。
 
 ## 常见的内存错误
 
 常见内存错误以及解决办法:
 
-* 内存分配未成功，却使用了它。（在使用内存之前检查指针是否为NULL）
+* 内存分配未成功，却使用了它。（在使用内存之前检查指针是否为NULL。如果指针p是函数的参数，那么在函数的入口处用`assert(p!=NULL)`进行检查。如果是用malloc或new来申请内存，应该用`if(p==NULL)`或`if(p!=NULL)`进行防错处理。）
 * 内存分配虽然成功，但是尚未初始化就引用它。（无论用何种方式创建数组，都应该初始化）
 * 内存分配成功并且已经初始化，但操作越过了内存的边界。例如在使用数组时经常发生下标“多1”或者“少1”的操作。特别是在for循环语句中，循环次数很容易搞错，导致数组操作越界。
 * 忘记了释放内存，造成内存泄露。动态内存的申请与释放必须配对，程序中malloc与free的使用次数一定要相同，否则肯定有错误（new/delete）。
@@ -82,5 +102,9 @@ malloc 的一个具体使用例子在 [gist](https://gist.github.com/xuelangZF/5
 
 # 更多阅读
   
-[细说new与malloc的10点区别](http://www.cnblogs.com/QG-whz/p/5140930.html)
+[细说new与malloc的10点区别](http://www.cnblogs.com/QG-whz/p/5140930.html)  
+[Where are static variables stored (in C/C++)?](http://stackoverflow.com/questions/93039/where-are-static-variables-stored-in-c-c)    
+[Memory management in C: The heap and the stack](http://www.inf.udec.cl/~leo/teoX.pdf)    
+
+[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_1.jpg
 
