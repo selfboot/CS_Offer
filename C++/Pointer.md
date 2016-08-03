@@ -1,5 +1,3 @@
-# 指针
-
 为了说清楚什么是指针，必须弄清楚数据在内存中是如何存储的，又是如何读取的。
 
 如果在程序中定义了一个变量，在编译时就给这个变量分配内存单元。系统根据程序中定义的变量类型，分配一定长度的空间。例如，C++编译系统一般为整型变量分配4个字节，为单精度浮点型变量分配4个字节，为字符型变量分配1个字节。内存区的每一个字节有一个编号，就是所谓的“地址”，如下图：
@@ -21,19 +19,7 @@
 
 所谓指向，就是通过地址来体现的。由于通过地址能找到所需的变量单元，因此可以说，地址指向该变量单元。因此将地址形象化地称为“指针”，一个变量的地址称为该变量的指针。
 
-## 零地址值
-
-来看下面的程序：
-
-    int* p = 0;
-    // int* p = 1;  
-    // error: cannot initialize a variable of type 'int *' with an rvalue of type 'int'
-    p += 6;
-    cout << p << endl; // 0x18
-
-这里 pint指针指向 0 地址处，如果改为 int *p=1，则会报错。
-
-## 指针变量
+# 指针变量
 
 **如果有一个变量是专门用来存放另一变量地址(即指针)的，则它称为指针变量。指针变量的值(即指针变量中存放的值)是地址(即指针)。**
 
@@ -54,23 +40,33 @@ C++ 规定所有变量在使用前必须先定义，即指定其类型，在`编
 1. &*pointer_1与&a相同，即变量a的地址。（因为 & 和 * 两个运算符的优先级别相同，但按自右至左方向结合）
 2. *&a 和 *pointer_1 的作用是一样的，它们等价于变量a
  
-指针变量可以有空值，即该指针变量不指向任何变量，可以这样表示 `p=NULL`; 实际上NULL代表整数0，也就是使p指向地址为0的单元，这样可以使指针不指向任何有效的单元。
+指针变量可以有空值，即该指针变量不指向任何变量，可以这样表示 `p=NULL`; 实际上NULL代表整数0，也就是使p指向地址为0的单元，这样可以使指针不指向任何有效的单元。看下面的程序：
+
+    int* p = 0;
+    // int* p = 1;  
+    // error: cannot initialize a variable of type 'int *' with an rvalue of type 'int'
+
+这里 pint指针指向 0 地址处，如果改为 int *p=1，则会报错。
 
 ## 指针运算
 
-`指针变量加/减一个整数` 
- 
 C++规定，一个指针变量加/减一个整数是将该指针变量的原值(是一个地址)和它指向的变量所占用的内存单元字节数相加或相减。如 `p+i` 代表这样的地址计算：p+i*d，d为p所指向的变量单元所占用的字节数。这样才能保证p+i指向p下面的第i个元素。
 
-`两个指针变量可以相减`
+    int* p = 0;
+    p += 6;
+    cout << p << endl; // 0x18
 
-如果两个指针变量指向同一个数组的元素，则两个指针变量值之差是两个指针之间的元素个数。假如p1指向 a[0]，p2指向a[4]，则p2-p1=(a+4)-(a)=4-0=4，但p1+p2并无实际意义。
+`两个指针变量可以相减`：如果两个指针变量指向同一个数组的元素，则两个指针变量值之差是两个指针之间的元素个数。假如p1指向 a[0]，p2指向a[4]，则p2-p1=(a+4)-(a)=4-0=4，但p1+p2并无实际意义。
 
-`两个指针变量比较`
+`两个指针变量比较`：若两个指针指向同一个数组的元素，则可以进行比较。指向前面的元素的指针变量小于指向后面元素的指针变量。
 
-若两个指针指向同一个数组的元素，则可以进行比较。指向前面的元素的指针变量小于指向后面元素的指针变量。
- 
-# 指向指针的指针
+`“野指针”`不是NULL指针，是指向“垃圾”内存的指针。“野指针”的成因主要有三种：
+
+1. 指针变量没有被初始化。指针变量刚被创建时不会自动成为NULL指针，它的缺省值是随机的，它会乱指一气。所以，指针变量在创建的同时应当被初始化，要么将指针设置为NULL，要么让它指向合法的内存。
+2. 指针p被free或者delete之后，没有置为NULL，让人误以为p是个合法的指针。
+3. 指针操作超越了变量的作用域范围。
+
+## 指向指针的指针
 
 指针变量也是变量，因此我们可以定义指向指针变量的指针变量，简称指向指针的指针。
 
@@ -86,6 +82,36 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
     cout << **pptr;         // 10
     int ***ppptr = &pptr;
     cout << ***ppptr;       // 10
+
+## 指针与引用
+
+指针与引用区别如下：
+
+1. 指针是一个变量，只不过这个变量存储的是一个地址，指向内存的一个存储单元；而引用只不过是变量的一个别名而已。
+2. 指针的值可以为空，也可能指向一个不确定的内存空间，但是引用的值不能为空，并且引用在定义的时候必须初始化为特定对象；
+3. 指针的值在初始化后可以改变，即指向其它的存储单元，而引用在进行初始化后就不可以改变引用对象了；
+4. 指针可以有多级，但是引用只能是一级；
+5. sizeof引用得到的是所指向的变量(对象)的大小，而sizeof指针得到的是指针本身的大小；
+
+## 指针和const
+
+指向常量的指针（`pointer to const`）不能用于改变其所指对象的值，要想存放常量对象的地址，只能使用指向常量的指针。
+
+    const int *a = 3;
+    int const *a = 3;
+    int const* a = 3;
+
+指针本身是对象，因此可以把指针本身定为常量。常量指针（`const pointer`）必须初始化，而且一旦初始化完成，则它的值（也就是存放在指针中的那个地址）就不能再改变了。
+
+    int errNumb = 0;
+    int *const curErr = &errNumb;
+
+也可以定义一个指向常量的常量指针（const pointer to const）。
+
+    const double pi=3.14;
+    const double * const pip = &pi;
+
+为了判断const到底对谁起作用（即谁是const的），可以用以下简单规则：**const只对它左边的东西起作用，当const本身就是最左边的修饰符时，它才会对右边的东西起作用**。
 
 # 指针和数组
 
@@ -122,12 +148,6 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
     int* (a[4]);         // 指针数组：数组a中的元素都为int型指针
     int* a[4];           // 指针数组：和上面是一样的，因为[]优先级高于*。
     int (*a)[4];         // 数组指针：指向数组a的指针
-
-［[二维数组运算结果](http://www.nowcoder.com/questionTerminal/8e78bcf76d0241938dc5f08ed8b2a065)］  
-［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］  
-［[指针数组的读取](http://www.nowcoder.com/questionTerminal/5a6e0056f81648fe97f9a85462e256c6)］   
-［[数组和指针相关操作](http://www.nowcoder.com/questionTerminal/621ea797eea249cb9f4db93218e7929f)］  
-［[指针取值](http://www.nowcoder.com/questionTerminal/9c55cfec4cce4c9fac74845359968cb0)］  
 
 ## 复杂例子分析
 
@@ -169,7 +189,7 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
 
     bool (*pf) (const string&, const string&); // 未初始化
 
-从声明的名字开始观察，pf前面有 ＊，因此pf是指针，右侧是形参列表，表示 pf 指向的是函数，再观察左侧，发现函数的返回类型是 bool。
+从声明的名字开始观察，pf前面有 *，因此pf是指针，右侧是形参列表，表示 pf 指向的是函数，再观察左侧，发现函数的返回类型是 bool。
 
 当我们把函数名作为一个值使用时，该函数自动地转换为指针。
 
@@ -183,17 +203,6 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
     bool b1 = lengthCompare("hello", "goodbye"); // 等价
 
 指向不同函数类型的指针间不存在转换规则，但是可以为函数指针赋一个 nullptr 或者值为 0 的整型常量表达式。
-
-## 重载函数的指针
-
-如果定义了指向重载函数的指针，指针类型必须与重载函数中的某一个精确匹配。
-
-    void ff(int *);
-    void ff(unsigned int);
-    
-    void (*pf1)(unsigned int) = ff; // pf1 指向 ff(unsigned)
-    void (*pf2)(int) = ff; // 错误，没有任何一个 ff 与该形参列表匹配
-    double (*pf3)(int *) = ff; // 错误，ff 和 pf3 的返回类型不匹配
 
 ## 函数指针形参
 
@@ -237,7 +246,18 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
     int (*f1(int))(int *, int);
 
 按照`由内向外`的顺序阅读这条声明语句。看到 f1 有 形参列表，所以 f1 是个函数；f1 前面有*, 所以 f1 返回一个指针；进一步观察，指针的类型本身也包含形参列表，因此指针指向函数，该函数的返回类型是 int。
- 
+
+## 重载函数的指针
+
+如果定义了指向重载函数的指针，指针类型必须与重载函数中的某一个精确匹配。
+
+    void ff(int *);
+    void ff(unsigned int);
+    
+    void (*pf1)(unsigned int) = ff; // pf1 指向 ff(unsigned)
+    void (*pf2)(int) = ff; // 错误，没有任何一个 ff 与该形参列表匹配
+    double (*pf3)(int *) = ff; // 错误，ff 和 pf3 的返回类型不匹配
+
 # 类成员函数指针
 
 具体看下面例子：
@@ -268,23 +288,26 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
         return 0;
     }
 
-参考  
-[C++ 函数指针 & 类成员函数指针](http://blog.csdn.net/crayondeng/article/details/16868351)  
+# 牛客网题目
 
-# 野指针
+［[指向常量的指针](http://www.nowcoder.com/questionTerminal/524cd1e7926a44e38d9d7c3a3359b822)］  
+［[指针改变常量的值](http://www.nowcoder.com/questionTerminal/36f828664d2d4d14a1428ae49f701f23)］  
+［[二维数组运算结果](http://www.nowcoder.com/questionTerminal/8e78bcf76d0241938dc5f08ed8b2a065)］  
+［[多维数组下标操作](http://www.nowcoder.com/questionTerminal/7b4220df2f8c4729b3a716ce7cd2056d)］  
+［[指针数组的读取](http://www.nowcoder.com/questionTerminal/5a6e0056f81648fe97f9a85462e256c6)］   
+［[数组和指针相关操作](http://www.nowcoder.com/questionTerminal/621ea797eea249cb9f4db93218e7929f)］  
+［[指针取值](http://www.nowcoder.com/questionTerminal/9c55cfec4cce4c9fac74845359968cb0)］  
+［[指针赋值语句](http://www.nowcoder.com/questionTerminal/b6f566ba692442d4b7cce66bf6804c53)］  
+［[函数指针定义](http://www.nowcoder.com/questionTerminal/960f8047a9ee4a6f8227768f3bc2734d)］  
+［[函数指针应用](http://www.nowcoder.com/questionTerminal/2c18fc889b924cc1b21ce6ec387fd853)］  
+［[成员函数的函数指针](http://www.nowcoder.com/questionTerminal/648f3eaef4234a34a5d5dbd268a77fa7)］  
 
-“野指针”不是NULL指针，是指向“垃圾”内存的指针。“野指针”的成因主要有三种：
-
-1. 指针变量没有被初始化。指针变量刚被创建时不会自动成为NULL指针，它的缺省值是随机的，它会乱指一气。所以，指针变量在创建的同时应当被初始化，要么将指针设置为NULL，要么让它指向合法的内存。
-2. 指针p被free或者delete之后，没有置为NULL，让人误以为p是个合法的指针。
-3. 指针操作超越了变量的作用域范围。
-
-［[指针赋值语句](http://www.nowcoder.com/questionTerminal/b6f566ba692442d4b7cce66bf6804c53)］
 
 # 参考  
 
 《C++ Primer》  
 [C++指针：指针变量、数组指针、字符串指针、函数指针](http://c.biancheng.net/cpp/biancheng/cpp/rumen_6/)  
+[C++ 函数指针 & 类成员函数指针](http://blog.csdn.net/crayondeng/article/details/16868351)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Pointer_1.png

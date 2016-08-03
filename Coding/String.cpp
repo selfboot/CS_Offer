@@ -54,7 +54,9 @@ String::String(const String &str)
     strcpy(m_data,str.m_data);
 }
 
-//赋值函数，异常安全的构造函数
+// 赋值函数，异常安全的赋值函数
+// 创建临时变量，接着将临时变量的 m_pData 和实例自身的做交换
+// 临时变量是一个局部栈变量，会自行回收。
 String& String::operator =(const String &str)
 {
     if(this != &str){
