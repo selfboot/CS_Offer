@@ -15,7 +15,6 @@
 
 * [Python](Python/)
 * [C++](C++/)
-* [Java](Java/)
 
 此外，还有几个目录：
 
@@ -28,7 +27,7 @@
 
 # 如何贡献
 
-大家可以在Issue 里列出一些感兴趣的问题，或者去认领 Issue，提交 Pull Request. 
+大家可以在Issue 里列出一些感兴趣的问题，或者去认领 Issue，提交 Pull Request.
 
 
 主要贡献者列表：
