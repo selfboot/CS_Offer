@@ -301,7 +301,7 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
 ［[函数指针定义](http://www.nowcoder.com/questionTerminal/960f8047a9ee4a6f8227768f3bc2734d)］  
 ［[函数指针应用](http://www.nowcoder.com/questionTerminal/2c18fc889b924cc1b21ce6ec387fd853)］  
 ［[成员函数的函数指针](http://www.nowcoder.com/questionTerminal/648f3eaef4234a34a5d5dbd268a77fa7)］  
-
+［[指向含有10个函数指针的数组的指针](https://www.nowcoder.com/questionTerminal/242d747044bd417e95fe37d69884dff8)］
 
 # 参考  
 
