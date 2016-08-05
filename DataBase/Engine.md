@@ -1,4 +1,6 @@
-对于MySQL来说，它提供了很多种类型的存储引擎。可以使用 `show engines;` 命令查看MySQL支持的引擎：
+关系数据库表是用于存储和组织信息的数据结构，可以将表理解为由行和列组成的表格，类似于Excel的电子表格的形式。有的表简单，有的表复杂，有的表根本不用来存储任何长期的数据，有的表读取时非常快，但是插入数据时去很差；而我们在实际开发过程中，就可能需要各种各样的表，不同的表，就意味着存储不同类型的数据，数据的处理上也会存在着差异。
+
+对于MySQL来说，它提供了很多种类型的存储引擎，我们可以根据对数据处理的需求，选择不同的存储引擎，从而最大限度的利用MySQL强大的功能。可以使用 `show engines;` 命令查看MySQL支持的引擎：
 
 ![][5]
 
@@ -63,6 +65,7 @@ InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截�
 [MySQL: InnoDB 还是 MyISAM?](http://coolshell.cn/articles/652.html)   
 [MySQL索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)  
 [MySQL索引原理及慢查询优化](http://tech.meituan.com/mysql-index.html)  
+[MySQL存储引擎介绍](http://www.jellythink.com/archives/640)  
 
 
 
