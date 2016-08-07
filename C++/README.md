@@ -121,6 +121,14 @@ C++中用虚函数实现多态机制。关于多态，简而言之就是用父�
 
 内存的更多内容参考：[Memory](Memory.md)
 
+内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。
+
+最难捉摸也最难检测到的错误之一是内存泄漏，即未能正确释放以前分配的内存的 bug。只发生一次的小的内存泄漏可能不会被注意，但泄漏大量内存的程序或泄漏日益增多的程序可能会表现出各种征兆：从性能不良（并且逐渐降低）到内存完全用尽。更糟的是，泄漏的程序可能会用掉太多内存，以致另一个程序失败，而使用户无从查找问题的真正根源。
+
+内存泄漏的原因可以概括为：调用了malloc/new等内存申请的操作，但缺少了对应的free/delete，总之就是，malloc/new比free/delete的数量多。实际项目中检测内存泄漏通常会十分繁琐，所以有许多工具帮助我们检测内存泄漏，比如 [mtrace](http://en.wikipedia.org/wiki/Mtrace)，[valgrind](http://valgrind.org)。
+
+详细内容参见 [MemoryLeaks](MemoryLeaks.md)
+
 # C++ STL 标准库
 
 C++ STL（标准模板库）是一套功能强大的 C++ 模板类，提供了通用的模板类和函数，这些模板类和函数可以实现多种流行和常用的算法和数据结构，如向量、链表、队列、栈。
@@ -139,7 +147,6 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 
 详细内容参考 [11_Features](11_Features.md)
 
-
 # 牛客网问题
 
 ［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］  
@@ -156,7 +163,7 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 [C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)  
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
 [Can we change the value of a constant through pointers?](http://stackoverflow.com/questions/3801557/can-we-change-the-value-of-a-constant-through-pointers/3801601#3801601)   
-
+[C/C++内存泄漏及检测](http://www.cnblogs.com/skynet/archive/2011/02/20/1959162.html)  
 
 
 
