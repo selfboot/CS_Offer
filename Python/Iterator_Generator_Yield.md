@@ -129,7 +129,7 @@ Python 中只要可以被next()函数调用并不断返回下一个值，就是�
       File "<stdin>", line 1, in <module>
     StopIteration
 
-有很多关于迭代器的例子，比如itertools函数返回的都是迭代器对象。下面的例子从有限序列生成一个无限序列：
+有很多关于迭代器的例子，比如itertools 中函数返回的都是迭代器对象。下面的例子从有限序列生成一个无限序列：
 
     >>> from itertools import cycle
     >>> colors = cycle(['red', 'white', 'blue'])
@@ -177,7 +177,7 @@ Python 中只要可以被next()函数调用并不断返回下一个值，就是�
     
     # print gen.next()    # StopIteration
 
-除了生成器表达式，还可以用yiled关键字来产生生成器。yield 的作用就是把一个函数变成一个 generator，带有 yield 的函数不再是一个普通函数，Python 解释器会将其视为一个 generator。也就是说，yield是一个语法糖，内部实现支持了迭代器协议，同时yield内部也是一个状态机，维护着挂起和继续的状态。
+除了生成器表达式，还可以用yiled关键字来产生生成器。yield 的作用就是把一个函数变成一个 generator，带有 yield 的函数不再是一个普通函数，Python 解释器会将其视为一个 generator。也就是说，**yield是一个语法糖，内部实现支持了迭代器协议，同时yield内部也是一个状态机，维护着挂起和继续的状态**。
 
 用生成器来实现斐波那契数列的例子是：
 
@@ -188,17 +188,101 @@ Python 中只要可以被next()函数调用并不断返回下一个值，就是�
             prev, curr = curr, curr + prev
     f = fib()
     from itertools import islice
-    print list(islice(f, 0, 10)) # [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+    print list(islice(f, 0, 10))    # [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
     print isinstance(f, Iterator)   # True
     print type(f)                   # <type 'generator'>
 
 fib和普通的python函数的区别在于函数体中没有return关键字，这里fib的返回值是一个`生成器对象`。当执行f=fib()返回的是一个生成器对象，此时函数体中的代码并不会执行，只有显示或隐示地调用next的时候才会真正执行里面的代码。
 
+当生成器函数 fib 执行yield语句的时候，fib函数的状态被冻结，所有变量值都被保存，下一条要执行的语句被记录下来，直到下一次的next()调用来临。一旦再遇到next()调用，生成器函数就被激活，而如果next()永远不再调用，那么最后记录的状态也就被丢弃了。
+
 生成器是可以迭代的，但是只可以读取它一次 ，因为它并不把所有的值放在内存中，它实时地生成数据。
 
-## yield 关键字
+## yield 与增强生成器
 
+在 python 2.3 中加入了关键字yield，只要包含它的函数即是一个 generator。但在2.3中，generator 不能重入，不能在运行过程中修改，不能引发异常，要么是顺序调用，要么就创建一个新的 generator。到了 2.5 版之后，做了以下改动：
 
+1. yield 被重新定义为一个表达式（Expression），之前是一个语句（statement）。
+2. 添加了一个 send() 函数，可以使用它向 generator 发送消息。
+3. 增加了 throw() 方法，可以用来从 generator 内部来引发异常，从而控制 generator 的执行。
+4. 增加了 close 方法，用来关闭一个 generator。
+
+执行一个 send(msg) 会恢复 generator 的运行，然后发送的值将成为当前 yield 表达式的返回值。然后 send() 会返回下一个被 generator yield 的值，如果没有下一个可以 yield 的值则引发一个异常。
+
+> Add a new send() method for generator-iterators, which resumes the generator and "sends" a value that becomes the result of the current yield-expression.  The send() method returns the next value yielded by the generator, or raises StopIteration if the generator exits without yielding another value.
+       
+可以看出这其实包含了一次运行，从将 msg 赋给当前被停住的 yield 表达式开始，到下一个 yield 语句结束，然后返回下一个yield语句的参数，然后再挂起，等待下一次的调用。所以，在 2.5 之后，可以将 next() 看作是 send(None) 。
+
+为了精准的理解 send(msg) 函数，可以将 yield 表达式想象成下面的伪代码：
+
+```python
+x = yield i <==> put(i); x = wait_and_get()
+```
+
+可以理解为先是一个 `put(i)`，这个 i 就是 yield 表达式后面的参数，如果 **yield 没有参数，则表示 None**。它表示将 i 放到一个全局缓冲区中，相当于返回了一个值。 `wait_and_get()` 可以理解为一个阻塞调用，它等待着外界来唤醒它，并且可以返回一个值。这样下面代码的运行结果就很容易理解了：
+
+```python
+>>> def g():
+...     print 'step 1'
+...     x = yield 'hello'
+...     print 'step 2', 'x=', x
+...     y = 5 + (yield x)
+...     print 'step 3', 'y=', y
+...
+>>> f = g()
+>>> print f.next()
+step 1
+hello
+>>> print f.send(5)
+step 2 x= 5
+5
+>>> print f.send(2)
+step 3 y= 7
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+```
+
+此外，文档中下面一段也很重要：
+
+> Because generator-iterators begin execution at the top of the generator's function body, there is no yield expression to receive a value when the generator has just been created. Therefore, calling send() with a non-None argument is prohibited when the generator iterator has just started, and a TypeError is raised if this occurs (presumably due to a logic error of some kind). Thus, before you can communicate with a coroutine you must first call next() or send(None) to advance its execution to the first yield expression.
+
+第一次调用时要么使用 next() ，要么使用 send(None) ，不能使用 send() 来发送一个非 None 的值，原因就是第一次没有一个 yield 表达式来接受这个值，如下示例：
+
+```python
+>>> f = g()
+>>> f.send(3)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: can't send non-None value to a just-started generator
+```
+
+2.5 增加了 throw() 方法，可以用来从 generator 内部来引发异常，从而控制 generator 的执行。
+
+```python
+>>> f = g() 
+>>> f.send(None) 
+step 1 
+'hello' 
+>>> f.throw(GeneratorExit) 
+>>>
+>>> ... 
+```
+
+这里执行了 f.throw(GeneratorExit)，引发了一个 GeneratorExit 异常，该异常用来在生成器退出前有机会执行一些清理工作。
+
+2.5 还增加了 close() 方法，用来关闭一个 generator ，它的伪代码如下：
+
+```python
+def close(self):
+    try:
+        self.throw(GeneratorExit)
+    except (GeneratorExit, StopIteration):
+        pass
+    else:
+        raise RuntimeError("generator ignored GeneratorExit")
+        # Other exceptions are not caught
+```
 
 ## 递归生成器
 
@@ -230,8 +314,13 @@ fib和普通的python函数的区别在于函数体中没有return关键字，�
 [What exactly are Python's iterator, iterable, and iteration protocols?](http://stackoverflow.com/questions/9884132/what-exactly-are-pythons-iterator-iterable-and-iteration-protocols)  
 [What does the yield keyword do in Python?](http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python)  
 [How to make class iterable?](http://stackoverflow.com/questions/19151/how-to-make-class-iterable)    
-[Difference between Python's Generators and Iterators](http://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators)  
+[Difference between Python's Generators and Iterators](http://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators)   
+[PEP 342: Coroutines via Enhanced Generators](https://www.python.org/dev/peps/pep-0342/)  
+[What is the difference between an expression and a statement in Python?](http://stackoverflow.com/questions/4728073/what-is-the-difference-between-an-expression-and-a-statement-in-python)  
 [Python 迭代器和生成器](http://python.jobbole.com/81881/)    
+[python 核心 - 生成器和yield](http://www.pycoding.com/2015/12/02/python/generator.html)  
+[Python天天美味(25) - 深入理解yield](http://www.cnblogs.com/coderzh/articles/1202040.html)   
+[2.5版yield之学习心得](http://zoomq.qiniudn.com/ZQScrapBook/ZqFLOSS/data/20061206220831/index.html)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Iterator_1.png
