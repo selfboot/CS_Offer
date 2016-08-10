@@ -78,47 +78,63 @@ python的新式类是2.2版本引进来的，之前的类叫做经典类或者�
     print n.__class__   # <class '__main__.newClass'>
     print type(n)       # <class '__main__.newClass'>
 
-参考  
-[What is the difference between old style and new style classes in Python?](http://stackoverflow.com/questions/54867/what-is-the-difference-between-old-style-and-new-style-classes-in-python)
+# 对象属性
 
-# Python 类方法
+Python 中对象的`属性`包含对象的所有内容：方法和数据，注意方法也是对象的属性。查找对象的属性时，首先在对象的 `__dict__` 里面查找，然后是对象所属类的__dict__，再往后是继承体系中父类（MRO解析）的__dict__，任意一个地方查找到就终止查找，并且调用 `__getattribute__`（也有可能是`__getattr__`） 方法获得属性值。
 
-Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classmethod)和实例方法，如下:
+## 方法
 
-    def foo(x):
-        print "executing foo(%s)"%(x)
-    
-    class A(object):
-        def foo(self,x):
-            print "executing foo(%s,%s)"%(self,x)
-    
-        @classmethod
-        def class_foo(cls,x):
-            print "executing class_foo(%s,%s)"%(cls,x)
-    
-        @staticmethod
-        def static_foo(x):
-            print "executing static_foo(%s)"%x
-    
-    a=A()
-    print(a.static_foo)
-    # <function static_foo at 0xb7d479cc>
-    
-对于一般的函数来说我们可以这么调用foo(x)，这个函数就是最常用的，它的工作跟任何东西(类，实例)无关。
+在 Python 类中有3种方法，即静态方法(staticmethod)，类方法(classmethod)和实例方法：
 
-对于实例方法，在类里每次定义方法的时候都需要绑定这个实例，就是foo(self, x)。为什么要这么做呢？因为实例方法的调用离不开实例，我们需要把实例自己传给函数，调用的时候是这样的a.foo(x)(其实是foo(a, x))。类方法一样，只不过它传递的是类而不是实例，A.class_foo(x)。注意这里的self和cls可以替换别的参，但是python的约定是self和cls，最好不要改。
+* 对于实例方法，在类里每次定义实例方法的时候都需要指定实例（该方法的第一个参数，名字约定成俗为self）。这是因为实例方法的调用离不开实例，我们必须给函数传递一个实例。假设对象a具有实例方法 `foo(self, *args, **kwargs)`，那么调用的时候可以用 `a.foo(*args, **kwargs)`，或者 `A.foo(a, *args, **kwargs)`，在解释器看来它们是完全一样的。
+* 类方法每次定义的时候需要指定类（该方法的第一个参数，名字约定成俗为cls），调用时和实例方法类似需要指定一个类。
+* 静态方法其实和普通的方法一样，只不过在调用的时候需要使用类或者实例。之所以需要静态方法，是因为有时候需要将一组逻辑上相关的函数放在一个类里面，便于组织代码结构。一般如果一个方法不需要用到self，那么它就适合用作静态方法。
 
-对于静态方法其实和普通的方法一样，不需要对谁进行绑定，唯一的区别是调用的时候需要使用a.static_foo(x) 或者 A.static_foo(x)来调用。（Staticmethods are used to group functions which have some logical connection with a class to the class.）
+具体的例子如下：
 
-|       | 实例方法 | 类方法           |  静态方法           |
-|-------| --------| -------         |  -------          |
-|a = A()| a.foo(x)| a.class_foo(x)  |  a.static_foo(x)  |
-| A     | 不可用   | A.class_foo(x)  |  A.static_foo(x)  |
+```python
+def foo(x):
+    print "executing foo(%s)"%(x)
 
-参考：  
-[What is the difference between @staticmethod and @classmethod in Python?](http://stackoverflow.com/questions/136097/what-is-the-difference-between-staticmethod-and-classmethod-in-python)
 
-# Python 数据属性
+class A(object):
+    def foo(self):
+        print "executing foo(%s)" % self
+
+    @classmethod
+    def class_foo(cls):
+        print "executing class_foo(%s)" % cls
+
+    @staticmethod
+    def static_foo():
+        print "executing static_foo()"
+
+a = A()
+print a.foo
+print A.foo
+
+print a.class_foo
+print A.class_foo
+
+print A.static_foo
+print a.static_foo
+print foo
+
+# <bound method A.foo of <__main__.A object at 0x10d5f90d0>>
+# <unbound method A.foo>
+# <bound method type.class_foo of <class '__main__.A'>>
+# <bound method type.class_foo of <class '__main__.A'>>
+# <function static_foo at 0x10d5f32a8>
+# <function static_foo at 0x10d5f32a8>
+# <function foo at 0x10d5f1ed8>
+```   
+
+在访问类方法的时候有两种方法，分别叫做 `未绑定的方法（unbound method）` 和 `绑定的方法（bound method）`：
+
+* 未绑定的方法：通过类来引用实例方法返回一个`未绑定方法对象`。要调用它，你必须显示地提供一个实例作为第一个参数，比如 A.foo。
+* 绑定的方法：通过实例访问方法返回一个绑定的方法对象。Python自动地给方法绑定一个实例，所以调用它时不用再传一个实例参数，比如 a.foo。
+
+## 数据属性
 
 下面创建了一个Student的类，并且实现了这个类的初始化函数"`__init__`":
 
@@ -184,8 +200,6 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
     print p2.name  # [1]
     print Person.name  # [1]
 
-更加详细的解释看： [关于Python类属性与实例属性的讨论](https://segmentfault.com/a/1190000002671941)  
-
 ## 特殊的类属性
 
 对于所有的类，都有一组特殊的属性：
@@ -196,8 +210,7 @@ Python 类其实有3个方法，即静态方法(staticmethod)，类方法(classm
 
 ![][4]
 
-
-# Python 类的继承
+# 类的继承
 
 Python 是面向对象语言，支持类的继承（包括单重和多重继承），继承的语法如下：
 
@@ -242,9 +255,7 @@ supper 调用如下：
 
 ## 继承机制 MRO
 
-MRO 主要用于在多继承时判断调用的属性来自于哪个类。
-
-Python2.2以前的类为经典类，它是一种没有继承的类，实例类型都是type类型，如果经典类被作为父类，子类调用父类的构造函数时会出错。这时MRO的方法为DFS（深度优先搜索），子节点顺序：从左到右。inspect.getmro（A）可以查看经典类的MRO顺序。
+**MRO 主要用于在多继承时判断调用的属性来自于哪个类**。Python2.2以前的类为经典类，它是一种没有继承的类，实例类型都是type类型，如果经典类被作为父类，子类调用父类的构造函数时会出错。这时MRO的方法为DFS（深度优先搜索），子节点顺序：从左到右。inspect.getmro（A）可以查看经典类的MRO顺序。
 
 ![DFS MRO][2]
 
@@ -262,12 +273,13 @@ Python2.2以前的类为经典类，它是一种没有继承的类，实例类�
 
 ![BFS MRO][5]
 
-两种继承模式在BFS下的优缺点:
+新式类两种继承模式在BFS下的优缺点:
 
 * 第一种，正常继承模式。比如B明明继承了D的某个属性（假设为foo），C中也实现了这个属性foo，那么BFS明明先访问B然后再去访问C，但是A的foo属性是c，这个问题称为`单调性问题`。
+
 * 第二种，棱形继承模式，BFS的查找顺序解决了DFS顺序中的只能继承无法重写的问题。
 
-因为DFS 和 BFS 都存在较大的问题，所以从Python2.3开始新式类的MRO采用了C3算法，解决了单调性问题，和只能继承无法重写的问题。MRO的C3算法顺序如下图：
+因为DFS 和 BFS 都存在较大的问题，所以从Python2.3开始新式类的 MRO采用了C3算法，解决了单调性问题，和只能继承无法重写的问题。MRO的C3算法顺序如下图：
 
 ![C3 MRO][6]
 
@@ -341,9 +353,27 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 ## 属性控制
 
-    __getattr__(self, name)
+在Python中，重载`__getattr__、__setattr__、__delattr__`和`__getattribute__`方法可以用来管理一个自定义类中的属性访问。其中：
 
-当用户试图访问一个根本不存在（或者暂时不存在）的属性时，你可以通过这个魔法方法来定义类的行为。
+* __getattr__方法将拦截所有未定义的属性获取（当要访问的属性已经定义时，该方法不会被调用，至于定义不定义，是由Python能否查找到该属性来决定的）；
+* __getattribute__方法将拦截所有属性的获取（不管该属性是否已经定义，只要获取它的值，该方法都会调用），由于此情况，所以，当一个类中同时重载了__getattr__和__getattribute__方法，那么__getattr__永远不会被调用，另外__getattribute__方法仅仅存在于Python2.6的新式类和Python3的所有类中；
+* __setattr__方法将拦截所有的属性赋值；
+* __delattr__方法将拦截所有的属性删除。
+
+在Python中，一个类或类实例中的属性是动态的（因为Python是动态的），也就是说，可以往一个类或类实例中添加或删除一个属性。
+
+由于__getattribute__、__setattr__、__delattr__方法对所有的属性进行拦截，所以，在重载它们时，不能再像往常的编码，要注意避免递归调用（如果出现递归，则会引起死循环）；然而对__getattr__方法，则没有这么多的限制。
+
+在重载__setattr__方法时，不能使用“self.name = value”格式，否则，它将会导致递归调用而陷入死循环。正确的应该是：
+
+```python
+def  __setattr__(self, name, value):
+    # do-something
+    object.__setattr__(self, name, value)
+    # do-something
+```
+
+其中的`object.__setattr__(self, name, value)`一句可以换成`self.__dict__[name] = value`；但前提是，必须保证__getattribute__方法重载正确（如果重载了__getattribute__方法的话），否则，将在赋值时导致错误，因为self.__dict__将要触发对self所有属性中的__dict__属性的获取，这样从而就会引发__getattribute__方法的调用，如果__getattribute__方法重载错误，__setattr__方法自然而然也就会失败。
 
 ## 自定义序列
 
@@ -353,20 +383,7 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 可变容器的协议除了上面提到的两个方法之外，还需要定义 `__setitem__` 和 `__delitem__` 。如果你想让你的对象可以迭代，你需要定义 `__iter__` ，这个方法返回一个迭代器。迭代器必须遵守迭代器协议，需要定义 `__iter__` （返回它自己）和 next 方法。
 
-# 元类
-
-`Python 中类也是一种对象`。只要你使用关键字class，Python解释器在执行的时候就会创建一个对象。于是乎你可以对它做如下的操作：
-
-1. 你可以将它赋值给一个变量
-2. 你可以拷贝它
-3. 你可以为它增加属性
-4. 你可以将它作为函数参数进行传递
-
-**元类就是用来创建类的“东西”**。你创建类就是为了创建类的实例对象，但是我们已经学习到了Python中的类也是对象。好吧，元类就是用来创建这些类（对象）的，元类就是类的类。
-
-更多内容见 [Metaclass.md](Metaclass.md)
-
-# 上下文管理
+## 上下文管理
 
 `上下文管理协议（Context Management Protocol）`包含方法 `__enter__()` 和 `__exit__()`，支持
 该协议的对象要实现这两个方法。
@@ -399,17 +416,20 @@ Python 对一些内建对象进行改进，加入了对上下文管理器的支�
 [Difference between @staticmethod and @classmethod in Python](http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/)  
 [Python Object Oriented](http://www.tutorialspoint.com/python/python_classes_objects.htm)  
 [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)  
+[PEP 343: The "with" Statement](https://www.python.org/dev/peps/pep-0343/)  
+[The Python 2.3 Method Resolution Order](https://www.python.org/download/releases/2.3/mro/#bad-method-resolution-orders)  
+[Python’s super() considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)  
+[What is the difference between old style and new style classes in Python?](http://stackoverflow.com/questions/54867/what-is-the-difference-between-old-style-and-new-style-classes-in-python)  
+[What is the difference between @staticmethod and @classmethod in Python?](http://stackoverflow.com/questions/136097/what-is-the-difference-between-staticmethod-and-classmethod-in-python)   
 [类和实例——廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00138682004077376d2d7f8cc8a4e2c9982f92788588322000)  
 [Python面向对象详解](http://blog.csdn.net/carolzhang8406/article/details/6903556)  
 [知乎：supper 方法](https://www.zhihu.com/question/20040039)  
 [NewClass Vs ClassicClass](https://wiki.python.org/moin/NewClassVsClassicClass)  
 [python类学习以及 MRO--多继承属性查找机制](http://blog.csdn.net/imzoer/article/details/8737642)   
 [你真的理解 Python 中 MRO 算法吗？](http://xymlife.com/2016/05/22/python_mro/)  
-[PEP 343: The "with" Statement](https://www.python.org/dev/peps/pep-0343/)  
-[The Python 2.3 Method Resolution Order](https://www.python.org/download/releases/2.3/mro/#bad-method-resolution-orders)  
-[Python’s super() considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)
-
-
+[关于Python类属性与实例属性的讨论](https://segmentfault.com/a/1190000002671941)    
+[Python中的属性管理](http://blog.chinaunix.net/uid-21633169-id-4614666.html)  
+ 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png
 [3]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_3.png

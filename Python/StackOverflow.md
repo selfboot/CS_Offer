@@ -11,6 +11,7 @@ Stackoverflow 上面Python相关问题精选。
 [What does ** (double star) and * (star) do for Python parameters?][7]  
 [Determine the type of an object?][8]  
 [How to define two-dimensional array in python](http://stackoverflow.com/questions/6667201/how-to-define-two-dimensional-array-in-python)  
+[What is the difference between an expression and a statement in Python?](http://stackoverflow.com/questions/4728073/what-is-the-difference-between-an-expression-and-a-statement-in-python)  
 
 # Class 
 

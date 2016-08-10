@@ -79,6 +79,19 @@ Python 支持类的继承（包括单重和多重继承），继承的语法如�
 
 更多内容参考 [Class](Class.md)
 
+# 元类
+
+`Python 中类也是一种对象`。只要你使用关键字class，Python解释器在执行的时候就会创建一个对象。于是乎你可以对它做如下的操作：
+
+1. 你可以将它赋值给一个变量
+2. 你可以拷贝它
+3. 你可以为它增加属性
+4. 你可以将它作为函数参数进行传递
+
+**元类就是用来创建类的“东西”**。你创建类就是为了创建类的实例对象，但是我们已经学习到了Python中的类也是对象。好吧，元类就是用来创建这些类（对象）的，元类就是类的类。
+
+更多内容见 [Metaclass.md](Metaclass.md)
+
 # Package 机制
 
 简单地说，`模块`就是一个保存了Python代码的文件。模块能定义函数，类和变量，模块里也能包含可执行的代码。使用模块可以更加有逻辑地组织Python代码段，使代码更好用，更易懂。
@@ -157,7 +170,15 @@ python中一切都是对象，这里需要强调函数是对象，那么
             return fib_cache(n - 1) + fib_cache(n - 2)
        
 更多内容参考 [Decorator](Decorator.md)   
-  
+
+# 描述器
+
+一个描述器是一个有`绑定方法`的对象属性(object attribute)，它的访问控制被描述器协议方法重写。这些方法是 `__get__(), __set__(), 和 __delete__()`，有这些方法的对象叫做描述器。
+
+描述器只对于新式对象和新式类才起作用，它是属性，实例方法，静态方法，类方法和 super 的背后的实现机制。在Python自身中广泛使用了描述器，以实现 Python 2.2 中引入的新式类。
+
+更多内容参考 [Descriptor](Descriptor.md)   
+
 # 协程
 
 在 Python 语言的主流实现 CPython 中，`GIL（Global Interpreter Lock，全局解释器锁）`是一个货真价实的全局线程锁，在解释器解释执行任何 Python 代码时，都需要先获得这把锁才行，在遇到 I/O 操作时会释放这把锁。GIL的存在导致多线程无法很好的利用多核CPU的并发处理能力。
@@ -215,23 +236,26 @@ Python 简单，但又危机四伏，充满陷阱，[StackOverFlow 上面有一�
 
 更多内容参考 [Optimization](Optimization.md)
 
+# 优秀的三方库
+
+Python 有着大量优秀的三方库，功能十分强大。可以在 [Awesome Python](https://github.com/vinta/awesome-python) 上找自己需要的库，下面列出几个经典的库。
+
+* Requests：是一个 HTTP 库，用 Python 编写，真正的为人类着想。Python 标准库中的 urllib2 模块提供了你所需要的大多数 HTTP 功能，但是它的 API 太渣了。它需要巨量的工作，甚至包括各种方法覆盖，来完成最简单的任务。
+* Numpy是Python的一个科学计算的库，提供了矩阵运算的功能，其一般与Scipy、matplotlib一起使用。NumPy 的主要对象是同种元素的多维数组（numpy.ndarray）。
+
+更多内容参见 [Library](Library.md)
+
 # Python 程序执行原理
 
 简单来说，Python先把代码（.py文件）编译成字节码，交给字节码虚拟机，然后虚拟机一条一条执行字节码指令，从而完成程序的执行。这里字节码在Python虚拟机程序里对应的是PyCodeObject对象，.pyc文件是字节码在磁盘上的表现形式。
 
 更多内容参见 [HowToRun](HowToRun.md)
 
-# 优秀的三方库
-
-Python 有着大量优秀的三方库，功能十分强大。可以在 [Awesome Python](https://github.com/vinta/awesome-python) 上找自己需要的库，下面列出几个经典的库。
-
-更多内容参见 [Library](Library.md)
-
 # 其它
 
 Python GC主要使用`引用计数（reference counting）`来跟踪和回收垃圾。在引用计数的基础上，通过“标记-清除”（mark and sweep）解决容器对象可能产生的循环引用问题，通过“分代回收”（generation collection）以空间换时间的方法提高垃圾回收效率。
 
-对于嵌套对象比如说source = [1, 2, [3, 4]]，浅拷贝创建新的列表对象target，target中的所有元素均是source中元素的引用，也就是说target中的元素只是source中元素的别名。切片操作[start:end]属于浅拷贝。深拷贝，其实就是递归拷贝。也就是说对于嵌套对象比如说source = [1, 2, [3, 4]]，深拷贝时创建新的列表对象target，然后递归地将source中的所有对象均拷贝到target中。即如果source中的元素是列表、字典等，那么python将拷贝这些列表、字典中的对象到target中去，就这样迭代下去，直到不存在嵌套结构。
+对于嵌套对象比如说source = [1, 2, [3, 4]]，浅拷贝创建新的列表对象target，target中的所有元素均是source中元素的引用。深拷贝，其实就是递归拷贝。也就是说对于嵌套对象比如说source = [1, 2, [3, 4]]，深拷贝时创建新的列表对象target，然后递归地将source中的所有对象均拷贝到target中。
 
 Python 中 list 类似于 C++ STL中 vector 的实现。在需要的时候扩容，但又不允许过度的浪费，适当地进行内存回收。
 
