@@ -20,6 +20,8 @@ Stackoverflow 上面Python相关问题精选。
 [Difference between `__str__` and `__repr__` in Python][11]    
 [Static class variables in Python][12]  
 [Static methods in Python?][13]  
+[Python's use of \_\_new__ and \_\_init__?](http://stackoverflow.com/questions/674304/pythons-use-of-new-and-init)   
+[What is the difference between old style and new style classes in Python?](http://stackoverflow.com/questions/54867/what-is-the-difference-between-old-style-and-new-style-classes-in-python)  
 
 # Function
 

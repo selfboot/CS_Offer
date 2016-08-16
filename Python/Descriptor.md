@@ -86,8 +86,8 @@ class RevealAccess(object):
         self.val = val
 
 >>> class MyClass(object):
-    x = RevealAccess(10, 'var "x"')
-    y = 5
+        x = RevealAccess(10, 'var "x"')
+        y = 5
 
 >>> m = MyClass()
 >>> m.x

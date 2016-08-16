@@ -192,7 +192,7 @@ Python的作用域解析是基于叫做LEGB（Local（本地），Enclosing（�
       File "<stdin>", line 2, in foo
     UnboundLocalError: local variable 'x' referenced before assignment
 
-这是因为，在一个作用域里面给一个变量赋值的时候，Python自动认为这个变量是这个作用域的本地变量，并屏蔽作用域外的同名的变量。很多时候可能在一个函数里添加一个赋值的语句会让你从前本来工作的代码得到一个`UnboundLocalError`。
+这是因为，在**一个作用域里面给一个变量赋值的时候，Python自动认为这个变量是这个作用域的本地变量，并屏蔽作用域外的同名的变量。**很多时候可能在一个函数里添加一个赋值的语句会让你从前本来工作的代码得到一个`UnboundLocalError`。
 
 下面的是文档中的解释：
 

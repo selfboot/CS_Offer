@@ -1,23 +1,30 @@
-# Python 元类详解
+元类metaclass应该算是python元编程的一部分，可以粗暴的理解为类的类，一般我们根据类创建实例，有了元类，我们就可以使用元类创建类。
+
+元类被称为 Python 中的“深奥的巫术”。尽管你需要用到它的地方极少，可事实上它的基础理论其实令人惊讶地易懂。
 
 # 类是对象
 
 在理解元类之前，需要先掌握Python中的类。在大多数编程语言中，类就是一组用来描述如何生成一个对象的代码段。在Python中这一点仍然成立：
 
-    >>> class ObjectCreator(object):
-    …       pass
-    …
-    >>> my_object = ObjectCreator()
-    >>> print my_object
-    <__main__.ObjectCreator object at 0x8974f2c>
+```python
+class ObjectCreator(object):
+    pass
+
+
+my_object = ObjectCreator()
+print my_object
+# <__main__.ObjectCreator object at 0x104d31050>
+```
 
 但是，Python中的类还远不止如此。`类同样也是一种对象`。是的，没错，就是对象。只要你使用关键字class，Python解释器在执行的时候就会创建一个对象。下面的代码段：
 
-    >>> class ObjectCreator(object):
-    …       pass
-    …
 
-将在内存中创建一个对象，名字就是ObjectCreator。这个对象（类）自身拥有创建对象（类实例）的能力，而这就是为什么它是一个类的原因。但是，它的本质仍然是一个对象，于是乎你可以对它做如下的操作：
+```python
+class ObjectCreator(object):
+    pass
+```
+
+将在内存中创建一个对象，名字就是ObjectCreator。**这个对象（类）自身拥有创建对象（类实例）的能力，而这就是为什么它是一个类的原因。**但是，它的本质仍然是一个对象，于是乎你可以对它做如下的操作：
 
 1. 你可以将它赋值给一个变量
 2. 你可以拷贝它
@@ -26,27 +33,29 @@
 
 下面是示例：
 
-    >>> print ObjectCreator     
-    # 你可以打印一个类，因为它其实也是一个对象
-    <class '__main__.ObjectCreator'>
-    >>> def echo(o):
-    …       print o
-    …
-    >>> echo(ObjectCreator)                 
-    # 你可以将类做为参数传给函数
-    <class '__main__.ObjectCreator'>
-    >>> print hasattr(ObjectCreator, 'new_attribute')
-    Fasle
-    >>> ObjectCreator.new_attribute = 'foo' 
-    #  你可以为类增加属性
-    >>> print hasattr(ObjectCreator, 'new_attribute')
-    True
-    >>> print ObjectCreator.new_attribute
-    foo
-    >>> ObjectCreatorMirror = ObjectCreator 
-    # 你可以将类赋值给一个变量
-    >>> print ObjectCreatorMirror()
-    <__main__.ObjectCreator object at 0x8997b4c>
+```python
+>>> print ObjectCreator     
+# 你可以打印一个类，因为它其实也是一个对象
+<class '__main__.ObjectCreator'>
+>>> def echo(o):
+…       print o
+…
+>>> echo(ObjectCreator)                 
+# 你可以将类做为参数传给函数
+<class '__main__.ObjectCreator'>
+>>> print hasattr(ObjectCreator, 'new_attribute')
+Fasle
+>>> ObjectCreator.new_attribute = 'foo' 
+#  你可以为类增加属性
+>>> print hasattr(ObjectCreator, 'new_attribute')
+True
+>>> print ObjectCreator.new_attribute
+foo
+>>> ObjectCreatorMirror = ObjectCreator 
+# 你可以将类赋值给一个变量
+>>> print ObjectCreatorMirror()
+<__main__.ObjectCreator object at 0x8997b4c>
+```
 
 ## 动态地创建类
 
@@ -71,7 +80,7 @@
     # 你可以通过这个类创建类实例，也就是对象
     <__main__.Foo object at 0x89c6d4c>
 
-但这还不够动态，因为你仍然需要自己编写整个类的代码。由于类也是对象，所以它们必须是通过什么东西来生成的才对。当你使用class关键字时，Python解释器自动创建这个对象。但就和Python中的大多数事情一样，Python仍然提供给你手动处理的方法。还记得内建函数type吗？这个古老但强大的函数能够让你知道一个对象的类型是什么，就像这样：
+但这还不够动态，因为你仍然需要自己编写整个类的代码。**由于类也是对象，所以它们必须是通过什么东西来生成的才对。**当你使用class关键字时，Python解释器自动创建这个对象。但就和Python中的大多数事情一样，Python仍然提供给你手动处理的方法。还记得内建函数type吗？这个古老但强大的函数能够让你知道一个对象的类型是什么，就像这样：
 
     >>> print type(1)
     <type 'int'>
@@ -86,7 +95,9 @@
 
 type可以像这样工作：
 
-    type(类名, 父类的元组（针对继承的情况，可以为空），包含属性的字典（名称和值）)
+    type(name of the class, 
+        tuple of the parent class (for inheritance, can be empty), 
+        dictionary containing attributes names and values)
 
 比如下面的代码：
 
@@ -198,21 +209,30 @@ Python中所有的东西，注意，我是指所有的东西——都是对象�
 
 因此，元类就是创建类这种对象的东西。type就是Python的内建元类，当然了，你也可以创建自己的元类。
 
-# \__metaclass__ 属性
+# `__metaclass__属性`
 
 你可以在写一个类的时候为其添加__metaclass__属性。
 
     class Foo(object):
         __metaclass__ = something…
+        [...]
 
-如果你这么做了，Python就会用元类来创建类Foo。小心点，这里面有些技巧。你首先写下class Foo(object)，但是类对象Foo还没有在内存中创建。Python会在类的定义中寻找__metaclass__属性，如果找到了，Python就会用它来创建类Foo，如果没有找到，就会用内建的type来创建这个类。把下面这段话反复读几次。当你写如下代码时 :
+如果你这么做了，Python就会用元类来创建类Foo。小心点，这里面有些技巧。你首先写下class Foo(object)，但是类对象Foo还没有在内存中创建。**Python会在类的定义中寻找__metaclass__属性，如果找到了，Python就会用它来创建类Foo，如果没有找到，就会用内建的type来创建这个类**。当你写如下代码时:
 
     class Foo(Bar):
         pass
 
 Python做了如下的操作：
 
-Foo中有__metaclass__这个属性吗？如果是，Python会在内存中通过__metaclass__创建一个名字为Foo的类对象（我说的是类对象，请紧跟我的思路）。如果Python没有找到__metaclass__，它会继续在Bar（父类）中寻找__metaclass__属性，并尝试做和前面同样的操作。如果Python在任何父类中都找不到__metaclass__，它就会在模块层次中去寻找__metaclass__，并尝试做同样的操作。如果还是找不到__metaclass__,Python就会用内置的type来创建这个类对象。
+> Is there a __metaclass\_\_ attribute in Foo?
+
+> If yes, create in memory a class object (I said a class object, stay with me here), with the name Foo by using what is in \_\_metaclass__.
+
+> If Python can't find \_\_metaclass__, it will look for a \_\_metaclass\_\_ at the MODULE level, and try to do the same (but only for classes that don't inherit anything, basically old-style classes).
+
+> Then if it can't find any \_\_metaclass__ at all, it will use the Bar's (the first parent) own metaclass (which might be the default type) to create the class object.
+
+> Be careful here that the \_\_metaclass__ attribute will not be inherited, the metaclass of the parent (Bar.\_\_class\_\_) will be. If Bar used a \_\_metaclass\_\_ attribute that created Bar with type() (and not type.\_\_new\_\_()), the subclasses will not inherit that behavior.
 
 现在的问题就是，你可以在__metaclass__中放置些什么代码呢？答案就是：`可以创建一个类的东西`。那么什么可以用来创建一个类呢？type，或者任何使用到type或者子类化type的东东都可以。
 
@@ -220,12 +240,12 @@ Foo中有__metaclass__这个属性吗？如果是，Python会在内存中通过_
 
 **元类的主要目的就是为了当创建类时能够自动地改变类**。通常，你会为API做这样的事情，你希望可以创建符合当前上下文的类。假想一个很傻的例子，你决定在你的模块里所有的类的属性都应该是大写形式。有好几种方法可以办到，但其中一种就是通过在模块级别设定__metaclass__。采用这种方法，这个模块中的所有类都会通过这个元类来创建，我们只需要告诉元类把所有的属性都改成大写形式就万事大吉了。
 
-幸运的是，__metaclass__实际上可以被任意调用，它并不需要是一个正式的类（我知道，某些名字里带有‘class’的东西并不需要是一个class，画画图理解下，这很有帮助）。所以，我们这里就先以一个简单的函数作为例子开始。
+幸运的是，__metaclass__实际上可以被任意调用，它并不需要是一个正式的类。所以，我们这里就先以一个简单的函数作为例子开始。
 
     # 元类会自动将你通常传给‘type’的参数作为自己的参数传入
     def upper_attr(future_class_name, future_class_parents, future_class_attr):
-        
         '''返回一个类对象，将属性都转为大写形式'''
+        
         # 选择所有不以'__'开头的属性
         attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
         # 将它们转为大写形式
@@ -237,8 +257,8 @@ Foo中有__metaclass__这个属性吗？如果是，Python会在内存中通过_
     __metaclass__ = upper_attr  
     # 这会作用到这个模块中的所有类
      
-    class Foo(object):
-    # 我们也可以只在这里定义__metaclass__，这样就只会作用于这个类中
+    class Foo():
+    # 也可以只在这里定义__metaclass__，这样就只会作用于这个类中。模块级 __metalclass__ 只对旧式类起作用。
         bar = 'bip'
 
 可以用下面程序检验一下元类的效果：
@@ -333,7 +353,7 @@ Foo中有__metaclass__这个属性吗？如果是，Python会在内存中通过_
 
 Python中的一切都是对象，它们要么是类的实例，要么是元类的实例，除了type。type实际上是它自己的元类，在纯Python环境中这可不是你能够做到的，这是通过在实现层面耍一些小手段做到的。其次，元类是很复杂的。
 
-参考：
+# 更多阅读
+[What is a metaclass in Python?](http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python)  
 [深刻理解Python中的元类(metaclass)](http://blog.jobbole.com/21351/)  
-[What is a metaclass in Python?](http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python)
 
