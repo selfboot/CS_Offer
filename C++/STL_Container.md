@@ -1,16 +1,25 @@
-# 容器
+> 容器，置物之所也。
 
-一个容器就是一些特定类型对象的集合。`顺序容器（sequential container）`为程序员提供了控制元素存储和访问顺序的能力。这种顺序不依赖于元素的值，而是与元素加入容器时的位置相对应。
+研究数据的特定排列方式，以利于搜寻或者排序或其他特殊目的，这一专门学科称为数据结构。几乎可以说，任何特定的数据结构都是为了实现某种特定的算法。
 
-除了顺序容器外，标准库还定义了三个顺序容器适配器：stack、queue和priority_queue。`适配器`是标准库中的一个通用概念，容器、迭代器和函数都有适配器。本质上，一个适配器是一种机制，能使某种事物的行为看起来像另外一种事物一样。
+众所周知，常用的数据结构不外乎数组(array)、链表(list)、树(tree)、栈(stack)、队列(queue)、散列表(hash table)、集合(set)、映射(map)等等。根据数据在容器中的排列特性，这些数据结构分为序列式和关联式两种。STL容器即是将运用最广的一些数据结构实现出来。
 
-和顺序容器对应的是`关联容器（associative-container）`，关联容器中的元素是按关键字来保存和访问的。关联容器支持高效的关键字查找和访问，STL有两个主要的关联容器：map 和 set。
+![][2]
 
-# 顺序容器
+# 序列式容器
 
-## Vector
+`序列式容器（sequential container）`：其中的元素都可序（ordered），但未必有序（sorted）。C++语言本身提供了一个序列式容器 array，STL 另外提供了 vector，list，deque，stack，queue，priority-queue等序列式容器。其中 stack、queue 只是由 deque 改头换面而成，技术上归为一种配接器（adapter）。`适配器`是标准库中的一个通用概念，容器、迭代器和函数都有适配器。本质上，一个适配器是一种机制，能使某种事物的行为看起来像另外一种事物一样。
 
-最简单的 STL 顺序容器就是 vector。Vector 只是一个拥有扩展功能的数组。
+## [vector](http://www.cplusplus.com/reference/vector/vector/)
+
+> Vectors are sequence containers representing arrays that can change in size.
+
+Vector 是一个拥有扩展功能的数组，我们可以创建任何类型的 vector，通过 vector 创建二维数组，最简单的方式就是创建一个存储 vector 元素的 vector。
+
+    int N＝5, M＝10;
+    vector<vector<int>> Matrix(N, vector<int>(M, -1));
+
+我们创建了一个 N * M 的矩阵，**并用 -1 填充所有位置上的值**。再看下面的例子：
 
     vector<int> v(10, 0);
     int elements_count = v.size();
@@ -26,57 +35,32 @@
         //把元素写入下标值[15..20), not [10..15)
     }
 
-向 vector 添加数据的最简单方式是使用 push_back()。但是，万一我们想在除了尾部以外的地方添加数据呢？Insert函数可以实现这个目的，往 vector 中插入一个元素：
+此外，`erase()函数`从指定容器删除指定位置的元素或某段范围内的元素，如果是删除指定位置的元素时，返回值是一个迭代器，指向删除元素下一个元素；如果是删除某范围内的元素时：返回值也表示一个迭代器，指向最后一个删除元素的下一个元素。下面例子中删除 vector 中指定的某个元素值（删除一个元素后导致后面所有的元素会向前移动一个位置）：
 
-    vector<int> v(10,0);
-    v.insert(1, 42);    // Insert value 42 after the first
+```c++
+std::vector<int> array = {1,2,6,6,7,8};
+for (std::vector<int>::iterator itor = array.begin(); itor != array.end(); itor++)
+{
+   if (*itor == 6) {
+       array.erase(itor);
+       itor--;
+   }
+}
+for(auto n: array) std::cout << n << ", ";
+// 1,2,7,8
+```
 
-从第二个（下标为1的元素）往后的所有元素都要右移一位，从而空出一个位置给新插入的元素。如果你打算添加很多元素，那多次右移并不可取——明智的做法是单次调用 insert()，指明插入数据的空间范围。
+vector 提供了许多元素操作方法，不详细说明，下面简单列出常使用的：
 
-    vector<int> v1(3,0);
-    vector<int> v2{1,2,3};
-    v1.insert(v1.begin(), v2.begin(), v2.end());
-
-还应该记住另一个非常重要的事情：当 vector 作为参数传给某个函数时，实际上是复制了这个 vector（也就是`值传递`）。在不需要这么做的时候创建新的 vector 可能会消耗大量时间和内存。实际上，很难找到一个任务需要在传递 vector 为参数时对其进行复制。所以，最好使用`引用传递`：
-
-    void some_function(const vector<int>& v) { 
-        // Read only!
-    }
-    void some_function(vector<int>& v) { 
-        // Can be Modified!
-    }
-
-此外，要知道我们可以创建任何类型的 vector，通过 vector 创建二维数组，最简单的方式就是创建一个存储 vector 元素的 vector。
-
-    int N＝5, M＝10;
-    vector< vector<int> > Matrix(N, vector<int>(M, -1));
-
-我们创建了一个 N * M 的矩阵，**并用 -1 填充所有位置上的值**。
-
-`erase()函数`从指定容器删除指定位置的元素或某段范围内的元素，如果是删除指定位置的元素时，返回值是一个迭代器，指向删除元素下一个元素；如果是删除某范围内的元素时：返回值也表示一个迭代器，指向最后一个删除元素的下一个元素。
-
-删除 vector 中指定的某个元素值（删除一个元素后导致后面所有的元素会向前移动一个位置）：
-
-    vector<int> array = {1,2,6,6,7,8};
-    for (vector<int>::iterator itor = array.begin(); itor != array.end(); itor++)
-    {
-        if (*itor == 6) {
-            array.erase(itor);
-            itor--;
-        }
-    }
-    // 1,2,7,8
-
-其他的一些函数：
-
+* insert()：在指定的迭代器位置前面插入新的元素或者一组元素，返回指向新插入元素（如果是一组元素的话，返回第一个）的迭代器；
 * clear()：清空 vector，使其包含 0 个元素，成为空容器。
 * capacity()：返容器占用的内存空间，注意和v.size()的区别（空间的分配和size的关系）；
 * pop_back()：删除尾部的数据，size -= 1；
 * c.at(index)：传回索引为index的数据，如果index越界，抛出out_of_range异常。
-* c.front()：返回第一个数据。
-* c.back()：传回最后一个数据，不检查这个数据是否存在。
+* c.front()：返回第一个数据，在空的 vector 上调用该操作会导致未定义行为。
+* c.back()：传回最后一个数据，在空的 vector 上调用该操作会导致未定义行为。
 
-很多时候大量删除数据，或者通过使用reserver()，结果vector占有的空间远远大于实际的需要，这时候需要压缩vector到它的实际大小。在 C++11 中已经提供`了shrink_to_fit()`函数实现vector的压缩。
+很多时候大量删除数据，或者通过使用reserver()，结果vector占有的空间远远大于实际的需要，这时候需要压缩vector到它的实际大小。在 C++11 中已经提供了`shrink_to_fit()`函数实现vector的压缩。
 
     std::vector<int> v(1000,1);              // v.capacity()=1000
     v.erase(v.begin(), v.begin()+v.size()/2);// v.capacity()=1000
@@ -84,9 +68,169 @@
 
 （空间增长策略*：按照容器现在容量的一倍进行增长。vector容器分配的是一块连续的内存空间，每次容器的增长，并不是在原有连续的内存空间后再进行简单的叠加，而是重新申请一块更大的新内存，并把现有容器中的元素逐个复制过去，然后销毁旧的内存。这时原有指向旧内存空间的迭代器已经失效，所以当操作容器时，迭代器要及时更新。*）
 
+## [list](http://www.cplusplus.com/reference/list/list/)
+
+> Lists are sequence containers that allow constant time insert and erase operations anywhere within the sequence, and iteration in both directions.
+
+相较于 vector 的连续线性空间，list 显得复杂许多，它的好处是每次插入或者删除一个元素，就配置或者释放一个元素空间。因此 list 对于空间的运用有绝对的精准，一点也不浪费。而且对于任何位置的元素插入或元素移除，list 永远是常数时间。
+
+STL list 实现是一个双向链表（SGI list是环状双向链表），迭代器具备前移、后移的能力，所以 list 提供的是 Bidirectional Iterators。list 有个重要的性质：`插入操作和接合操作都不会造成原有的 list 迭代器失效`。这在 vector 是不成立的，因为 vector 的插入操作可能造成记忆体重新配置，导致原有的迭代器全部失效。
+
+![][3]
+
+和 vector 一样，list 也提供了 push_back, pop_back方法，此外由于是双向链表，还可以从头部插入或者删除数据：push_front, push_front。还提供了和 vector 功能相同的front，back，insert，erase，clear 函数。来看几个简单的例子：
+
+```c++
+std::list<int> mylist;
+
+mylist.push_back(33);
+mylist.push_back(22);
+mylist.push_front(11);
+
+mylist.front() -= mylist.back();
+mylist.insert(mylist.begin(), 0);
+mylist.erase(--mylist.end());
+
+for(auto n: mylist) std::cout << n << " ";  // 0 -11 33 
+```
+
+由于 list 数据结构的特殊，也提供了一些 vector 没有的操作，如下：
+
+* splice：将某个连续范围的元素从一个list迁移（transfer）到另一个（或者同一个）list的某个定点。
+* remove：删除list中指定值的元素，和 erase 不同，这里是根据值而不是位置去删除。
+* merge：合并两个有序链表并使之有序。
+* sort：针对 list 的特定排序算法，默认的算法库中的sort需要随机访问迭代器，list并不能提供。
+
+下面看简单的例子：
+
+```c++
+std::list<std::string> mylist;
+mylist.push_back ("one");
+mylist.push_back ("two");
+mylist.push_back ("three");
+mylist.remove("two");
+
+mylist.sort();
+for(auto n: mylist) std::cout << n << " ";  // one three
+
+return 0;
+```
+
+## [deque](http://www.cplusplus.com/reference/deque/deque/)
+
+> deque (usually pronounced like "deck") is an irregular acronym of double-ended queue. Double-ended queues are sequence containers with dynamic sizes that can be expanded or contracted on both ends (either its front or its back).
+
+vector 是单向开口的连续线性空间，deque 则是一种双向开口的连续线性空间。所谓双向开口，意思是可以在头尾两端分别做元素的插入和删除工作，如下图所示：
+
+![][4]
+
+deque 和 vector 的差异在于：
+
+* deque 允许常数时间内对起头端进行元素的插入或移除操作
+* deque 没有所谓的容量（capacity）概念，因为它是动态地以分段连续空间组合而成，随时可以增加一段新的空间并链接起来。
+
+虽然 deque 也提供了 RandomAccessIterator，但是它的迭代器并不是普通指针，复杂度大很多。因此除非必要，应该尽可能使用 vector 而非 deque。对 deque 进行排序操作，为了提高效率，可以先将 deque 完整复制到一个 vector 中，将 vector 排序后（利用 STL sort），再复制回 deque。下面看一个简单的例子：
+
+```c++
+std::deque<int> mydeque;
+
+// set some initial values:
+for (int i=1; i<6; i++) mydeque.push_back(i);   // 1 2 3 4 5
+std::deque<int>::iterator it = mydeque.begin();
+++it;
+it = mydeque.insert (it,10);
+mydeque.erase(--mydeque.end());
+for(auto n: mydeque) std::cout << n << " ";     // 1 10 2 3 4
+```
+
+## 适配器
+
+### [stack](http://www.cplusplus.com/reference/stack/stack/)
+
+> Stacks are a type of container adaptor, specifically designed to operate in a LIFO context (last-in first-out), where elements are inserted and extracted only from one end of the container.
+
+stack 是一种先进后出的数据结构，SGI STL以 deque 作为缺省情况下的 stack 底部结构。它主要支持下面的操作：
+
+* empty：判断栈是否为空
+* size：取得栈的大小
+* top：取得栈顶元素
+* push：入栈操作
+* pop：出栈操作
+
+stack 所有元素的进出都必须符合“先进后出”的条件，只有 stack 顶端的元素，才有机会被外界取用。因此 **stack 不提供走访功能，不提供迭代器**。简单的使用例子如下：
+
+```c++
+std::stack<int> mystack;
+for (int i=0; i<5; ++i) mystack.push(i);
+std::cout << "Popping out elements...";
+while (!mystack.empty())
+{
+   std::cout << ' ' << mystack.top();
+   mystack.pop();
+}
+std::cout << '\n';
+// Popping out elements... 4 3 2 1 0
+return 0;
+```
+
+### [queue](http://www.cplusplus.com/reference/queue/queue/)
+
+> queues are a type of container adaptor, specifically designed to operate in a FIFO context (first-in first-out), where elements are inserted into one end of the container and extracted from the other.
+
+queue 是一种先进先出（FIFO）的数据结构，允许从最底部加入元素，同时取得最顶部元素。SGI STL以 deque 作为缺省情况下的 queue 底部结构。它主要支持下面的操作：
+
+* empty：判断队列是否为空
+* size：取得队列的大小
+* front：取得队列头部元素
+* back：取得队列尾部元素
+* push：队列尾部插入元素
+* pop：从队列头部取出元素
+
+和 stack 一样， **queue 不提供走访功能，不提供迭代器**。简单的使用例子如下：
+
+```c++
+std::queue<int> myqueue;
+for (int i=0; i<5; ++i) myqueue.push(i);
+std::cout << "Popping out elements...";
+while (!myqueue.empty())
+{
+   std::cout << ' ' << myqueue.front();
+   myqueue.pop();
+}
+std::cout << '\n';
+// Popping out elements... 0 1 2 3 4
+return 0;
+```
+
+### [priority_queue](http://www.cplusplus.com/reference/queue/priority_queue/)
+
+> Priority queues are a type of container adaptors, specifically designed such that its first element is always the greatest of the elements it contains, according to some strict weak ordering criterion.
+
+优先队列（priority queue）允许用户以任何次序将任何元素推入容器内，但取出时一定是从优先权最高的元素开始取。优先队列具有权值观念，其内的元素并非依照被推入的次序排列，而是自动依照元素的权值排列，权值最高者排在最前面。
+
+优先队列完全以底部容器为根据，加上 heap 处理规则，具有`修改某物接口，形成另一种风貌`的性质，因此是配接器。优先队列中的所有元素，进出都有一定的规则，只有queue顶部的元素（权值最高者），才有机会被外界取用。因此并不提供遍历功能，也不提供迭代器。
+
+优先队列的构造函数和其他序列式容器的略有不同，因为需要指定底层容器的类型和优先级比较的仿函数。C++11 中一共有5大种构造函数，下面列出其中一种：
+
+```c++
+template <class InputIterator>
+priority_queue (InputIterator first, InputIterator last,
+                const Compare& comp, const Container& ctnr);
+```
+
+下面是具体的构造示例：
+
+```c++
+int myints[]= {10,60,50,20};
+
+std::priority_queue<int> first;
+std::priority_queue<int> second (myints,myints+4);
+std::priority_queue<int, std::vector<int>, std::greater<int>> third (myints,myints+4);
+```
+
 # 关联容器
 
-关联容器用来支持高效的关键字查找和访问，其中的元素是按照关键字来保存和访问的。与之相对，顺序容器中的元素是按它们在容器中的位置来顺序保存和访问的。两个主要的关联容器类型是 map 和 set：
+`关联式容器（associative-container）`：观念上类似关联式数据库，每个元素都有一个键值（key）和一个实值（value）。当元素被插入到关联式容器中时，容器内部结构便依照其键值大小，以某种特定规则将这个元素放置于适当位置。标准的 STL 关联式容器分为map（映射表）和 set（集合）两大类，以及衍生体 multiset（多键集合）和多键映射表（multimap），底层均为 RB-Tree（红黑树完成）。
 
 * map中的元素是一些关键字-值对（key-value）对：关键字起到索引的作用，值则表示与索引相关联的数据。
 * set中每个元素只包含一个关键字，set支持高效的关键字查询操作——检查一个给定关键字是否在 set 中。
@@ -110,9 +254,9 @@
     map <string, string> authors = {{"Joyce", "James"},
                                     {"Austen", "Jane"}};
 
-对于有序容器，关键字类型必须定义元素比较的方法。默认情况下，标准库使用关键字类型的 < 运算符来比较两个关键字。
+**对于有序容器，关键字类型必须定义元素比较的方法**。默认情况下，标准库使用关键字类型的 `< 运算符` 来比较两个关键字。
 
-无序容器使用关键字类型的 == 运算符来比较元素，它们还使用一个hash<key_type>类型的对象来生成每个元素的哈希值。标准库为内置类型定义了 hash 模板，还为一些标准库类型，如 string 定义了hash。但是我们不能直接定义关键字类型为自定义类类型的无序容器。因为不能直接使用哈希模板，必须提供我们自己的 hash 模板版本。
+无序容器使用关键字类型的 == 运算符来比较元素，它们还使用一个hash<key_type>类型的对象来生成每个元素的哈希值。标准库为内置类型定义了 hash 模板，还为一些标准库类型，如 string 定义了hash。但是我们**不能直接定义关键字类型为自定义类类型的无序容器。因为不能直接使用哈希模板**，必须提供我们自己的 hash 模板版本。
 
 ### pair类型
 
@@ -144,9 +288,9 @@
     iter -> second = "2";
     cout << iter->first << ", " << iter->second << endl;
 
-与不能改变 map 的关键字一样，一个 set 中的关键字也是 const 的，可以用一个 set 迭代器来读元素的值，但不能修改。
+与不能改变 map 的关键字一样，一个 **set 中的关键字也是 const 的，可以用一个 set 迭代器来读元素的值，但不能修改**（因为 set 元素值就是其键值，关系到 set 元素的排列规则，如果任意改变set元素值，会破坏set组织）。
 
-通常不对关联容器使用泛型算法，因为关键字是 const 这一特性意味着不能将关联容器传递给修改或者重排容器元素的算法（这类算法往往需要向元素写入值）。关联容器可用于只读取元素的算法。
+**通常不对关联容器使用泛型算法**，因为关键字是 const 这一特性意味着不能将关联容器传递给修改或者重排容器元素的算法（这类算法往往需要向元素写入值）。关联容器可用于只读取元素的算法。
 
 ### 添加元素
 
@@ -165,9 +309,7 @@
     word_count.insert(pair<string, int>("and", 1));
     word_count.insert(map<string, int>::value_type("text", 1));
 
-### 检测 insert 的返回值
-
-insert 返回的值依赖于容器类型和参数，对于不包含重复关键字的容器，添加单一元素的 insert返回一个 pair，告诉我们插入操作是否成功。pair 的 **first 成员是一个迭代器，指向具有给定关键字的元素**，second 成员是一个 bool 值，指出元素是插入成功还是已经存在于容器中。
+insert 返回的值依赖于容器类型和参数，对于不包含重复关键字的容器，添加单一元素的 insert返回一个 pair。pair 的 **first 成员是一个迭代器，指向插入妥当的新元素或指向插入失败点（键值重复）的旧元素**，second 成员是一个 bool 值，指出元素是插入成功（返回1）还是已经存在于容器中（没有插入，因此返回0）。
 
     map<string, int> word_count;
     word_count.insert({"or", 1});
@@ -185,7 +327,7 @@ insert 返回的值依赖于容器类型和参数，对于不包含重复关键�
 
 ### 删除元素
 
-关联容器定义了三个版本的 erase，与顺序容器一样，可以通过传递给 erase 一个迭代器删除一个元素或者一个迭代器对删除一个元素范围。这两个版本和顺序容器的操作类似，指定的元素被删除，返回 void。
+关联容器定义了三个版本的 erase，与序列式容器一样，可以通过传递给 erase 一个迭代器删除一个元素或者一个迭代器对删除一个元素范围。这两个版本和序列式容器的操作类似，指定的元素被删除，返回 void。
 
 此外，关联容器提供额外的 erase 操作，接受一个 key_type 参数，此版本删除所有匹配给定关键字的元素（如果存在的话），返回实际删除的元素的数量。对于保存不重复关键字的容器，erase返回值总是0或者1。
 
@@ -239,13 +381,16 @@ map 和 unordered_map 容器提供了下标运算符和一个对应的at函数�
         cout << beg->second << endl;
     }
 
+# 更多阅读
 
-# 参考
-
+《STL 源码剖析》  
 《C++ Primer》 11章：关联容器  
 [标准模板库（STL）使用入门（上）](http://blog.jobbole.com/87586/)  
 [标准模板库（STL）使用入门（下）](http://blog.jobbole.com/88310/)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_STL_Container_1.png
+[2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_STL_Container_2.png
+[3]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_STL_Container_3.png
+[4]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_STL_Container_4.png
 
