@@ -113,7 +113,19 @@ C++中用虚函数实现多态机制。关于多态，简而言之就是用父�
 
 函数声明告诉编译器函数的名称、返回类型和参数，函数定义提供了函数的实际主体。
 
+memcpy是c和c++使用的内存拷贝函数，从源src所指的内存地址的起始位置开始拷贝n个字节到目标dest所指的内存地址的起始位置中，函数返回指向dest的指针。
+
 函数的更多内容参考： [Function](Function.md)
+
+# 模版
+
+C++中模版（Templates）的最初发展动机很直接，让我们得以建立`类型安全(type-safe)`的容器，如vector, list 和 map。模板的思想其实很简单：`参数化类型`。换句话说，把一个原本特定于某个类型的算法或类当中的类型信息抽掉，抽出来做成模板参数T。
+
+相对于基于多态的面向对象抽象而言，使用模版更加高效。因为面向对象的多态引入了间接调用，需要在运行期查找真正调用的函数，而模板可以直接利用编译器的类型信息，做到编译期多态，避免了间接调用。
+
+C++ 中主要有函数模板与类模板，标准函数库提供的许多有用的函数大多结合了模板的概念，如STL以及iostream。C++ 模版机制自身是一部完整的图灵机，它可以用来计算任何可计算的值。
+
+更多内容参考 [Template](Template.md)
 
 # 内存管理
 
@@ -152,6 +164,10 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 ［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］  
 ［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］  
 
+# 面经收集
+
+[网易内推（C++/C研发）offer之路](http://www.nowcoder.com/discuss/3038?type=2&order=0&pos=22&page=2)  
+
 # 更多阅读
 
 《C++ Primer（第五版）》  
@@ -164,7 +180,6 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
 [Can we change the value of a constant through pointers?](http://stackoverflow.com/questions/3801557/can-we-change-the-value-of-a-constant-through-pointers/3801601#3801601)   
 [C/C++内存泄漏及检测](http://www.cnblogs.com/skynet/archive/2011/02/20/1959162.html)  
-
 
 
 
