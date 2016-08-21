@@ -4,7 +4,7 @@
 
 欲阻止一个变量被改变，可以使用const关键字。在定义该const变量时，通常需要对它进行初始化，因为以后就没有机会再去改变它了。
 
-const只是在`编译期的保护`，编译期会检查const变量有没有被修改，如果有代码尝试修改一个const变量，编译器就会报错。但是由于const修饰的既然是是变量，就有存储空间，我们可以通过地址修改空间里的值，这样还是可以改变的，也就是说const在一定程度上在编译期间使该变量变成了一个常量，然而它并没有实现保证该变量在运行期间内存中的值不被修改。
+const只是在`编译期的保护`，编译期会检查const变量有没有被修改，如果有代码尝试修改一个const变量，编译器就会报错。但是由于const修饰的既然是变量，就有存储空间，我们可以通过地址修改空间里的值，这样还是可以改变的，也就是说const在一定程度上在编译期间使该变量变成了一个常量，然而它并没有实现保证该变量在运行期间内存中的值不被修改。
 
 更多特点如下：
 
@@ -16,7 +16,7 @@ const只是在`编译期的保护`，编译期会检查const变量有没有被�
 
 ［[改变 const 变量的值](http://www.nowcoder.com/questionTerminal/36f828664d2d4d14a1428ae49f701f23)］
 
-代码实例参见 [C++_Const.cpp](C++_Code/C++_Const.cpp)
+代码实例参见 [C++_Const.cpp](../Coding/C++_Const.cpp)
 
 # static
 
@@ -34,7 +34,7 @@ const只是在`编译期的保护`，编译期会检查const变量有没有被�
 
 > The whole and entire purpose of static is to declare that a variable is private to the source file that it is declared in. Thus, it is doing precisely its job in preventing a connection from an extern.  It is not visible to externs in other files, and you can have many different files that all declare static TYPE blah;, and they are all different.
 
-下面是一个简单的例子，分别在两个文件里面都定义了全局变量num，结果会导致重复定义：
+简单来说，对于static 的全局变量，它对链接器不可以见，所以这个变量只能在当前文件中使用。下面是一个简单的例子，分别在两个文件里面都定义了全局变量num，结果会导致重复定义：
 
     $ cat test_1.cpp
     int num = 5;
@@ -184,6 +184,60 @@ c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面
 
 定义f和i是存放在寄存器的局部变量，如果n的值大，则能节约许多执行时间。不过要注意在程序中定义寄存器变量对编译系统只是建议性(而不是强制性)的。此外，现在的优化编译系统能够识别使用频繁的变量，自动地将这些变量放在寄存器中。
 
+# explicit
+
+> The [explicit specifier](http://en.cppreference.com/w/cpp/language/explicit) specifies that a constructor or **conversion function** (since C++11) doesn't allow **implicit conversions** or **copy-initialization**. 
+
+复制初始化（[copy initialization](http://en.cppreference.com/w/cpp/language/copy_initialization)）是指用一个对象来初始化另一个对象。主要分下面六种情况：
+
+* T object = other;	 用`=操作符`声明一个非引用对象。
+* T object = {other}; C++ 11 中的列表初始化。
+* f(other); 向函数按照值传递传参数。
+* return other; 函数返回一个值。
+* throw object; catch (T object); throw 或者 catch 一个意外值。
+* T array[N] = {other}; 
+
+有时候在需要类型 T2 的地方，我们给了类型 T1，并且没有显式地进行类型转换。这时候可能就用到了**隐式类型转换**（[Implicit conversions](http://en.cppreference.com/w/cpp/language/implicit_conversion)），编译器在背后默默地将 T1 转换为 T2。
+
+关键字的使用详情可以参考下面：
+
+```c++
+struct A
+{
+    A(int) { }      // converting constructor
+    A(int, int) { } // converting constructor (C++11)
+    operator bool() const { return true; }
+};
+
+struct B
+{
+    explicit B(int) { }
+    explicit B(int, int) { }
+    explicit operator bool() const { return true; }
+};
+
+int main()
+{
+    A a1 = 1;      // OK: copy-initialization selects A::A(int)
+    A a2(2);       // OK: direct-initialization selects A::A(int)
+    A a3 {4, 5};   // OK: direct-list-initialization selects A::A(int, int)
+    A a4 = {4, 5}; // OK: copy-list-initialization selects A::A(int, int)
+    A a5 = (A)1;   // OK: explicit cast performs static_cast
+    if (a1) cout << "true" << endl; // OK: A::operator bool()
+    bool na1 = a1; // OK: copy-initialization selects A::operator bool()
+    bool na2 = static_cast<bool>(a1); // OK: static_cast performs direct-initialization
+
+//  B b1 = 1;      // error: copy-initialization does not consider B::B(int)
+    B b2(2);       // OK: direct-initialization selects B::B(int)
+    B b3 {4, 5};   // OK: direct-list-initialization selects B::B(int, int)
+//  B b4 = {4, 5}; // error: copy-list-initialization does not consider B::B(int,int)
+    B b5 = (B)1;   // OK: explicit cast performs static_cast
+    if (b5) cout << "true" << endl; // OK: B::operator bool()
+//  bool nb1 = b2; // error: copy-initialization does not consider B::operator bool()
+    bool nb2 = static_cast<bool>(b2); // OK: static_cast performs direct-initialization
+}
+```
+
 # final
 
 final关键字可用于修饰类、变量和方法。final修饰的类不能被继承，final修饰的方法不能被重写，final修饰的变量不可被修改，一旦获得初始值，该变量就不能被重新赋值。
@@ -202,11 +256,15 @@ final关键字可用于修饰类、变量和方法。final修饰的类不能被�
 [Type aliases (typedef / using)](http://www.cplusplus.com/doc/tutorial/other_data_types/)   
 [How do I use extern to share variables between source files in C?](http://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files-in-c)  
 [When to use extern in C++](http://stackoverflow.com/questions/10422034/when-to-use-extern-in-c)  
+[What does the explicit keyword in C++ mean?](http://stackoverflow.com/questions/121162/what-does-the-explicit-keyword-in-c-mean)   
+[What is the meaning of “operator bool() const”](http://stackoverflow.com/questions/4600295/what-is-the-meaning-of-operator-bool-const)  
+
 [揭秘 typedef四用途与两陷阱](http://niehan.blog.techweb.com.cn/archives/325.html)  
 [typedef 用法总结](http://blog.csdn.net/gaohuaid/article/details/16829599)  
 [C/C++中的static关键字的总结](https://yq.aliyun.com/articles/47641)  
 [Where are static variables stored (in C/C++)?](http://stackoverflow.com/questions/93039/where-are-static-variables-stored-in-c-c)  
 [extern "C"](http://book.51cto.com/art/200904/121028.htm)
-[详解C中volatile关键字](http://www.cnblogs.com/yc_sunniwell/archive/2010/06/24/1764231.html)  
+[详解C中volatile关键字](http://www.cnblogs.com/yc_sunniwell/archive/2010/06/24/1764231.html)   
+
 Effective C++：条款30， 透彻理解 inlining的里里外外  
 

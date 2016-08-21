@@ -118,6 +118,104 @@ C++ 中的函数定义的一般形式如下：
 ［[C++ 重载函数原型](http://www.nowcoder.com/questionTerminal/dcb7cdf4d47747faa3be0d14d3b886e2)］   
 ［[重载函数调用错误的](http://www.nowcoder.com/questionTerminal/a4311c49cc3843249e6b36e05b55edd4)］
 
+# 常用库函数
+
+## memcpy
+
+memcpy是c和c++使用的内存拷贝函数，从源src所指的内存地址的起始位置开始拷贝**n个字节**到目标dest所指的内存地址的起始位置中，函数返回指向dest的指针。函数原型如下：
+
+    // #include <cstring>
+    // #include <string.h> 
+    void *memcpy(void *dest, const void *src, size_t n);
+
+要注意下面两个问题：
+
+1. src和dest所指的内存区域可能重叠，并不能够确保src所在重叠区域在拷贝之前不被覆盖。而使用 `memmove` 可以用来处理重叠区域。
+2. 如果目标区域dest本身已有数据，执行memcpy后，将覆盖原有数据（最多覆盖n）。
+
+strcpy和memcpy主要有以下3方面的区别。
+
+1. 复制的内容不同。strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等。
+2. 复制的方法不同。strcpy不需要指定长度，它遇到被复制字符的串结束符"\0"才结束，所以容易溢出。memcpy则是根据其第3个参数决定复制的长度。
+3. 用途不同。通常在复制字符串时用strcpy，而需要复制其他类型数据时则一般用memcpy。
+
+例子(把一个char组成的字符串循环右移n位，n小于字符串长度)
+
+    const int MAX_LEN = 100;
+    
+    void LoopMove (char *pStr, int steps )
+    {
+        int n = strlen( pStr ) - steps;
+        char tmp[MAX_LEN];
+    
+        memcpy(tmp, pStr + n, steps );
+        memmove(pStr + steps, pStr, n );    // 防治内存区域重叠
+        memcpy(pStr, tmp, steps );
+    }
+    
+    int main(){
+        char temp[] = "abcdefg";
+        LoopMove(temp, 2);
+        printf("%s", temp);
+    }
+
+［[memmove 实现方式](http://www.nowcoder.com/questionTerminal/32859fcd17ab47468a2899935829f3de)］
+
+## memset
+
+memset 将s所指向的某一块内存中的前n个`字节`的内容全部设置为ch指定的ASCII值，第一个值为指定的内存地址，块的大小由第三个参数指定，这个函数通常为新申请的内存做初始化工作，其返回值为指向s的指针。是对较大的结构体或数组进行`清零`操作（memset(&Address, 0, sizeof(Address))）的一种最快方法.
+    
+    // #include <cstring>
+    // #include <string.h>
+    void *memset(void *s, int ch, size_t n);
+
+**用 memset 对非字符型数组赋非零的初值是不可取的**！如下例子：
+
+    int a[5];
+    // memset(a,1,5*sizeof(int));
+    memset(a,1,sizeof(a));
+
+    for(int i=0;i<5;i++)
+        cout<<a[i];
+    // 1684300916843009168430091684300916843009
+
+这是因为memset对a指向的内存的20个字节进行赋值，每个都用数1去填充，转为二进制后，1就是00000001，占一个字节。一个int元素是4字节，合一起是0000 0001,0000 0001,0000 0001,0000 0001，转化成十六进制就是0x01010101，就等于16843009，就完成了对一个int元素的赋值了。
+
+# 高危库函数
+
+C 中大多数缓冲区溢出问题可以直接追溯到标准 C 库。最有害的罪魁祸首是不进行自变量检查的、有问题的字符串操作（strcpy、strcat、sprintf 和 gets）。
+
+**永远不要使用 gets()**
+
+最新的编译器会提醒：warning: this program uses gets(), which is unsafe.  这是因为gets函数从标准输入读入用户输入的一行文本，它在遇到 EOF 字符或换行字符之前，不会停止读入文本。也就是gets() 根本不执行边界检查。因此，使用 gets() 总是有可能使任何缓冲区溢出。作为一个替代方法，可以使用方法 `fgets(buf, size, stdin)`，它可以做与 gets() 所做的同样的事情，但它接受用来限制读入字符数目的大小参数，因此，提供了一种防止缓冲区溢出的方法。
+
+    #define BUFSIZE 10
+    
+    int main(){
+        char buf[BUFSIZE];
+        // gets(buf);
+        fgets(buf, BUFSIZE, stdin);
+    }
+
+如果有可能，避免使用下面的函数：
+
+* strcpy，strcat
+* printf，sprintf, fprintf, ...
+* scanf，sscanf, fscanf, ...
+
+**strcpy()函数**
+
+strcpy()函数将源字符串复制到目的缓冲区，但是没有指定要复制字符的具体数目。复制字符的数目直接取决于源字符串中的数目，如果源字符串碰巧来自用户输入，且没有专门限制其大小，则有可能会陷入大的麻烦中！
+
+如果知道目的地缓冲区的大小，可以添加明确的检查。或者使用 `strncpy() 函数`：
+
+    strncpy(dest, src, dst_size-1);
+    dst[dst_size-1] = '\0'; /* Always do this to be safe! */
+    
+如果 src 比 dst 大，则该函数不会抛出一个错误；当达到最大尺寸时，它只是停止复制字符，注意上面dst_size-1。
+
+strcat()函数非常类似于 strcpy()，除了它将一个字符串合并到缓冲区末尾。它也有一个类似的、更安全的替代方法 `strncat()`。如果可能，使用 strncat() 而不要使用 strcat()。
+
 # 更多阅读
 
 [函数中局部变量的返回](http://blog.csdn.net/jackystudio/article/details/11523353)  

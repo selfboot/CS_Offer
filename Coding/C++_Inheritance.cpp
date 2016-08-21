@@ -26,7 +26,7 @@ protected:
     }
 };
 
-class CPublicDerive : public CBase {    //用“public”指定公有继承
+class CPublicDerive : public CBase {    //用 public 指定公有继承
 public:
     void setBase(string s, int i) {
         setName(s);    //调用基类的保护成员
@@ -36,7 +36,7 @@ public:
     }
 };
 
-class CProtectDerive : protected CBase {    //用“protected”指定私有继承
+class CProtectDerive : protected CBase {    //用 protected 指定保护继承
 public:
     void setBase(string s, int i) {
         setName(s);    //调用基类的保护成员
@@ -52,7 +52,7 @@ public:
     }
 };
 
-class CPrivateDerive : private CBase {    //用“private”指定私有继承，private可以省略
+class CPrivateDerive : private CBase {    //用 private 指定私有继承，private可以省略
 public:
     void setBase(string s, int i) {
         setName(s);    //调用基类的保护成员

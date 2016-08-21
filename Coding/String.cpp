@@ -4,6 +4,7 @@
 */
 
 #include <iostream>
+#include <vector>
 class String
 {
 public:
@@ -37,7 +38,7 @@ String::String(const char *str)
             std::cout<<"申请内存失败！"<<std::endl;
             exit(1);
         }
-        strcpy(m_data,str);
+        strcpy(m_data, str);
     }
 }
 
@@ -51,7 +52,7 @@ String::String(const String &str)
         std::cout<<"申请内存失败！"<<std::endl;
         exit(1);
     }
-    strcpy(m_data,str.m_data);
+    strcpy(m_data, str.m_data);
 }
 
 // 赋值函数，异常安全的赋值函数
@@ -59,7 +60,7 @@ String::String(const String &str)
 // 临时变量是一个局部栈变量，会自行回收。
 String& String::operator =(const String &str)
 {
-    if(this != &str){
+    if(this != &str){   //检查自赋值
         String tmp(str);
 
         char* data = tmp.m_data;
@@ -93,3 +94,39 @@ String::~String()
 {
     delete [] m_data;
 }
+
+void foo(String x)
+{
+}
+
+void bar(const String& x)
+{
+}
+
+String baz()
+{
+    String ret("world");
+    return ret;
+}
+
+int main()
+{
+    String s0;
+    String s1("hello");
+    String s2(s0);
+    String s3 = s1;
+    s2 = s1;
+
+    foo(s1);
+    bar(s1);
+    foo("temporary");
+    bar("temporary");
+    String s4 = baz();
+
+    std::vector<String> svec;
+    svec.push_back(s0);
+    svec.push_back(s1);
+    svec.push_back(baz());
+    svec.push_back("good job");
+}
+

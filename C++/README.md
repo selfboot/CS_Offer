@@ -157,12 +157,23 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 
 详细内容参考 [11_Features](11_Features.md)
 
-# 牛客网问题
+# 其他
+
+## 手写代码
+
+有时候需要手写一些简单的函数，比如：
+
+* strcpy
+* String
+
+更多内容参考 [Coding](Coding.md)。
+
+## 牛客网问题
 
 ［[代码膨胀问题](http://www.nowcoder.com/questionTerminal/f6ee5023f5334873980247cf496aa641)］  
 ［[C++不是类型安全](http://www.nowcoder.com/questionTerminal/f80ec593dcbd44e7a13975b53e9bdaab)］  
 
-# 面经收集
+## 面经收集
 
 [网易内推（C++/C研发）offer之路](http://www.nowcoder.com/discuss/3038?type=2&order=0&pos=22&page=2)  
 

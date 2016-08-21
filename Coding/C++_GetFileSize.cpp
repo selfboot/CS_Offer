@@ -28,7 +28,7 @@ unsigned long get_file_size_2(const char *filename)
 }
 
 int main(){
-    const char* path = "../More/C++_Coding.md";
+    const char* path = "C++_GetFileSize.cpp";
     cout << "Size of file: " << path << " is \n";
     cout << get_file_size(path) << endl;
     cout << get_file_size_2(path) << endl;

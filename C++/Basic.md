@@ -215,35 +215,118 @@ struct 或者 union 成员对齐规则如下：
 ［[溢出，大小端](http://www.nowcoder.com/questionTerminal/c7298be0b2ce42698b80987631cf8fca)］  
 ［[大小端，网络发送](http://www.nowcoder.com/questionTerminal/d7c1ff50fab44443b61903eccd791f1d)］  
 
-# 四种类型转换
+# 类型转换
 
-* reinterpret_cast：一个指针转化为其他类型的指针时，不做类型检测，操作结果是一个指针指向另一个指针的值的二进制拷贝；
+类型转换就是将给定类型的表达式转换为另一种类型。C++中的转型可分为两种：隐式类型转换和显式类型转换。
 
-        class A{}; 
-        class B{}; 
-        A* a = new A;
-        B* b = reinterpret_cast(a);
+隐式类型转换是C中的遗留物，在C++中并不推荐使用（C++有专门的转型操作符，见下文的显式转型）。将某种类型的对象拷贝到另一种不同类型的对象中时就会发生隐式转型。比如异型赋值，返回值（函数声明的返回值与代码块实际返回值不同的情况下），按值传递异型参数等情况均会发生隐式类型转换。
+
+```c++
+short a = 128;
+int b;
+b = a;
+```
+
+short 类型的对象被赋值给 int 型的对象，这是C++语言内建支持的标准转换。隐式类型转换是件麻烦事，它们很可能导致错误或非预期的函数被调用（参看ME 条款5）。
+
+因此应该尽量避免隐式类型转换，为此 C++ 提供了显式类型转换关键字：static_cast, const_cast, dynamic_cast 以及 reinterpret_cast。
+
+## static_cast
+
+static_cast 很像 C 语言中的旧式类型转换。可以用于以下场景：
+
+* 用于在存有继承关系的类之间的指针或引用的转换（即可将基类转换为子类，也可将子类转换为基类），把派生类的指针或引用转换成基类时是安全的；把基类指针或引用转换成派生类表示时，由于没有类型检查，所以是不安全的。
+* 用于基本数据类型之间的转换，如把int转换成char，把int转换成enum。
+* 把任何类型的表达式转换成void类型。
+* 还能将 non-const对象转换为 const对象（注意：反之则不行，那是const_cast的职责）。
+
+如下示例：
+
+```c++
+class CBase {};
+class CDerived: public CBase {};
+
+double d = 3.14159265;
+int i = static_cast<int>(d);
+
+CBase *base = new CBase;
+CDerived *derived = static_cast<CDerived *>(base);
+```
+
+**static_cast 转换时并不进行运行时安全检查，所以是非安全的，很容易出问题。**因此 C++ 引入 dynamic_cast 来处理安全转型。
+
+## dynamic_cast
+
+dynamic_cast 主要用来在继承体系中的**安全向下转型**。它能安全地将指向基类的指针转型为指向子类的指针或引用，并获知转型动作成功是否。
+
+dynamic_cast 只能用在指针和引用类型的转换中，它是唯一进行运行期(runtime)检查的类型转换符，它的主要目的就是保证转换后的类型是一个完整类型(Complete type）。dynamic_cast在转换指针类型时，如果结果不是一个Complete Type, 它会返回NULL; dynamic_cast在转换引用类型时，如果结果不是一个Complete Type，它会抛出bad_cast的异常。dynamic_cast 会动用运行时信息（RTTI）来进行类型安全检查，因此 dynamic_cast 存在一定的效率损失。
+
+```c++
+class CBase { };
+class CDerived: public CBase { };
+
+int main(){
+    CBase b;
+    CBase* pb;
+    CDerived d;
+    CDerived* pd;
+    pb = dynamic_cast<CBase*>(&d);     // ok: derived-to-base
+    pd = dynamic_cast<CDerived*>(&b);  // error: base-to-derived
+}
+```
+
+上面的代码最后一行会出错（error: 'CBase' is not polymorphic），**因为dynamic_cast 只有在基类带有虚函数的情况下才允许将基类转换为子类**。
+
+```c++
+class CBase
+{
+    virtual void dummy() { }
+};
+
+class CDerived : public CBase {
+    int a;
+};
+
+int main()
+{
+CBase *pba = new CDerived;
+CBase *pbb = new CBase;
+CDerived *pd1, *pd2;
+pd1 = dynamic_cast<CDerived *>(pba);
+pd2 = dynamic_cast<CDerived *>(pbb);
+}
+```
+
+上面代码中的 pd1 不为 null,而 pd2 为 null。
+
+## const_cast
+
+这个转换操作会操纵传递对象的const属性，或者设置或者移除该属性。
+
+```c++
+class C{}; 
+const C* a = new C; 
+C *b = const_cast(a);
+```
+    
+## reinterpret_cast
+
+一个指针转化为其他类型的指针时，不做类型检测，操作结果是一个指针指向另一个指针的值的二进制拷贝；
+
+```c++
+class A{}; 
+class B{}; 
+A* a = new A;
+B* b = reinterpret_cast(a);
+```
         
-* static_cast：该运算符没有运行时类型检查来保证转换的安全性。可以用于以下场景：
-    * 用于类层次结构中基类（父类）和派生类（子类）之间指针或引用的转换，进行上行转换（把派生类的指针或引用转换成基类表示）是安全的；进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所以是不安全的。
-    * 用于基本数据类型之间的转换，如把int转换成char，把int转换成enum。这种转换的安全性也要开发人员来保证。
-    * 把任何类型的表达式转换成void类型。
+reinterpret_cast 用来执行低级转型，如将执行一个 int 的指针强转为 int。其转换结果与编译平台息息相关，不具有可移植性，因此在一般的代码中不常见到它。
 
-            class Base {}; 
-            class Derive:public Base{}; 
-            Base* a = new Base; 
-            Derive *b = static_cast(a);
-
-* dynamic_cast：用于对象的指针和引用，当用于多态类型转换时，允许隐式转换及相反的过程中。与static_cast的不同之处在于，将一个基类对象指针（或引用）转换到派生类指针时，dynamic_cast会检测操作的有效性，如果返回的不是被请求的有效完整对象，则返回null，反之返回这个有效的对象，如果是引用返回无效时则会抛出bad_cast异常；
-* const_cast：这个转换操作会操纵传递对象的const属性，或者设置或者移除该属性。
-
-        class C{}; 
-        const C* a = new C; 
-        C *b = const_cast(a);
+reinterpret_cast 常用的一个用途是转换函数指针类型，即可以将一种类型的函数指针转换为另一种类型的函数指针，但这种转换可能会导致不正确的结果。总之，reinterpret_cast 只用于底层代码，一般我们都用不到它，如果你的代码中使用到这种转型，务必明白自己在干什么。
 
 ［[虚函数继承类型转换](http://www.nowcoder.com/questionTerminal/5e5bb7214788436cb966e67305a8041e)］  
 
-## If 判断语句
+# If 判断语句
 
 零值的比较
 
@@ -310,6 +393,7 @@ C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低�
 [c++中的左值与右值](http://www.cnblogs.com/catch/p/3500678.html)  
 [C++ Rvalue References Explained](http://thbecker.net/articles/rvalue_references/section_01.html)  
 [C、C++内存对齐](http://www.jellythink.com/archives/413)  
-[sizeof() a vector](http://stackoverflow.com/questions/2373189/sizeof-a-vector)
+[sizeof() a vector](http://stackoverflow.com/questions/2373189/sizeof-a-vector)  
+[C++类型转换（Type Casting）详解](http://lang.9sssd.com/vcpp/art/962)  
 
 
