@@ -189,6 +189,7 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  
 [Can we change the value of a constant through pointers?](http://stackoverflow.com/questions/3801557/can-we-change-the-value-of-a-constant-through-pointers/3801601#3801601)   
 [C/C++内存泄漏及检测](http://www.cnblogs.com/skynet/archive/2011/02/20/1959162.html)  
-
+[C++的坑真的多吗？](http://coolshell.cn/articles/7992.html)  
+[C++11 FAQ中文版](https://www.chenlq.net/cpp11-faq-chs)  
 
 

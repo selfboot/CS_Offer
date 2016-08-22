@@ -140,20 +140,103 @@ malloc 的一个具体使用例子在 [gist](https://gist.github.com/xuelangZF/5
 
 # 内存泄漏
 
+内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。
+
+内存泄漏是最难发现的常见错误之一，因为除非用完内存或调用malloc失败，否则都不会导致任何问题。实际上，使用C/C++这类没有垃圾回收机制的语言时，很多时间都花在处理如何正确释放内存上。如果程序运行时间足够长，如后台进程运行在服务器上，只要服务器不宕机就一直运行，一个小小的失误也会对程序造成重大的影响，如造成某些关键服务失败。
+
+C++中的内存泄露一般指`堆中的内存泄露`。堆内存是我们手动malloc/realloc/new申请的，程序不会自动回收，需要调用free或delete手动释放，否则就会造成内存泄露。内存泄露常见的原因大概有以下几种：
+
+1. “无主”内存：申请内存后，指针指向内存的起始地址，若丢失或修改这个指针，那么申请的内存将丢失且没法释放。
+2. 异常分支导致资源未释放：程序正常执行没有问题，但是如果遇到异常，正常执行的顺序或分支会被打断，得不到执行。所以在异常处理的代码中，要确保系统资源的释放。
+3. 类的析构函数为非虚函数：析构函数为虚函数，利用多态来调用指针指向对象的析构函数，而不是基类的析构函数。
+
+下面来看一个简单的内存泄漏示例代码：
+
+```c++
+void f(void) {
+    int *x = (int *)malloc(5 * sizeof(int));
+    int *y = new int[5];
+    // free(x);
+    // delete []y;
+    // x = NULL;
+    // y = NULL;
+}                    // problem here: memory leak -- x, y not freed
+
+int main(void) {
+    f();
+    return 0;
+}
+```
+
+## 内存泄漏检测
+
+内存泄露检测的关键在于记录分配内存和释放内存的操作，看看能不能匹配。跟踪每一块内存的声明周期，例如：每当申请一块内存后，把指向它的指针加入到List中，当释放时，再把对应的指针从List中删除，到程序最后检查List就可以知道有没有内存泄露了。
+
+在一般的linux发行版中，有一个自带的工具可以很方便的替你完成这些事，这个工具就是mtrace。mtrace为内存分配、释放函数（malloc, realloc, memalign, free）安装hook函数，这些hook函数记录内存申请和释放的trace信息。 
+
+不过还有一款强大的检测工具 Valgrind，它是运行在Linux上一套基于仿真技术的程序调试和分析工具，包含一个内核——一个软件合成的CPU，和一系列的小工具，每个工具都可以完成一项任务──调试，分析，或测试等，其中Memcheck 工具可以用来方便的检测内存泄漏。
+
+可以用下面命令检测程序是否发生内存泄漏：
+
+```Bash
+$ valgrind --leak-check=yes ./demo.o
+```
+
+对于下面的程序来说
+
+```c++
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int val;
+    Node *next;
+};
 
 
+Node* still_reachable;
+Node* possible_lost;
 
+void show(){
+    Node *tmp = new Node;   // definitely_lost
+    tmp->next = new Node;   // indirectly_lost
+}
+
+int main()
+{
+
+    show();
+    still_reachable = new Node;
+    possible_lost = new Node[2] + 1;
+}
+```
+
+一共有四种类型的内存泄漏（关于这四种泄漏类型的详细内容，参考  [Memory leak detection](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.leaks)）：
+
+```Bash
+==45310== LEAK SUMMARY:
+==45310==    definitely lost: 16 bytes in 1 blocks
+==45310==    indirectly lost: 16 bytes in 1 blocks
+==45310==      possibly lost: 2,096 bytes in 2 blocks
+==45310==    still reachable: 16 bytes in 1 blocks
+==45310==         suppressed: 20,125 bytes in 189 blocks
+==45310== Reachable blocks (those to which a pointer was found) are not shown.
+```
 
 # 更多阅读
 
 [细说new与malloc的10点区别](http://www.cnblogs.com/QG-whz/p/5140930.html)  
 [Where are static variables stored (in C/C++)?](http://stackoverflow.com/questions/93039/where-are-static-variables-stored-in-c-c)    
 [Memory management in C: The heap and the stack](http://www.inf.udec.cl/~leo/teoX.pdf)    
-[Doc: Valgrind](http://valgrind.org/docs/manual/quick-start.html#quick-start.intro)   
 [缓冲区溢出详解](http://www.cnblogs.com/clover-toeic/p/3737011.html)  
-[缓冲区溢出攻击](http://www.cnblogs.com/fanzhidongyzby/p/3250405.html)  
+[缓冲区溢出攻击](http://www.cnblogs.com/fanzhidongyzby/p/3250405.html)   
+[C/C++内存泄漏及检测](http://blog.jobbole.com/95375/)  
+[Doc: Valgrind：Memory leak detection](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.leaks)    
+[用valgrind检查C++程序的内存泄漏](http://zhiqiang.org/note/md/check-cpp-memory-with-valgrind.html)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_1.jpg  
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_2.jpg
 [3]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_3.jpg
+[4]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_4.png
+
 

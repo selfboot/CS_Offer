@@ -175,14 +175,45 @@ shared_ptr名如其名，它允许多个该智能指针共享地“拥有”同�
 
 要解决环形引用的问题，没有特别好的办法，一般都是在可能出现环形引用的地方使用weak_ptr来代替shared_ptr。
 
+### [weak_ptr](http://en.cppreference.com/w/cpp/memory/weak_ptr)
+
+weak_ptr一般和shared_ptr配合使用，它可以指向shared_ptr所指向的对象，但是却不增加对象的引用计数。这样就有可能出现weak_ptr所指向的对象实际上已经被释放了的情况。因此，weak_ptr有一个lock函数，尝试取回一个指向对象的shared_ptr。
+
+> std::weak_ptr is a smart pointer that holds a non-owning ("weak") reference to an object that is managed by std::shared_ptr. It must be converted to std::shared_ptr in order to access the referenced object.
+
+下面是一个简单的例子：
+
+```c++
+#include <iostream>
+#include <memory>
+
+std::weak_ptr<int> gw;
+void f() {
+    if (auto spt = gw.lock()) { // Has to be copied into a shared_ptr before usage
+        std::cout << *spt << "\n";
+    }
+    else {
+        std::cout << "gw is expired\n";
+    }
+}
+
+int main() {
+    {
+        auto sp = std::make_shared<int>(42);
+        gw = sp;
+        f();
+    }
+    f();
+}
+```
 
 # 更多阅读
 
 [C++ 引用计数技术及智能指针的简单实现](http://www.cnblogs.com/QG-whz/p/4777312.html)  
 [从auto_ptr说起](http://www.jellythink.com/archives/673)  
 [到C++11中的智能指针](http://www.jellythink.com/archives/684)  
-[Using smart pointers for class members](http://stackoverflow.com/questions/15648844/using-smart-pointers-for-class-members)
-
+[C++11 新特性之智能指针](http://blog.jobbole.com/104569/)  
+[When is std::weak_ptr useful?](http://stackoverflow.com/questions/12030650/when-is-stdweak-ptr-useful)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_11_SmartPoint_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_11_SmartPoint_2.png

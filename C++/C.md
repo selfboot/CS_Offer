@@ -161,5 +161,5 @@ printf 函数是一个标准库函数，它的函数原型在头文件“stdio.h
 [从Swap函数谈加法溢出问题](http://blog.csdn.net/dataspark/article/details/9703967)  
 [浅谈C语言中的位段](http://www.cnblogs.com/dolphin0520/archive/2011/10/14/2212590.html)  
 [C语言结构体里的成员数组和指针](http://coolshell.cn/articles/11377.html)  
-
+[深入理解C语言](http://coolshell.cn/articles/5761.html)  
 

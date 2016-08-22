@@ -46,15 +46,6 @@ I/O 操作一个与生俱来的问题是可能发生错误，I/O类定义了一�
 |setw(n) |设置字段宽度为n位
 | setiosflags( ios::fixed) | 设置浮点数以固定的小数位数显示(ios::left 左对齐，ios::right 数据右对齐)
 
-其它istream类方法如下：
-
-* `cin.get(char &)`：从输入流中读取一个字符，赋给字符变量ch。如果读取成功则函数返回true(真)，如失败(遇文件结束符) 则函数返回false(假)。
-* `cin.get(void)`：从指定的输入流中提取一个字符（包括空白字符），函数的返回值就是读入的字符。若遇到输入流中的文件结束符，则函数值返回文件结束标志EOF(End Of File)。
-* `get(char *, int, char)`：从输入流中读取n-1个字符，赋给指定的字符数组(或字符指针指向的数组)，如果在读取n-1个字符之前遇到指定的终止字符，则提前结束读取。如果读取成功则函数返回true(真)，如失败(遇文件结束符) 则函数返回false(假)。
-* `getline(char*, int, char)`：从输入流中读取一行字符，其用法与带3个参数的get函数类似。默认是读取整行！
-
-用getline函数从输入流读字符时，遇到终止标志字符时结束，指针移到该终止标志字符之后，下一个getline函数将从该终止标志的下一个字符开始接着读入。如果用cin.get函数从输入流读字符时，遇终止标志字符时停止读取，指针不向后移动，仍然停留在原位置，下一次读取时仍从该终止标志字符开始。这是getline函数和get函数不同之处。
-
 ## 文件输入输出
 
 文件流是以外存文件为输入输出对象的数据流。输出文件流是从内存流向外存文件的数据，输入文件流是从外存文件流向内存的数据。每一个文件流都有一个内存缓冲区与之对应。
@@ -110,7 +101,7 @@ sstream 头文件定义了三个类型来支持`内存 IO`，这些类型可以�
 
 sstream 定义来的类型增加了一些成员来管理与流相关联的 string，可以对 stringstream 对象调用这些操作，但不能对其它 IO 调用。
 
-* stringstream strm： 未绑定的stringstream 对象；
+* stringstream strm： 未绑定的 stringstream 对象；
 * stringstream strm(s)：一个 stringstream 对象，保存了 string s 的一个拷贝；
 * strm.str()：返回 strm 所保存的 string 的拷贝；
 * strm.str(s)：将 string s拷贝到 strm 中，返回 void.
@@ -138,6 +129,25 @@ sstream 定义来的类型增加了一些成员来管理与流相关联的 strin
     // reversed_nums: {321, 654, 987}
 
 我们知道在要求使用基类对象的地方，可以使用继承类型的对象取代，所以在接受一个 iostream 类型引用或者指针参数的函数，可以用一个对应的 fstream(或 sstream)类型来调用。
+
+## 相关函数
+
+istream, ostream 类提供了许多函数，常用的有 get, getline 等。
+
+`std::istream::get` 从输入流中读取一个字符，赋给字符变量ch，常用的原型为：
+
+```c++
+istream& get (char& c);
+```
+
+`std::istream::getline` 从输入流中读取字符，直到遇到终止符号，默认换行符为终止符号，读到换行符后，丢弃换行符（C++ 还提供一个功能类似的全局函数 std::getline）。常用的原型如下：
+
+```c++
+istream& getline (char* s, streamsize n );
+istream& getline (char* s, streamsize n, char delim );
+```
+
+用getline函数从输入流读字符时，遇到终止标志字符时结束，指针移到该终止标志字符之后，下一个getline函数将从该终止标志的下一个字符开始接着读入。如果用cin.get函数从输入流读字符时，遇终止标志字符时停止读取，指针不向后移动，仍然停留在原位置，下一次读取时仍从该终止标志字符开始，这是getline函数和get函数不同之处。简单来说，**getline将丢弃换行符，而get()将换行符保留在输入序列里**，千万要注意 get 之后的换行符（ **>> 操作符也不会丢弃换行符**，同样需要注意）。
 
 # 输入输出缓冲区
 
@@ -186,7 +196,7 @@ cin.ignore(a, ch)方法是从输入流（cin）中提取字符，提取的字符
 
 不建议使用 `std::cin.sync()` 丢弃缓冲区内容，因为有的平台并不支持（OS X就不支持）。
 
-## 一个陷阱
+## 陷阱
 
 `OJ 输入提前 break！！！`有时候会犯这类错误，且不容易察觉。
  
@@ -206,6 +216,29 @@ cin.ignore(a, ch)方法是从输入流（cin）中提取字符，提取的字符
        }
        cout << ans << endl;
     }
+
+读取操作时，`>> 操作符` 会跳过空白制表符，但是 getline 不会跳过。也就是说 getline 可能会读取 >> 操作后剩余下的换行符。假设一个输入流数据如下：
+
+> 10 2  
+> name Jack  
+> name John
+
+如果用下面的程序读取数据：
+
+```c++
+cin >> N >> M;
+for(int i=0; i<2; i++){
+    cin.getline(names[i]);
+}
+```
+
+那么读到的names数组前两项将会是 "", "name Jack"。因为 >> 读完 M 后还剩下一个换行符，将被 getline 读取到。解决办法就是在 第一句后面加上一句，**吃掉换行符**。（后面就不用吃掉换行符了，因为 getline 会丢弃换行符）
+
+```c++
+cin >> N >> M;
+cin.get();
+...
+```
 
 # 参考  
 C++ Primer 文件输入输出  
