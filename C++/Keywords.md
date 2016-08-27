@@ -197,7 +197,7 @@ c++ 11 中也可以使用关键字 using 来进行类型别名的声明，上面
 * throw object; catch (T object); throw 或者 catch 一个意外值。
 * T array[N] = {other}; 
 
-有时候在需要类型 T2 的地方，我们给了类型 T1，并且没有显式地进行类型转换。这时候可能就用到了**隐式类型转换**（[Implicit conversions](http://en.cppreference.com/w/cpp/language/implicit_conversion)），编译器在背后默默地将 T1 转换为 T2。
+有时候在需要类型 T2 的地方，我们给了类型 T1，并且没有显式地进行类型转换。这时候可能就用到了**隐式类型转换**（[Implicit conversions](http://en.cppreference.com/w/cpp/language/implicit_conversion)），编译器在背后默默地将 T1 转换为 T2（编译器背着程序员做了太多的事情）。
 
 关键字的使用详情可以参考下面：
 
@@ -249,7 +249,6 @@ final关键字可用于修饰类、变量和方法。final修饰的类不能被�
     class Bad_2: NoDerived { /* */ };   // 错误，NoDerived 是 final的
 
 ［[final 描述错误](http://www.nowcoder.com/questionTerminal/8272c92814ca40c39f9a534485c90be2)］
-
 
 # 更多阅读
 [Meaning of “const” last in a C++ method declaration?](http://stackoverflow.com/questions/751681/meaning-of-const-last-in-a-c-method-declaration)  
