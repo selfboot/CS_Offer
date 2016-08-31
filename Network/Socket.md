@@ -1,6 +1,6 @@
-Socket 起源于 Unix，而Unix基本哲学之一就是`一切皆文件`，都可以用“`打开open –> 读写write/read –> 关闭close`”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传输是一种特殊的I/O，Socket也是一种文件描述符。Socket也具有一个类似于打开文件的函数调用：Socket()，该函数返回一个整型的Socket描述符，随后的连接建立、数据传输等操作都是通过该Socket实现的。
+Socket 起源于 Unix，而Unix基本哲学之一就是`一切皆文件`，都可以用“`打开open –> 读写write/read –> 关闭close`”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传输是一种特殊的I/O，Socket也是一种文件描述符。
 
-使用TCP/IP协议的应用程序通常采用应用编程接口：UNIX BSD的套接字（socket）和UNIX System V的TLI（已经被淘汰），来实现网络进程之间的通信。
+Socket也具有一个类似于打开文件的函数调用：Socket()，该函数返回一个整型的Socket描述符，随后的连接建立、数据传输等操作都是通过该Socket实现的。使用TCP/IP协议的应用程序通常采用应用编程接口：UNIX BSD的套接字（socket）和UNIX System V的TLI（已经被淘汰），来实现网络进程之间的通信。
 
 常用的Socket类型有两种：流式Socket（SOCK_STREAM）和数据报式Socket（SOCK_DGRAM）。流式是一种面向连接的Socket，针对于面向连接的TCP服务应用；数据报式Socket是一种无连接的Socket，对应于无连接的UDP服务应用。（socket的类型有哪些？）
 
@@ -8,7 +8,7 @@ Socket 起源于 Unix，而Unix基本哲学之一就是`一切皆文件`，都�
 
 既然socket是“open—write/read—close”模式的一种实现，那么socket就提供了这些操作对应的函数接口。下面以TCP为例，介绍几个基本的socket接口函数。
 
-`socket函数`：**使用给定的地址族、套接字类型、协议编号（默认为0）来创建套接字**。
+`socket函数`：**使用给定的协议族、套接字类型、协议编号（默认为0）来创建套接字**。
 
 socket函数对应于普通文件的打开操作。普通文件的打开操作返回一个文件描述字，而socket()用于创建一个socket描述符（socket descriptor），它唯一标识一个socket。这个socket描述字跟文件描述字一样，后续的操作都有用到它，把它作为参数，通过它来进行一些读写操作。
 
@@ -84,7 +84,7 @@ accept的第一个参数为服务器的socket描述字，是服务器开始调�
 * len : 表示缓冲区的长度
 * flags : 通常为0
 
-`send函数`：将buf中的nbytes字节内容写入socket描述字。成功时返回写的字节数。失败时返回-1，并设置errno变量。
+`send函数`：将buf中的n bytes字节内容写入socket描述字。成功时返回写的字节数。失败时返回-1，并设置errno变量。
 
     int send(int sockfd,const void * msg,int len,unsigned int flags);
 

@@ -123,7 +123,10 @@ Http协议定义了很多与服务器交互的方法，最基本的有4种，分
 1. GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&相连，如EditPosts.aspx?name=test1&id=123456。POST方法是把提交的数据放在HTTP包的Body中。
 2. GET提交的数据大小有限制（因为`浏览器对URL的长度有限制`，实际上HTTP协议规范没有对URL长度进行限制），而POST方法提交的数据没有限制。
 3. GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值，也就是说Get是通过地址栏来传值，而Post是通过提交表单来传值。
-4. GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码.
+4. 对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。
+5. GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。
+6. GET在浏览器回退时是无害的，而POST会再次提交请求。GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
+7. 对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
 
 ## Http不同版本区别
 
@@ -145,7 +148,7 @@ HTTP/1.0版本，1.1版本主要区别如下：
 
 * `缓存`
 
-    在HTTP/1.0 中，使用`Expire头域`来判断资源的fresh或stale，并使用条件请求来判断资源是否仍有效。例如，cache服务器通过If-Modified-Since头域向服务器验证资源的Last-Modefied头域是否有更新，源服务器可能返回304（Not Modified），则表明该对象仍有效；也可能返回200（OK）替换请求的Cache对象。
+    在HTTP/1.0 中，使用`Expire头域`来判断资源的fresh或stale，并使用条件请求来判断资源是否仍有效。例如，cache通过If-Modified-Since头域向服务器验证资源的Last-Modefied头域是否有更新，源服务器可能返回304（Not Modified），则表明该对象仍有效；也可能返回200（OK）替换请求的Cache对象。
     
     HTTP/1.1在1.0的基础上加入了一些cache的新特性，当缓存对象的Age超过Expire时变为stale对象，cache不需要直接抛弃stale对象，而是与源服务器进行重新激活（revalidation）。
     
@@ -257,6 +260,7 @@ Web代理（proxy）服务器是网络的中间实体。代理位于Web客户端
 [Http状态码查询，各种返回码的详解](http://www.bkjia.com/headlines/491296.html)  
 [HTTP协议详解(五) http协议代理](http://www.bkjia.com/headlines/491855.html)  
 [Http(二)-消息报头](http://xfhnever.com/2014/10/08/http-header/)  
+[99%的人都理解错了HTTP中GET与POST的区别](http://mp.weixin.qq.com/s?__biz=MzI3NzIzMzg3Mw==&mid=100000054&idx=1&sn=71f6c214f3833d9ca20b9f7dcd9d33e4#rd)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_1.png

@@ -18,7 +18,7 @@
 
 此外，还有几个目录：
 
-* [C++_Code](C++_Code/)：一些 C++ 的代码
+* [Coding](Coding/)：一些 C++ 的代码
 * [OnlineJudge](OnlineJudge/)：一些 OJ 的解题代码
 * [Offer](Offer/)：主要分享一些和找工作相关的内容
 * [Others](Others/)：一些无法归类，但是可能有用的东西

@@ -2,15 +2,16 @@
 
 # C/C++
 
-- [ ] const 关键字
-- [ ] static 关键字
-- [ ] extern 关键字
-- [ ] extern "C" 函数名修饰机制
-- [ ] volatile 关键字
-- [ ] register 关键字
-- [ ] final 关键字
-- [ ] inline 关键字
-- [ ] typedef 关键字
+- [ ] [const 五大类用法](C++/Keywords.md#const)
+- [ ] [static 五种用途](C++/Keywords.md#static)
+- [ ] [extern 作用](C++/Keywords.md#extern)
+- [ ] [extern "C" 函数名修饰机制](C++/Keywords.md#extern-c)
+- [ ] [volatile 稳定访问特殊地址](C++/Keywords.md#volatile)
+- [ ] [register 寄存器优化](C++/Keywords.md#register)
+- [ ] [final 禁止继承或者覆盖](C++/Keywords.md#final)
+- [ ] [inline 内联函数](C++/Keywords.md#inline)
+- [ ] [typedef 类型别名](C++/Keywords.md#typedef)
+- [ ] [explicit 避免隐式类型转换](C++/Keywords.md#explicit)
 - [ ] 数组作为形参
 - [ ] 指针与引用区别
 - [ ] 函数指针

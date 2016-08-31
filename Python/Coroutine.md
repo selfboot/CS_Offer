@@ -68,7 +68,7 @@
 
 因为协程是一个线程执行，那怎么利用多核CPU呢？最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。
 
-Python 语言内置了对协程的支持，主要是利用了 yield 和 生成器，关于 yield 和生成器的详细解释，可以参考 [Python_Iterator_Generator_Yield.md] (Python_Iterator_Generator_Yield.md)。
+Python 语言内置了对协程的支持，主要是利用了 yield 和 生成器，关于 yield 和生成器的详细解释，可以参考 [Iterator_Generator_Yield.md] (Iterator_Generator_Yield.md)。
 
 # Greenlet
 
@@ -102,7 +102,7 @@ Python 语言内置了对协程的支持，主要是利用了 yield 和 生成�
 * 如果执行 gr1.switch() gr2.switch()，则输出结果是 12, 56, 34, 78
 * 如果执行 gr2.switch() gr1.switch()，则输出结果是 56, 12, 78, 34
 
-当一个 greenlet 执行完毕变为 dead 状态时，程序接下来该执行哪一句呢？答案是回到它的 parent 继续执行。每一个 greenlet 都有一个父 greenlet，父 greenlet 用来创建当前的 greenlet。所以，greenlet 其实被组织成为一个树状的结构，最顶层的代码没有运行在用户显式创建的 greenlet 中，可以将它看做运行在greenlet树的根部，及隐式的 main 中。上面的例子中， gr1 和 gr2 就运行在树的根部 main 中。
+当一个 greenlet 执行完毕变为 dead 状态时，程序接下来该执行哪一句呢？答案是**回到它的 parent 继续执行**。每一个 greenlet 都有一个父 greenlet，父 greenlet 用来创建当前的 greenlet。所以，greenlet 其实被组织成为一个树状的结构，最顶层的代码没有运行在用户显式创建的 greenlet 中，可以将它看做运行在greenlet树的根部，即隐式的 main 中。上面的例子中，gr1 和 gr2 就运行在树的根部 main 中。
 
 # Gevent
 

@@ -25,7 +25,13 @@ Linux 常用命令参考 [Command](Command.md)
 ［[线程并发脏数据](http://www.nowcoder.com/questionTerminal/532ddd8c34e84eaab24c6538b8091445)］  
 ［[进程轮询调度周转时间](http://www.nowcoder.com/questionTerminal/1469627261884cd3ac5755a49a46d8f9)］  
 
-关于进程的更多内容参见 [ProcessThread](ProcessThread.md)  
+关于进程、线程的更多内容参见 [ProcessThread](ProcessThread.md)  
+
+## 进程间通信
+
+进程间通信（IPC，Inter-Process Communication），指至少两个进程或线程间传送数据或信号的一些技术或方法。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。
+
+更多内容参考 [IPC](IPC.md)
 
 ## 守护进程
 
@@ -40,6 +46,12 @@ Linux 常用命令参考 [Command](Command.md)
 5. 关闭文件描述符
 
 守护进程的详细内容参见 [Daemon](Daemon.md).
+
+## fork 函数
+
+fork()系统调用是Unix下以自身进程创建子进程的系统调用，一次调用，两次返回，如果返回是0，则是子进程，如果返回值>0，则是父进程（返回值是子进程的pid）。
+
+关于 Fork 更多内容，参见 [Fork](Fork.md)
 
 # 内存管理
 

@@ -412,7 +412,7 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 在Python中，重载`__getattr__、__setattr__、__delattr__`和`__getattribute__`方法可以用来管理一个自定义类中的属性访问。其中：
 
 * __getattr__方法将拦截所有未定义的属性获取（当要访问的属性已经定义时，该方法不会被调用，至于定义不定义，是由Python能否查找到该属性来决定的）；
-* __getattribute__方法将拦截所有属性的获取（不管该属性是否已经定义，只要获取它的值，该方法都会调用），由于此情况，所以，当一个类中同时重载了__getattr__和__getattribute__方法，那么__getattr__永远不会被调用，另外__getattribute__方法仅仅存在于Python2.6的新式类和Python3的所有类中；
+* __getattribute__方法将拦截所有属性的获取（不管该属性是否已经定义，只要获取它的值，该方法都会调用）。当同时定义了__getattr__时，只有__getattribute__显式调用后者或者抛出 AttributeError 时才会调用__getattr__。另外__getattribute__方法仅仅存在于Python2.6的新式类和Python3的所有类中；
 * __setattr__方法将拦截所有的属性赋值；
 * __delattr__方法将拦截所有的属性删除。
 

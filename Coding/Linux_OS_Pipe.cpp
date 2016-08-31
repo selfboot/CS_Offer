@@ -1,6 +1,6 @@
 /*
  * @Author: xuezaigds@gmail.com
- * @Last Modified time: 2016-04-25 11:45:30
+ * @Last Modified time: 2016-08-28 11:11:10
  */
 
 #include <unistd.h>
@@ -39,9 +39,10 @@ int main()
     else if(pid>0)          // 父进程
     {
         close(pipe_fd[0]);  // 关闭读端
-        strcpy(w_buf,"1111222233334444\n");
-        if(write(pipe_fd[1],w_buf,16)!=-1){
-            printf("Write data %s", w_buf);
+        const char* content = "1111222233334444";
+        strncpy(w_buf, content, strlen(content));
+        if(write(pipe_fd[1],w_buf, strlen(content))!=-1){
+            printf("Write data %s\n", w_buf);
             printf("Parent write over\n");
         }
         close(pipe_fd[1]);  // 关闭写端
