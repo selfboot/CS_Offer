@@ -26,7 +26,7 @@ int main()
     }
 
     // Now we attach the segment to our data space.
-    if ((shm = shmat(shmid, NULL, 0)) == (char *) -1) {
+    if ((shm = (char *)shmat(shmid, NULL, 0)) == (char *) -1) {
         perror("shmat");
         exit(1);
     }

@@ -1,34 +1,5 @@
 问题清单，用以自检！
 
-# C/C++
-
-- [ ] [const 五大类用法](C++/Keywords.md#const)
-- [ ] [static 五种用途](C++/Keywords.md#static)
-- [ ] [extern 作用](C++/Keywords.md#extern)
-- [ ] [extern "C" 函数名修饰机制](C++/Keywords.md#extern-c)
-- [ ] [volatile 稳定访问特殊地址](C++/Keywords.md#volatile)
-- [ ] [register 寄存器优化](C++/Keywords.md#register)
-- [ ] [final 禁止继承或者覆盖](C++/Keywords.md#final)
-- [ ] [inline 内联函数](C++/Keywords.md#inline)
-- [ ] [typedef 类型别名](C++/Keywords.md#typedef)
-- [ ] [explicit 避免隐式类型转换](C++/Keywords.md#explicit)
-- [ ] 数组作为形参
-- [ ] 指针与引用区别
-- [ ] 函数指针
-- [ ] 函数重载、覆盖、隐藏区别
-- [ ] struct 内存对齐
-- [ ] sizeof 运算符
-- [ ] union 实现 CPU 字节序判定
-- [ ] 内存堆栈的区别
-- [ ] 常见的内存错误
-- [ ] new 和 malloc 区别
-- [ ] 四种类型转换方式
-- [ ] include 头文件方式
-- [ ] 按值传递和按引用传递区别
-- [ ] If 判断规范写法
-- [ ] 逗号运算符
-- [ ] 智能指针
-
 # 数据结构、算法
 
 - [ ] 经典排序算法
@@ -48,6 +19,38 @@
 - [ ] 数据库三范式
 - [ ] 外连接，左外连接，右外连接
 - [ ] sql 查询语句（like, order by, group by）
+
+# C/C++
+
+- [ ] [声明还是定义](C++/Basic.md/#声明还是定义)
+- [ ] [左值还是右值](C++/Basic.md#左值还是右值)
+- [ ] [引用的使用](C++/Basic.md#引用)
+- [ ] [const 五大类用法](C++/Keywords.md#const)
+- [ ] [static 五种用途](C++/Keywords.md#static)
+- [ ] [extern 作用](C++/Keywords.md#extern)
+- [ ] [extern "C" 函数名修饰机制](C++/Keywords.md#extern-c)
+- [ ] [volatile 稳定访问特殊地址](C++/Keywords.md#volatile)
+- [ ] [register 寄存器优化](C++/Keywords.md#register)
+- [ ] [final 禁止继承或者覆盖](C++/Keywords.md#final)
+- [ ] [inline 内联函数](C++/Keywords.md#inline)
+- [ ] [typedef 类型别名](C++/Keywords.md#typedef)
+- [ ] [explicit 避免隐式类型转换](C++/Keywords.md#explicit)
+- [ ] 数组作为形参
+- [ ] 指针与引用区别
+- [ ] 函数指针
+- [ ] 函数重载、覆盖、隐藏区别
+- [ ] [内存对齐原则](C++/Basic.md#内存对齐)
+- [ ] [sizeof 运算符](C++/Basic.md#sizeof-运算符)
+- [ ] [union 实现 CPU 字节序判定](C++/Basic.md#联合体cpu字节序)
+- [ ] 内存堆栈的区别
+- [ ] 常见的内存错误
+- [ ] new 和 malloc 区别
+- [ ] [四种类型转换方式](C++/Basic.md#类型转换)
+- [ ] include 头文件方式
+- [ ] 按值传递和按引用传递区别
+- [ ] [If 判断规范写法](C++/Basic.md#if-判断语句)
+- [ ] [逗号运算符](C++/Basic.md#逗号运算符)
+- [ ] [智能指针](C++/11_SmartPoint.md)
 
 # Python
 

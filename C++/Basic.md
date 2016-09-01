@@ -3,9 +3,11 @@
 简单来说：
 
 > Declaration is for the compiler to accept a name(to tell the compiler that the name is legal, the name is introduced with intention not a typo).   
+>
 > A variable is declared when the compiler is informed that a variable exists (and this is its type); it does not allocate the storage for the variable at that point.
 >   
 > Definition is where a name and its content is associated. The definition is used by the linker to link a name reference to the content of the name.  
+> 
 >A variable is defined when the compiler allocates the storage for the variable.
 
 变量声明（declaration）用来引入标识符，并对它的类型（对象，函数等）进行说明，有了声明语句，`编译器`就可以理解对该标识符的引用。下面的这些都是声明语句：
@@ -61,12 +63,18 @@
     3 = a;
     a+b = 4;
 
-在 c 语言中，通常来说有名字的变量就是左值(如上面例子中的 a, b)，而由运算操作(加减乘除，函数调用返回值等)所产生的中间结果(没有名字)就是右值，如上的 3 + 4， a + b 等。可以认为**左值就是在程序中能够寻值的东西，右值就是没法取到它的地址的东西**。
+在 C 语言中，通常来说有名字的变量就是左值(如上面例子中的 a, b)，而由运算操作(加减乘除，函数调用返回值等)所产生的中间结果(没有名字)就是右值，如上的 3 + 4， a + b 等。可以认为**左值就是在程序中能够寻址的东西，右值就是没法取到它的地址的东西**。
 
 如上概念到了 c++ 中，就变得稍有不同。具体来说，在 c++ 中，`每一个表达式或者是一个左值，或者是一个右值`，相应的，该表达式也就被称作“左值表达式"，"右值表达式"。对于内置的基本数据类型来说(primitive types)，左值右值的概念和 c 没有太多不同，不同的地方在于自定义的类型:
 
 * 对于内置的类型，右值是不可被修改的(non-modifiable)，也不可被 const, volatile 所修饰(cv-qualitification ignored)
 * 对于自定义的类型(user-defined types)，右值却允许通过它的成员函数进行修改。
+
+C++ 中自定义类型允许有成员函数，而通过右值调用成员函数是被允许的，但成员函数有可能不是 const 类型，因此通过调用右值的成员函数，也就可能会修改了该右值。
+
+此外，**右值只能被 const 类型的 reference 所指向**，当一个右值被 const reference 指向时，它的生命周期就被延长了。
+
+具体示例在 [C++_LR_Value](../Coding/C++_LR_Value.cpp)。
 
 # 引用
 
@@ -79,7 +87,7 @@
     int a=2,
     int &ra=a;
 
-a为原变量名称，ra为引用名。给ra赋值：ra=1; 等价于 a=1。对引用求地址，就是对目标变量求地址，因此&ra与&a相等。注意我们不能建立引用的数组，因为数组是一个由若干个元素所组成的集合，所以无法建立一个由引用组成的集合。
+a为原变量名称，ra为引用名。给ra赋值：ra=1; 等价于 a=1。对引用求地址，就是对目标变量求地址，因此&ra与&a相等。注意我们**不能建立引用的数组**，因为数组是一个由若干个元素所组成的集合，所以无法建立一个由引用组成的集合。
 
     int& ref[3]= {2,3,5}; //int& ref[3]= {2,3,5}; //不能声明引用的数组
     const int (&ref)[3] ={2,3,5};                 // 可以
@@ -104,8 +112,7 @@ a为原变量名称，ra为引用名。给ra赋值：ra=1; 等价于 a=1。对�
 
     void swap(int &a,int &b)
     {
-        int temp;
-        temp=a;
+        int temp=a;
         a=b;
         b=temp;
     }
@@ -113,26 +120,27 @@ a为原变量名称，ra为引用名。给ra赋值：ra=1; 等价于 a=1。对�
 当大型对象被传递给函数时，使用引用参数可使参数传递效率得到提高，因为引用并不产生对象的副本，也就是参数传递时，对象无须复制。有时甚至有的类类型（包括 IO 类型在内）根本不支持拷贝操作，只能用引用传递。
 
 ［[复杂的参数传递](http://www.nowcoder.com/questionTerminal/2b09b944ce7342ab8ca645690afd207b)］  
-［[指针传递](http://www.nowcoder.com/questionTerminal/960f8047a9ee4a6f8227768f3bc2734d)］
 
 ## 引用返回值
 
-将“引用”作为函数返回值类型，好处是在内存中不产生被返回值的副本。正是因为这点原因，所以`返回一个局部变量的引用是不可取的`。因为随着该局部变量生存期的结束，相应的引用也会失效！
+将“引用”作为函数返回值类型，好处是在内存中不产生被返回值的副本。正是因为这点原因，所以**返回一个局部变量的引用是不可取的**。因为随着该局部变量生存期的结束，相应的引用也会失效！
 
-同时也`不能返回函数内部new分配的内存的引用`，被函数返回的引用只是作为一个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就无法释放，造成memory leak。正确的做法如下：
+同时也**不能返回函数内部new分配的内存的引用**`，被函数返回的引用只是作为一个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就无法释放，造成memory leak。正确的做法如下：
 
-    #include <iostream>
-    using namespace std;
-    int& fun(int& a){
-        a++;
-        return a;
-    } //把a返回引用函数,也就是说这个fun()就是a的别名
-    int main(void){
-        int b =10;
-        fun(b); //同理,fun(b)就是b自增后的b的别名
-        cout << b <<endl;
-        return 0;
-    }
+```c++
+#include <iostream>
+using namespace std;
+int& fun(int& a){
+    a++;
+    return a;
+} //把a返回引用函数,也就是说这个fun()就是a的别名
+int main(void){
+    int b =10;
+    fun(b); //同理,fun(b)就是b自增后的b的别名
+    cout << b <<endl;
+    return 0;
+}
+```
 
 # sizeof 运算符
     
@@ -153,11 +161,13 @@ sizeof 运算符返回`一条表达式或者一个类型名字所占的字节数
 
 在 sizeof 的运算对象中解引用一个无效指针仍然是一种安全的行为，因为指针实际上并没有被真正使用，sizeof 并不需要真的解引用指针也能知道它所指对象的类型。这是一件可以在程序运行前（`编译时`）完成的事情，所以，sizeof(*p)直接就被具体数字给取代了，在运行时也就不会有了解引用这个表达式。
 
-    int i = 10;
-    printf("%d\n",i);                           // 10
-    // sizeof 并不计算 i++
-    printf("%d\n",sizeof(i++));                 // 4
-    printf("%d\n",i);                           // 10
+```c++
+int i = 10;
+printf("%d\n",i);                           // 10
+// sizeof 并不计算 i++
+printf("%d\n",sizeof(i++));                 // 4
+printf("%d\n",i);                           // 10
+```
     
 sizeof 运算符的结果部分地依赖于其作用的类型：
 
@@ -289,11 +299,11 @@ class CDerived : public CBase {
 
 int main()
 {
-CBase *pba = new CDerived;
-CBase *pbb = new CBase;
-CDerived *pd1, *pd2;
-pd1 = dynamic_cast<CDerived *>(pba);
-pd2 = dynamic_cast<CDerived *>(pbb);
+    CBase *pba = new CDerived;
+    CBase *pbb = new CBase;
+    CDerived *pd1, *pd2;
+    pd1 = dynamic_cast<CDerived *>(pba);
+    pd2 = dynamic_cast<CDerived *>(pbb);
 }
 ```
 
@@ -379,16 +389,17 @@ C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低�
     int x,y,z;
     x=y=1;
     z=x++,y++,++y;
-    printf("%d,%d,%d\n",x,y,z); // 231
+    printf("%d,%d,%d\n",x,y,z); // 2,3,1
 
     int a,b;
     b=(a=1,a+1,a++);
-    printf("%d,%d\n",a,b)；// 2, 1
+    printf("%d,%d\n",a,b)；// 2,1
 
 ［[逗号表达式的值](http://www.nowcoder.com/questionTerminal/5971372060a24eac874d43b830864189)］
 
 
 # 更多内容
+
 [What is the difference between a definition and a declaration?](http://stackoverflow.com/questions/1410563/what-is-the-difference-between-a-definition-and-a-declaration)  
 [c++中的左值与右值](http://www.cnblogs.com/catch/p/3500678.html)  
 [C++ Rvalue References Explained](http://thbecker.net/articles/rvalue_references/section_01.html)  

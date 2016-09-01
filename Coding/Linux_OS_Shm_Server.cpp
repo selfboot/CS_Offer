@@ -24,13 +24,13 @@ int main()
     // Create the segment.
     if ((shmid = shmget(key, SHMSZ, IPC_CREAT | 0666)) < 0) {
         perror("shmget");
-        exit(1);
+        exit(-1);
     }
 
     // Now we attach the segment to our data space.
-    if ((shm = shmat(shmid, NULL, 0)) == (char *) -1) {
+    if ((shm = (char *)shmat(shmid, NULL, 0)) == (char *)-1) {
         perror("shmat");
-        exit(1);
+        exit(-1);
     }
 
     // Now put some things into the memory for the other process to read.
