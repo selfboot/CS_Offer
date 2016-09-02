@@ -24,11 +24,12 @@ class B: public A {};
 int main()
 {
     A a;
-    std::cout << *(int *)&a << std::endl;
-    std::cout << *((int *)&a + 1) << std::endl;
-    std::cout << *((int *)&a + 2) << std::endl;
+    std::cout << *(int *)&a << std::endl;       // 1
+    std::cout << *((int *)&a + 1) << std::endl; // 2
+    std::cout << *((int *)&a + 2) << std::endl; // 3
     B b;
-    std::cout << *(int *)&b << std::endl;
-    std::cout << *((int *)&b + 1) << std::endl;
-    std::cout << *((int *)&b + 2) << std::endl;
+    std::cout << *(int *)&b << std::endl;       // 1
+    std::cout << *((int *)&b + 1) << std::endl; // 2
+    std::cout << *((int *)&b + 2) << std::endl; // 3
+    return 0;
 }

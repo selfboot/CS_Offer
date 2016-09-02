@@ -61,10 +61,14 @@
 - [ ] [inline 内联函数](C++/Keywords.md#inline)
 - [ ] [typedef 类型别名](C++/Keywords.md#typedef)
 - [ ] [explicit 避免隐式类型转换](C++/Keywords.md#explicit)
+- [ ] [赋值还是拷贝构造](C++/Class.md#赋值还是构造)
+- [ ] [禁止对象产生在堆栈上](C++/Class.md#禁止对象产生在堆栈中)
+- [ ] [类内初始化](C++/Class.md#构造函数初始值列表)
+- [ ] [虚函数实现机制](C++/Class.md#多态)
+- [ ] [函数重载、覆盖、隐藏区别](C++/Class.md#成员函数)
 - [ ] 数组作为形参
 - [ ] 指针与引用区别
 - [ ] 函数指针
-- [ ] 函数重载、覆盖、隐藏区别
 - [ ] [内存对齐原则](C++/Basic.md#内存对齐)
 - [ ] [sizeof 运算符](C++/Basic.md#sizeof-运算符)
 - [ ] [union 实现 CPU 字节序判定](C++/Basic.md#联合体cpu字节序)

@@ -50,4 +50,12 @@ private:
 
 int main() {
     DerivedContainer dc;
+    /*
+    Contained1 constructor.
+    Contained2 constructor.
+    BaseContainer constructor.
+    Contained3 constructor.
+    DerivedContainer constructor.
+    */
+    return 0;
 }
