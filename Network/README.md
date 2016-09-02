@@ -112,8 +112,6 @@ TCP协议和UDP协议特性区别，主要从连接性、可靠性、有序性�
 基于TCP的协议有：HTTP/HTTPS，Telnet，FTP，SMTP。
 基于UDP的协议有：DHCP，DNS，SNMP，TFTP，BOOTP。
 
-参考 [TCP和UDP的区别](http://liangjiabin.com/blog/2015/03/difference-between-tcp-vs-udp-protocol.html)
-
 # 应用层
 
 ## HTTP 协议
@@ -147,7 +145,7 @@ HTTP 有两个主要的版本 HTTP 1.0 和 HTTP 1.1，1.1 版本在带宽优化�
 
 [协议森林系列文章](http://www.cnblogs.com/vamei/archive/2012/12/05/2802811.html)  
 [《计算机网络》这门课为何如此之难？](https://www.zhihu.com/question/19718686)    
-
+[TCP和UDP的区别](http://liangjiabin.com/blog/2015/03/difference-between-tcp-vs-udp-protocol.html)
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_01.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_02.jpg

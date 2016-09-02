@@ -63,20 +63,21 @@ python的新式类是2.2版本引进来的，之前的类叫做经典类或者�
 
 关于统一类(class)和类型(type)，具体看下面的例子
 
-    class OldClass():
-        pass
-    
-    o = OldClass()
-    print o.__class__   # __main__.OldClass
-    print type(o)       # <type 'instance'>
-    
-    
-    class newClass(object):
-        pass
-    
-    n = newClass()
-    print n.__class__   # <class '__main__.newClass'>
-    print type(n)       # <class '__main__.newClass'>
+```python
+class OldClass():
+    pass
+
+o = OldClass()
+print o.__class__  # __main__.OldClass
+print type(o)  # <type 'instance'>
+
+class newClass(object):
+    pass
+
+n = newClass()
+print n.__class__  # <class '__main__.newClass'>
+print type(n)  # <class '__main__.newClass'>
+```
 
 # 对象属性
 

@@ -198,21 +198,25 @@ lambda 表达式允许你定义简单函数,但是它的使用是有限制的。
 
 如果想让某个匿名函数在定义时就捕获到值，可以将那个参数值定义成默认参数即可，就像下面这样: 
 
-    >>> x = 10
-    >>> a = lambda y, x=x: x + y
-    >>> x = 20
-    >>> b = lambda y, x=x: x + y 
+```python
+>>> x = 10
+>>> a = lambda y, x=x: x + y
+>>> x = 20
+>>> b = lambda y, x=x: x + y 
+```
 
 这样结果就是 20，30了。下面再看两个例子，加深对lambda变量捕获机制的了解：
 
-    >>> funcs = [lambda x: x+n for n in range(5)] 
-    >>> for f in funcs:
-    ... print(f(0))
-    # 4 4 4 4 4
-    >>> funcs = [lambda x, n=n: x+n for n in range(5)]
-    >>> for f in funcs:
-    ... print(f(0))
-    # 0 1 2 3 4
+```python
+>>> funcs = [lambda x: x+n for n in range(5)] 
+>>> for f in funcs:
+... print(f(0))
+# 4 4 4 4 4
+>>> funcs = [lambda x, n=n: x+n for n in range(5)]
+>>> for f in funcs:
+... print(f(0))
+# 0 1 2 3 4
+```
 
 ## 默认参数值
 
@@ -254,7 +258,9 @@ Python 自带许多方便的内置函数，如下图：
 
 ## sorted
 
-    sorted(iterable[, cmp[, key[, reverse]]])
+```python
+sorted(iterable[, cmp[, key[, reverse]]])
+```
 
 > Return a new sorted list from the items in iterable.
 
@@ -267,17 +273,21 @@ Python 自带许多方便的内置函数，如下图：
 
 例如有一个字典，根据字典中的属性值来排序，返回一个排好序的元组：
 
-    >>> d = {"a":1, "c":3, "d":4, "b":2, "e": 5}
-    >>> sorted_d = sorted(d.items(), key=lambda i: i[1])
-    >>> sorted_d
-    [('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)]
+```python
+>>> d = {"a":1, "c":3, "d":4, "b":2, "e": 5}
+>>> sorted_d = sorted(d.items(), key=lambda i: i[1])
+>>> sorted_d
+[('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)]
+```
 
 或者有一个数组，它的每一个成员是一个字典，然后根据字典中的属性值来排序，用cmp参数如下：
 
-    >>> persons=[{'name':'zhang3','age':15},{'name':'li4','age':12}]
-    >>> sorted_d = sorted(persons, lambda a,b: a['age']-b['age'])
-    >>> sorted_d
-    [{'age': 12, 'name': 'li4'}, {'age': 15, 'name': 'zhang3'}]    
+```python
+>>> persons=[{'name':'zhang3','age':15},{'name':'li4','age':12}]
+>>> sorted_d = sorted(persons, lambda a,b: a['age']-b['age'])
+>>> sorted_d
+[{'age': 12, 'name': 'li4'}, {'age': 15, 'name': 'zhang3'}] 
+```
 
 再来看一个稍微复杂的例子。给定一个只包含大小写字母，数字的字符串，对其进行排序，保证：
 
@@ -287,9 +297,11 @@ Python 自带许多方便的内置函数，如下图：
 
 像下面这样用 sorted 函数即可。
 
-    >>> s = "Sorting1234"
-    >>> "".join(sorted(s, key=lambda x: (x.isdigit(), x.isdigit() and int(x) % 2 == 0, x.isupper(), x)))
-    'ginortS1324'
+```python
+>>> s = "Sorting1234"
+>>> "".join(sorted(s, key=lambda x: (x.isdigit(), x.isdigit() and int(x) % 2 == 0, x.isupper(), x)))
+'ginortS1324'
+```
 
 这里，lambda 函数将输入的字符转换为一个元组，然后 `sorted 函数将根据元组`（而不是字符）来进行比较，进而判断每个字符的前后顺序。这里可以理解为，根据字符生成的元组重新定义了排序的依据。
 

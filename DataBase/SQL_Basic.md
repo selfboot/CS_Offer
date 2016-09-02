@@ -69,7 +69,7 @@ update 语句可以在不改变整个元组的情况下改变其部分属性的�
     where salary < (select avg(salary)
                     from instructor);
 
-SQL 语句提供case 语句，可以利用它在一条语句中执行多种更新，避免更新次序发生的问题。
+SQL 语句提供case 语句，可以利用它在一条语句中执行多种更新，避免因为更新次序可能引发的问题。
 
     update instructor
     set salary=case
@@ -122,12 +122,10 @@ SELECT * FROM Websites WHERE country='CN';
 * >=：大于等于
 * <=：小于等于
 * BETWEEN：在某个范围内
-* LIKE：搜索某种模式
+* LIKE：**搜索某种模式**
 * IN：指定针对某个列的多个可能值
 
-### like 模糊匹配
-
-`字符串运算`：在字符串上可以使用`like 操作符`来实现模式匹配（大小写敏感）。
+可以在字符串上可以使用`like 操作符`来实现模式匹配（大小写敏感）。
 
 * `百分号%`：匹配任意字符串
 * `下划线_`：匹配任意一个字符
@@ -159,7 +157,7 @@ FROM access_log GROUP BY site_id;
 
 ## HAVING 子句
 
-在 SQL 中增加 HAVING 子句原因是，`WHERE 关键字无法与聚合函数一起使用`。HAVING 子句可以让我们筛选分组后的各组数据。假设我们想要查找总访问量大于 200 的网站，可以使用下面的 SQL 语句：
+在 SQL 中增加 HAVING 子句原因是，**WHERE 关键字无法与聚合函数一起使用**。HAVING 子句可以让我们筛选分组后的各组数据。假设我们想要查找总访问量大于 200 的网站，可以使用下面的 SQL 语句：
 
 ```SQL
 SELECT Websites.name, Websites.url, SUM(access_log.count) AS nums FROM (access_log

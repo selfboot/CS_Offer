@@ -152,7 +152,7 @@ epoll操作过程需要三个接口，分别如下：
 
 2. int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
 
-    epoll的事件注册函数，它不同与select()是在监听事件时告诉内核要监听什么类型的事件，而是在这里先注册要监听的事件类型。
+    epoll的事件注册函数，它不同于select()是在监听事件时告诉内核要监听什么类型的事件，而是在这里先注册要监听的事件类型。
     
     * 第一个参数是epoll_create()的返回值，
     * 第二个参数表示动作，用三个宏来表示：EPOLL_CTL_ADD：注册新的fd到epfd中；EPOLL_CTL_MOD：修改已经注册的fd的监听事件；EPOLL_CTL_DEL：从epfd中删除一个fd；
@@ -217,7 +217,7 @@ epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪�
 
 与 I/O 复用密切相关的另一种 I/O 模型是在多线程中使用阻塞式 I/O。这种模型与上述模型极为相似，但它没有使用 select 阻塞在多个描述符上，而是使用多个线程，每个线程阻塞在一个描述符上。
 
-# 参考
+# 更多阅读
 [Unix五种I/O模型对比](http://sukai.me/linux-five-io-models/)  
 [IO多路复用之select总结](http://www.cnblogs.com/Anker/archive/2013/08/14/3258674.html)  
 [IO多路复用之epoll总结](http://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html)  
