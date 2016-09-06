@@ -7,7 +7,7 @@
 
 使用模板的目的就是能够让`程序员编写与类型无关的代码`。比如编写了一个交换两个整型int 类型的swap函数，这个函数就只能实现int 型，对double，字符这些类型无法实现，要实现这些类型的交换就要重新编写另一个swap函数。使用模板的目的就是要让这程序的实现与类型无关，比如一个swap模板函数，即可以实现int 型，又可以实现double型的交换。
 
-注意：模板的声明或定义只能在全局，命名空间或类范围内进行。即不能在局部范围，函数内进行，比如不能在main函数中声明或定义一个模板。
+注意：**模板的声明或定义只能在全局，命名空间或类范围内进行。**即不能在局部范围，函数内进行，比如不能在main函数中声明或定义一个模板。
 
 # 函数模板
 
@@ -76,7 +76,7 @@ public:
 
 ## 成员函数
 
-类模板的成员函数可以在类模板的定义中定义(这样就是 inline函数)，也可以在类模板定义之外定义。要注意的是类模板成员函数本身也是一个模板，类模板被实例化时它并不自动被实例化，只有当它被调用或取地址，才被实例化。
+类模板的**成员函数可以在类模板的定义中定义(这样就是 inline函数)，也可以在类模板定义之外定义**。要注意的是类模板成员函数本身也是一个模板，类模板被实例化时它并不自动被实例化，只有当它被调用或取地址，才被实例化。
 
 在类模板外部定义成员函数的方法为：
 
@@ -92,7 +92,76 @@ void A<T1,T2>::h(){
 }
 ```
 
-**当在类外面定义类的成员时template后面的模板形参应与要定义的类的模板形参一致**。
+`当在类外面定义类的成员时template后面的模板形参应与要定义的类的模板形参一致`。
+
+# 模板编译
+
+当编译器遇到一个模板定义时，并不生成代码。只有当我们实例化出模版的一个特定版本时，编译器才会生成代码。
+
+**模板的声明和实现是否一定要在同一个头文件中？**
+
+要知道，我们在调用一个函数时，编译器只需要掌握函数的声明。类似的，当**我们使用一个类类型的对象时，类定义必须是可用的，但成员函数的定义不必已经出现**。因此，可以将**类定义和成员函数声明**放在头文件（.h）中，而普通函数和类的成员函数的定义放在源文件中（.cpp）。
+
+这样就可以把源文件编译成目标文件打包成库，然后把库和头文件给客户使用。对客户来说，可以使用相应的功能，但是看不到源文件。这样可以很好地保护商业利益，此外如果想要更改实现的话，可以重新编译自己的库，客户不需要为此更改代码。
+
+但是在使用模板时，这种习惯性做法将变得不再有用。因为**为了生成一个实例化版本，编译器必须要掌握函数模板或类模板成员函数的定义**。因此，与非模版代码不同，模板的头文件通常既包括声明也包括定义。一般做法就是将模板的声明和定义都放置在同一个.h文件中，这就是为什么所有的STL头文件都包含模板定义。
+
+详细来解释的话，主要从这[三个方面](https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl)来理解：
+
+1. A template is not a class or a function. A template is a “pattern” that the compiler uses to generate a family of classes or functions.
+2. In order for the compiler to generate the code, it must see both the template definition (not just declaration) and the specific types/whatever used to “fill in” the template. For example, if you’re trying to use a Foo<int>, the compiler must see both the Foo template and the fact that you’re trying to make a specific Foo<int>.
+3. Your compiler probably doesn’t remember the details of one .cpp file while it is compiling another .cpp file. It could, but most do not and if you are reading this FAQ, it almost definitely does not. BTW this is called the “`separate compilation model`.”
+
+下面看一个例子，假设一个模板类 Foo 的声明如下：
+
+```c++
+template<typename T>
+class Foo {
+public:
+  Foo();
+  void someMethod(T x);
+private:
+  T x;
+};
+```
+
+成员函数的定义如下：
+
+```c++
+template<typename T>
+Foo<T>::Foo()
+{
+  // ...
+}
+template<typename T>
+void Foo<T>::someMethod(T x)
+{
+  // ...
+}
+```
+
+现在假设在 `Bar.cpp` 中使用 `Foo<int>`:
+
+```c++
+// Bar.cpp
+void blah_blah_blah()
+{
+  // ...
+  Foo<int> f;
+  f.someMethod(5);
+  // ...
+}
+```
+
+如果我们将Foo 的构造函数以及someMethod成员函数的定义放在Foo.cpp中，编译时会出现链接错误。这是因为编译器在编译 Foo.cpp 时知道了模版的定义代码，在编译 Bar.cpp 时候，知道了 Foo<int>的实例化，但是没法同时掌握模版定义和参数实例化，这样也就无法生成具体的类代码。
+
+为了解决这个问题，通常我们会把模板的声明和定义放在一个头文件中（建议这样做），不过也可以分别放在头文件和源文件中，下面就是一个示例：
+
+* [foo.h](../Coding/C++_Template_foo.h)：函数模版声明，模版类的定义；
+* [foo.cpp](../Coding/C++_Template_foo.cpp)：函数模版定义，模板成员函数的定义；
+* [main.cpp](../Coding/C++_Template_main.cpp)：使用函数模版和模版类。
+
+这里在模版类的实现文件中放置具体的`模版实例化`，就可以生成具体的实例化对象了。
 
 # 隐式接口和编译期多态
 
@@ -221,7 +290,10 @@ void f(){}              // 注意：这里没有"模板实参"
 《Effective C++ 模板与泛型编程》  
 《Effective C++ 条款 25》  
 [Cpp Reference-Templates](http://en.cppreference.com/w/cpp/language/templates)  
+[Why can templates only be implemented in the header file?](http://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file)  
+[Why can’t I separate the definition of my templates class from its declaration and put it inside a .cpp file? ](https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl)  
 [类模板定义及实例化](http://www.cnblogs.com/assemble8086/archive/2011/10/02/2198308.html)  
 [C++ typename的起源与用法](http://feihu.me/blog/2014/the-origin-and-usage-of-typename/)  
 [C++模板的偏特化与全特化](http://harttle.com/2015/10/03/cpp-template.html)    
+[C++ 中的模板类声明头文件和实现文件分离后，如何能实现正常编译？](https://www.zhihu.com/question/20630104)  
 

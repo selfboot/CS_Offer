@@ -184,6 +184,7 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 《STL 源码剖析》   
 《Effective C++》   
 《More Effective C++》  
+[C++ FAQ](https://isocpp.org/faq)  
 [C++_More](More/C++_More.md)
 [C/C++内存管理详解](http://chenqx.github.io/2014/09/25/Cpp-Memory-Management/)  
 [那些不能遗忘的知识点回顾——C/C++系列](http://www.cnblogs.com/webary/p/4754522.html)  

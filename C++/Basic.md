@@ -61,7 +61,7 @@ void main( void )
     Test a(1);  // 定义了一个对象
     a.fun();    // 调用对象的函数 
     Test b();   // 声明了一个函数
-    b.fun();    // Error！！！
+    // b.fun();    // Error！！！
 }
 ```
 

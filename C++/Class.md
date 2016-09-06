@@ -238,7 +238,7 @@ const float A::e = 5;
 
 ## 成员函数
 
-成员函数也可以被重载，只要满足重载的要求，即`同一个作用域内`的几个`函数名字相同`但`形参列表`不同，成员函数的 virtual 关键字可有可无。此外要注意**const函数与同名的非const函数是重载函数**；const对象只能调用const函数 ，但是非const对象可以调用const函数。
+成员函数也可以被重载，只要满足重载的要求，即`同一个作用域内`的几个`函数名字相同`但`形参列表`不同，成员函数的 virtual 关键字可有可无。
 
 ［[const函数的操作](http://www.nowcoder.com/questionTerminal/09ec766d373a43769603963664e231e7)］  
 
@@ -252,6 +252,22 @@ const float A::e = 5;
 * 重载：看参数。
 * 隐藏：用什么就调用什么。
 * 覆盖：调用派生类。
+
+**C++中成员函数能否同时用static和const进行修饰？**
+
+不行！这是因为C++编译器在实现const的成员函数的时候为了确保该函数不能修改类的中参数的值，会在函数中添加一个隐式的参数`const this*`。但当一个成员为static的时候，该函数是没有this指针的，也就是说此时const的用法和static是冲突的。
+
+更详细的解释如下：在定义一个类对象的时候，实际上只给该对象的非静态的数据成员分配内存空间（假设没有虚函数），而该类的静态成员数据以及该类的函数都在编译的时候分配到一个公共的空间里，所有，在定义一个对象并调用类对象的函数的时候，函数根本不知道到底是哪个对象调用了他，怎么解决这个问题呢？ 
+
+C++利用传递this指针的方式来实现，调用一个类对象里的函数的时候，将把这个对象的指针传递给他，以便函数对该对象的数据进行操作，对于一个定义为const的函数，传递的是const的this指针，说明不能更改对象的属性，而对static成员的函数不传递this指针，所以不能用const来修饰static的成员函数了！ 
+
+从对象模型上来说，类的非static成员函数在编译的时候都会扩展加上一个this参数，const的成员函数被要求不能修改this所指向的这个对象；而static函数编译的时候并不扩充加上this参数，自然无所谓const。 
+
+如果在编写const成员函数时，不慎**修改了数据成员，或调用了其他非const成员函数，编译器就会报错**。如果想在const函数中改变某个成员变量的值，那么可以将该变量声明为 mutable 类型。
+
+此外，要注意**const函数与同名的非const函数是重载函数**，类的const对象只能调用const函数，非const对象可以调用const函数和非const成员函数。
+
+具体的示例在 [C++_Class_Func.cpp](../Coding/C++_Class_Func.cpp)。
 
 # 继承
 
@@ -361,6 +377,7 @@ More Effective C++ 条款 27
 [深入理解C++的动态绑定和静态绑定](http://blog.csdn.net/chgaowei/article/details/6427731)  
 [C++ 抽象类](http://www.cnblogs.com/balingybj/p/4771916.html)  
 [关于C++中的虚拟继承的一些总结](http://www.cnblogs.com/BeyondAnyTime/archive/2012/06/05/2537451.html)  
+[类中的const成员](http://www.cnblogs.com/kaituorensheng/p/3244910.html)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Class_1.png

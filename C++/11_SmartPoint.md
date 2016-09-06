@@ -334,6 +334,7 @@ int main()
 
 # 更多阅读
 
+[Top 10 dumb mistakes to avoid with C++ 11 smart pointers](http://www.acodersjourney.com/2016/05/top-10-dumb-mistakes-avoid-c-11-smart-pointers/)  
 [C++ 引用计数技术及智能指针的简单实现](http://www.cnblogs.com/QG-whz/p/4777312.html)  
 [从auto_ptr说起](http://www.jellythink.com/archives/673)  
 [到C++11中的智能指针](http://www.jellythink.com/archives/684)  

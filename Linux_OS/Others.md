@@ -1,4 +1,10 @@
-## Linux 启动流程
+# Posix 和 System V
+
+POSIX(Portable Operating System Interface for Computing Systems)是由IEEE 和ISO/IEC 开发的一簇标准。该标准是基于现有的UNIX 实践和经验，描述了操作系统的调用服务接口，用于保证编制的应用程序可以在源代码一级上在多种操作系统上移植运行。
+
+Unix System V，是Unix操作系统众多版本中的一支。它最初由AT&T开发，在1983年第一次发布，因此也被称为AT&T System V。一共发行了4个System V的主要版本：版本1、2、3和4。System V Release 4，或者称为SVR4，是最成功的版本，成为一些UNIX共同特性的源头。
+
+# Linux 启动流程
 
 每个平台的启动细节不同，但整体来说启动过程如下。
 
@@ -50,11 +56,6 @@ x=-4  1100（补码）
 
 ［[－2^31 -1 的各种计算](http://www.nowcoder.com/questionTerminal/5f5f30bea94748fe903ff5616e73de00)］  
 ［[unsigned 取值](http://www.nowcoder.com/questionTerminal/3327439779e146dc9035b0977d9469eb)］
-
-
-# 共享内存的实现原理
-
-
 
 # 可执行链接格式 ELF
 
