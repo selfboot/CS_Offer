@@ -320,6 +320,13 @@ print count_sort(case, 5)
 3. 对每个不是空的桶子进行排序。
 4. 从不是空的桶子里把项目再放回原来的序列中。
 
+# 混合排序
+
+Introsort（内省排序）是由David Musser在1997年设计的排序算法。这个排序算法首先从快速排序开始，当递归深度超过一定深度（深度为排序元素数量的对数值）后转为堆排序。采用这个方法，内省排序既能在常规数据集上实现快速排序的高性能，又能在最坏情况下仍保持。
+
+introsort的大致思想是：当数据很大时先用quicksort,当递归超过一定深度时改用heapsort，最后每个子序列元素个数小于某个阈值时，就改用insertionsort。由此可知，它乃综合各家之长的算法。
+在2000年6月，SGI的C++标准模板库的 [stl_algo.h](http://www.sgi.com/tech/stl/stl_algo.h) 中的不稳定排序算法采用了Musser的introsort算法。在此实现中，切换到插入排序的数据量阈值为16个。
+
 # 更多阅读
 
 [冒泡排序](https://zh.wikipedia.org/wiki/冒泡排序)  

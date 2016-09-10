@@ -177,11 +177,13 @@ gdb调试中需要用到的命令
 
 ![][1]
 
+
 # 参考
 
 [使用gdb调试程序详解](http://www.vimer.cn/2009/11/使用gdb调试程序详解.html)  
 [GDB中应该知道的几个调试方法](http://coolshell.cn/articles/3643.html)  
-[Codesign gdb on Mac OS X Yosemite](http://andresabino.com/2015/04/14/codesign-gdb-on-mac-os-x-yosemite-10-10-2/)
+[Codesign gdb on Mac OS X Yosemite](http://andresabino.com/2015/04/14/codesign-gdb-on-mac-os-x-yosemite-10-10-2/)  
+[C++编译器无法捕捉到的8种错误](http://blog.jobbole.com/15837/)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_GDB_Debug_1.png
 

@@ -109,5 +109,7 @@
 [让 BAT 的 Offer 不再难拿](http://www.jianshu.com/p/ee15c1cf9c16)  
 [2014校招后台开发(服务端开发)经验总结](http://www.oserror.com/backend/438.html)  
 [纯干货！面试官如何面试程序员](http://blog.jobbole.com/99830/)  
+[关于面试一点感触](http://www.nowcoder.com/discuss/8429?type=2&order=0&pos=10&page=4)  
+[阿里四面面经 + 已成功拿到offer](http://www.nowcoder.com/discuss/8343?type=2&order=0&pos=17&page=1)  
 
 

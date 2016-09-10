@@ -1,13 +1,14 @@
 /*
  * @Author: xuezaigds@gmail.com
- * @Last Modified time: 2016-04-18 17:37:33
+ * @Last Modified time: 2016-09-10 11:12:19
+ * Worked on Mac OS X
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
-#include <dispatch/dispatch.h>
+#include <dispatch/dispatch.h>          // OS X
 
 const int BufLen = 10;                  // 缓冲区长度
 int buf[BufLen] = {0};

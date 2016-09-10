@@ -242,7 +242,7 @@ int main()
 
 # final
 
-C++ 11 中引入了final关键字
+C++ 11 中引入了final关键字，用来阻止类的进一步派生和虚函数的进一步重载。
 
 > Specifies that a virtual function cannot be overridden in a derived class or that a class cannot be inherited from.
 
@@ -270,7 +270,42 @@ struct C : B // Error: B is final
 };
 ```
 
-［[final 描述错误](http://www.nowcoder.com/questionTerminal/8272c92814ca40c39f9a534485c90be2)］
+# override
+
+一个派生类可以覆盖在基类中声明的虚函数，这是面向对象设计的基础。然而这么简单的操作也会出错，关于覆盖虚函数的两个常见错误如下： 
+
+* `无意中覆盖`：派生类不小心实现了一个和基类名字和参数列表相同的虚函数。
+* `签名不匹配`：本来要覆盖基类的虚函数，结果导致产生了一个新的函数。
+
+使用 override 可以避免这两个问题。因为 override 明确告诉编译器该函数覆盖了基类中的虚函数，任何违反了这一语义的实现编译器都将显式地给出错误提示。
+
+> In a member function declaration or definition, override ensures that the function is virtual and is overriding a virtual function from the base class. The program is ill-formed (a compile-time error is generated) if this is not true.
+
+看一个简单的例子：
+
+```c++
+struct A
+{
+    virtual void foo();
+    void bar();
+};
+ 
+struct B : A
+{
+    void foo() const override; // Error: B::foo does not override A::foo
+                               // (signature mismatch)
+    void foo() override; // OK: B::foo overrides A::foo
+    void bar() override; // Error: A::bar is not virtual
+};
+```
+
+编译器实现 override 的方法很简单，如下：
+
+> The override special identifier means that the compiler will check the base class(es) to see if there is a virtual function with this exact signature. And if there is not, the compiler will error out.
+
+不过注意 override 和 final 一样，不是C++保留字：
+
+> Note that neither override nor final are language keywords. They are technically identifiers; they only gain special meaning when used in those specific contexts. In any other location, they can be valid identifiers.
 
 # 更多阅读
 

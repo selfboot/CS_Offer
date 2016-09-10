@@ -127,6 +127,50 @@ UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时
 
 ![][5]
 
+## 线程同步
+
+线程间通信方式主要有：`事件、临界区、互斥量、信号量`。生产者消费者问题（Producer-consumer problem），是一个多线程同步问题的经典案例。生产者的主要作用是重复生成一定量的数据放到缓冲区中，与此同时，消费者也在缓冲区消耗这些数据。该问题的关键就是要保证生产者不会在缓冲区满时加入数据，消费者也不会在缓冲区中空时消耗数据。
+
+用`信号量`进行多线程的同步操作，信号量包括两个操作原语：
+
+* down：检查信号量是否大于0。若该值大于0，将其值减 1（用掉一个保存的唤醒信号）并继续；若该值为0，则进程将睡眠，而且此时down操作并未结束。 
+* up：对信号量的值增1，如果一个或多个进程在该信号量上睡眠，无法完成一个先前的down操作，则由系统选择其中的一个并允许进程完成它的down操作。（信号量的值增1和唤醒一个进程同样是不可分隔的）
+
+解决生产者消费者问题需要使用三个信号量：一个称为full（初始为 0），用来记录充满的缓冲槽数目，一个称为empty（初始为N），用来记录空的缓冲槽数目，一个称为mutex（初始为1），用来确保生产者和消费者不会同时访问缓冲区。
+
+那么生产者、消费者可以如下进行：
+
+    #define N 100
+    semaphore mutex=1;                  //临界区互斥信号量
+    semaphore empty=n;                  //空闲缓冲区
+    semaphore full=0;                   //缓冲区初始化为空
+    
+    producer() {                       //生产者
+        int item;
+        while(true){
+            item = produce_item();      //生产数据
+            down(&empty);               //将空槽数目减1
+            down(&mutex);               //进入临界区
+            insert(item);               //将新数据项加入到缓冲区中
+            up(&mutex);                 //离开临界区,释放互斥信号量
+            up(&full);                  //将满槽的数目加1
+        }
+    }
+    
+    consumer() {                        //消费者
+        int item;
+        while(true){
+            down(&full);                // 将满槽数目减1
+            down(&mutex);               // 进入临界区
+            item = remove_item();       // 从缓冲区中取出数据项
+            up(&mutex);                 // 离开临界区,释放互斥信号量
+            up(&empty);                 // 将空槽数目加1
+            consum_item();              // 处理数据项
+        }
+    }
+
+一个完整的例子在 [ProducerConsumer](../Coding/ProducerConsumer.cpp)。
+
 ## 线程安全
 
 `线程安全`就是多线程访问时，采用了加锁机制，当一个线程访问某个数据时，进行保护，其他线程不能进行访问直到该线程访问完毕，其他线程才可使用。不会出现数据不一致或者数据污染。线程不安全就是不提供数据访问保护，有可能出现多个线程先后更改数据造成所得到的数据是脏数据。
@@ -230,12 +274,13 @@ POSIX线程标准要求C标准库中的大多数函数具备线程安全性。
 《UNIX网络编程》  
 《现代操作系统》  
 《UNIX 环境高级编程》    
+
 [进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)  
 [Linux的IPC命令](http://www.cnblogs.com/cocowool/archive/2012/05/22/2513027.html)  
 [操作系统(计算机)进程和线程管理](http://c.biancheng.net/cpp/u/xitong_2/)    
 [内核线程与用户线程的一点小总结](http://www.jianshu.com/p/5a4fc2729c17)   
 [孤儿进程与僵尸进程](http://www.cnblogs.com/Anker/p/3271773.html)    
-
+[sem_init on OS X](http://stackoverflow.com/questions/1413785/sem-init-on-os-x)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_1.png

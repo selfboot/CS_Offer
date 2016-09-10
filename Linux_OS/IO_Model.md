@@ -188,7 +188,7 @@ epoll对文件描述符的操作有两种模式：`LT（level trigger，水平�
 
 这件事怎么做到的呢？当一个socket句柄上有事件时，内核会把该句柄插入上面所说的准备就绪list链表，这时我们调用epoll_wait，会把准备就绪的socket拷贝到用户态内存，然后清空准备就绪list链表。最后，epoll_wait检查这些socket，如果不是ET模式（就是LT模式的句柄了），并且这些socket上确实有未处理的事件时，又把该句柄放回到刚刚清空的准备就绪链表了。所以，非ET的句柄，只要它上面还有事件，epoll_wait每次都会返回。而ET模式的句柄，除非有新中断到，即使socket上的事件没有处理完，也是不会次次从epoll_wait返回的。
 
-ET 触发模式在很大程度上减少了epoll事件被重复触发的次数，因此效率要比LT模式高。`epoll工作在ET模式的时候，必须使用非阻塞套接口，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死`。
+ET 触发模式在很大程度上减少了epoll事件被重复触发的次数，因此效率要比LT模式高。~~epoll工作在ET模式的时候，必须使用非阻塞套接口，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死~~。
 
 ## 优缺点比较
 
@@ -196,7 +196,7 @@ select的几大缺点：
 
 1. 每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大。
 2. select 会对所有的感兴趣的 fd 一个个去检查是否就绪，这样就行成了一个`轮询`，这个是比较慢的，而 epoll 则通过设置回调函数，在有事件发生的时候，将事件添加到双向链表中，最后只需要检查双向链表是否为空即可，这个也是很高效的。
-3. select 用的是 FD_SET 进行操作，而 FD_SET 有上限限制（可以通过自己改源码进行修改），但是 epoll 没有这个限制
+3. select 用的是 FD_SET 进行操作，而 FD_SET 有上限限制（可以通过自己改源码进行修改），但是 epoll 没有这个限制。
 
 epoll是对select和poll的改进，避免了上述的三个缺点。我们先看一下epoll和select和poll的调用接口上的不同，select和poll都只提供了一个函数——select或者poll函数。而epoll提供了三个函数，epoll_create, epoll_ctl和epoll_wait，epoll_create是创建一个epoll句柄；epoll_ctl是注册要监听的事件类型；epoll_wait则是等待事件的产生。
 
@@ -221,10 +221,12 @@ epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪�
 [Unix五种I/O模型对比](http://sukai.me/linux-five-io-models/)  
 [IO多路复用之select总结](http://www.cnblogs.com/Anker/archive/2013/08/14/3258674.html)  
 [IO多路复用之epoll总结](http://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html)  
+[select、poll和epoll简介](http://blog.arganzheng.me/posts/select-poll-and-epoll.html)  
 [Linux IO模式及 select、poll、epoll详解](https://segmentfault.com/a/1190000003063859)  
 [使用事件驱动模型实现高效稳定的网络服务器程序](http://www.ibm.com/developerworks/cn/linux/l-cn-edntwk/index.html?ca=drs-)  
 [聊聊 Linux 中的五种 IO 模型](http://blog.jobbole.com/99905/)  
 [大话同步/异步、阻塞/非阻塞](https://ring0.me/2014/11/sync-async-blocked/)  
+[处理大并发之一 对异步非阻塞的理解](http://blog.csdn.net/feitianxuxue/article/details/8936802)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
