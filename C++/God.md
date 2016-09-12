@@ -4,29 +4,31 @@
 
 下面多态函数调用的输出？
 
-    class B
-    {
-    public:
-        virtual void vfun(int i = 10){
-            cout << "B:vfun " << i << endl;
-        }
-    };
-    
-    class D : public B
-    {
-    public:
-        virtual void vfun(int i = 20){
-            cout << "D:vfun " << i << endl;
-        }
-    };
-    
-    int main()
-    {
-        D* pD = new D();
-        B* pB = pD;
-        pD->vfun();
-        pB->vfun();
+```c++
+class B
+{
+public:
+    virtual void vfun(int i = 10){
+        cout << "B:vfun " << i << endl;
     }
+};
+
+class D : public B
+{
+public:
+    virtual void vfun(int i = 20){
+        cout << "D:vfun " << i << endl;
+    }
+};
+
+int main()
+{
+    D* pD = new D();
+    B* pB = pD;
+    pD->vfun();     // D:vfun 20
+    pB->vfun();     // D:vfun 10
+}
+```
 
 为了解释清楚，先来看四个概念：
 
@@ -46,46 +48,46 @@
 
 所以对于上面的例子，pD->vfun()和pB->vfun()调用都是函数D::vfun()，但是缺省参数是静态绑定的，所以 pD->vfun() 时，pD的静态类型是D*，所以它的缺省参数应该是20；同理，pB->vfun()的缺省参数应该是10。
 
-不是很容易接受是吧，所以`绝不要重新定义继承而来的缺省参数`。
+不是很容易接受是吧，所以`Effective C++ 条款37：绝不要重新定义继承而来的缺省参数`。
 
 ## 继承中重复的数据成员
 
 派生类中数据成员和基类数据成员重复时，该如何调用？看下面例子：
 
-    #include "stdio.h"
-     
-    class A
-    {
-    public:
-        int _a;
-        A()
-        {
-            _a = 1;
-        }
-        void print()
-        {
-            printf("%d", _a);
-        }
-    };
-    class B: public A
-    {
-    public:
-        int _a;
-        B()
-        {
-            _a = 2;
-        }
-    };
-    int main()
-    {
-        B b;
-        b.print();          // 1
-        printf("%d", b._a); // 2
+```c++
+#include "stdio.h"
+
+class A {
+public:
+    int _a;
+
+    A(){
+        _a = 1;
     }
 
-首先要知道继承的时候，允许子类存在与父类同名的成员变量，但是并不覆盖父类的成员变量，他们同时存在。
+    void print(){
+        printf("%d", _a);
+    }
+};
 
-子类公有（public）继承父类，所以子类可以通过对象访问父类的公有成员函数，由于调用的是父类的公有成员函数（该函数中的this指针存放的是父类对象的地址），所以打印的是父类A的_a。
+class B : public A {
+public:
+    int _a;
+
+    B() {
+        _a = 2;
+    }
+};
+
+int main() {
+    B b;
+    b.print();          // 1    
+    printf("%d", b._a); // 2
+}
+```
+首先要知道继承的时候，允许**子类存在与父类同名的成员变量，但是并不覆盖父类的成员变量，他们同时存在**。
+
+子类公有（public）继承父类，所以子类可以通过对象访问父类的公有成员函数，由于调用的是父类的公有成员函数（**该函数中的this指针存放的是父类对象的地址**），所以打印的是父类A的_a。
 
 # 该死的未定义行为
 
@@ -110,24 +112,25 @@ C++ 对于这种abs之后超出表示类型的行为`没有定义`，不同编�
 
 > If the result cannot be represented by the returned type (such as abs(INT_MIN) in an implementation with two's complement signed values), it causes undefined behavior.
 
-参考：[Cplusplus: abs](http://www.cplusplus.com/reference/cstdlib/abs/?kw=abs)
-
 # 语言的细节
 
 ## 字符数组、常量字符串
 
-    char a[] = "abcde";
-    char arr[] = {4, 3, 9, 9, 2, 0, 1, 5};
-    cout << sizeof(a)<<endl;        //6
-    cout << sizeof(arr) << endl;    //8
-    cout << strlen(a);              //5
+```c++
+char a[] = "abcde";
+char arr[] = {4, 3, 9, 9, 2, 0, 1, 5};
+cout << sizeof(a)<<endl;        //6
+cout << sizeof(arr) << endl;    //8
+cout << strlen(a);              //5
+```
 
 字符串常量后面会有 '\0'，sizeof计算时会加上 '\0' 后计算长度。'\0' 的ASCII码值为0，strlen 计算时遇到 '\0'结束。
 
 
-
 # 更多阅读
 
+[Cplusplus: abs](http://www.cplusplus.com/reference/cstdlib/abs/?kw=abs)  
+[What are all the common undefined behaviours that a C++ programmer should know about? ](http://stackoverflow.com/questions/367633/what-are-all-the-common-undefined-behaviours-that-a-c-programmer-should-know-a)  
 [What are the common undefined/unspecified behavior for C that you run into?](http://stackoverflow.com/questions/98340/what-are-the-common-undefined-unspecified-behavior-for-c-that-you-run-into)   
 
 

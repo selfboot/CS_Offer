@@ -24,7 +24,7 @@
     extern double f(int, double); // the same as the two above
     extern double f(int, double);
 
-变量定义（definition）用于为变量分配存储空间，还可为变量指定初始值。可以将定义看作是对声明的变量进行实例化，`链接器`需要根据定义来找到变量具体对应的值。下面是前面声明语句对应的定义部分：
+变量定义（definition）**用于为变量分配存储空间，还可为变量指定初始值**。可以将定义看作是对声明的变量进行实例化，`链接器`需要根据定义来找到变量具体对应的值。下面是前面声明语句对应的定义部分：
 
     int bar;
     int g(int lhs, int rhs) {return lhs*rhs;}
@@ -193,8 +193,9 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 * 对引用类型执行 sizeof 运算得到被引用对象所占空间的大小；
 * 对指针执行 sizeof 运算得到指针本身所占空间的大小；
 * 对解引用指针执行 sizeof 运算得到指针指向的对象所占空间的大小，指针不需要有效；
-* 对数组执行 sizeof 运算得到整个数组所占空间的大小（sizeof 不会把数组转换成指针来处理，可以用数组的大小除以单个元素的大小得到数组中元素的个数）。
+* 对数组执行 sizeof 运算得到整个数组所占空间的大小，等同于对数组中所有的元素各执行一次 sizeof 运算并将所得结果求和。（sizeof 不会把数组转换成指针来处理，可以用数组的大小除以单个元素的大小得到数组中元素的个数）。
 * 对 string 对象或 vector 对象执行 sizeof 运算只返回该类型固定部分的大小（**24**），不会计算对象占用了多少空间；
+* 对于 enum 类型的变量，它保存的枚举对象本身并不是真的变量，它们只是类型安全的 #define，用来以可读的方式保存一串数字而已。编译器一般是用 int 类型的来保存一个 enum，所以sizeof 结果为 4。
 
 此外求类的大小时遵循下面规则（只统计与类的实例有关的，只与类型相关的不统计）：
 
@@ -209,7 +210,8 @@ sizeof 运算符的结果部分地依赖于其作用的类型：
 ［[字符数组，八进制坑](http://www.nowcoder.com/questionTerminal/a7b35bc367604e73823d2dded6496e38)］  
 ［[类的大小](http://www.nowcoder.com/questionTerminal/33f3a63dc5d449adb351168ada7f47c6)］  
 ［[C中整型字符常量，C++字符字面量大小](http://www.nowcoder.com/questionTerminal/e16ca070d715455fa8f6916aa324138d)］  
-［[引用的大小](http://www.nowcoder.com/questionTerminal/31095437d232497c9ea40c5c7a629dc4)］  
+［[引用的大小](http://www.nowcoder.com/questionTerminal/31095437d232497c9ea40c5c7a629dc4)］    
+［[枚举类型，typedef 函数指针](http://www.nowcoder.com/questionTerminal/07684925aaaf4885ad574b2a2debe930)］  
 
 # 内存对齐
 
@@ -222,7 +224,7 @@ struct 或者 union 成员对齐规则如下：
 1. 第一个数据成员放在offset为0的地方，每个成员按照对齐系数和自身占用字节数中，二者比较小的那个进行对齐；
 2. 在数据成员完成各自对齐以后，struct或者union本身也要进行对齐，对齐将按照对齐系数和struct或者union中最大数据成员长度中比较小的那个进行；
 
-先局部成员对齐，然后再全局对齐。（[memory_align.cpp](C++_Code/memory_align.cpp)）此外，值得注意的是，enum 内部是 int 实现的，所以大小为 4。用 typedef 声明指针时，并不为指针分配空间。
+先局部成员对齐，然后再全局对齐。（[memory_align.cpp](C++_Code/memory_align.cpp)）此外，值得注意的是，**enum 内部是 int 实现的，所以大小为 4。用 typedef 声明指针时，并不为指针分配空间**。
 
 ［[enum，typedef声明指针](http://www.nowcoder.com/questionTerminal/f12da06f01594f4d8d04a1f242399dc5)］  
 ［[结构体中 : 的含义](http://www.nowcoder.com/questionTerminal/f4e20747a2dd4649bac0c028daa234f4)］    
@@ -418,6 +420,7 @@ C++ 提供一种特殊的运算符，逗号运算符，它的优先级别最低�
 
 # 更多内容
 
+[what is the size of an enum type data in C++?](http://stackoverflow.com/questions/8115550/what-is-the-size-of-an-enum-type-data-in-c)    
 [What is the difference between a definition and a declaration?](http://stackoverflow.com/questions/1410563/what-is-the-difference-between-a-definition-and-a-declaration)  
 [c++中的左值与右值](http://www.cnblogs.com/catch/p/3500678.html)  
 [C++ Rvalue References Explained](http://thbecker.net/articles/rvalue_references/section_01.html)  

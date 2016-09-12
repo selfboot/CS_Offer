@@ -118,7 +118,7 @@ malloc 的一个具体使用例子在 [gist](https://gist.github.com/xuelangZF/5
 
 如图所示，定义了一个简单的函数function，它接受一个整形参数，做一次乘法操作并返回。当调用function(0)时，arg参数记录了值0入栈，并将call function指令下一条指令的地址0x00bd16f0保存到栈内，然后跳转到function函数内部执行。每个函数定义都会有函数头和函数尾代码，如图绿框表示。因为函数内需要用ebp寄存器保存函数栈帧基址，因此先保存ebp原来的值到栈内，然后将栈指针esp内容保存到ebp。函数返回前需要做相反的操作——将esp指针恢复，并弹出ebp。
 
-之所以会有缓冲区溢出的可能，主要是因为栈空间内保存了函数的返回地址。该地址保存了函数调用结束后后续执行的指令的位置，对于计算机安全来说，该信息是很敏感的。如果有人恶意修改了这个返回地址，并使该返回地址指向了一个新的代码位置，程序便能从其它位置继续执行。也就是说攻击者可以利用缓冲区溢出来窜改进程运行时栈，从而改变程序正常流向，轻则导致程序崩溃，重则系统特权被窃取。
+之所以会有缓冲区溢出的可能，主要是因为**栈空间内保存了函数的返回地址**。该地址保存了函数调用结束后后续执行的指令的位置，对于计算机安全来说，该信息是很敏感的。如果有人恶意修改了这个返回地址，并使该返回地址指向了一个新的代码位置，程序便能从其它位置继续执行。也就是说攻击者可以利用缓冲区溢出来窜改进程运行时栈，从而改变程序正常流向，轻则导致程序崩溃，重则系统特权被窃取。
 
 ## 溢出原理
 
@@ -232,7 +232,9 @@ int main()
 [缓冲区溢出攻击](http://www.cnblogs.com/fanzhidongyzby/p/3250405.html)   
 [C/C++内存泄漏及检测](http://blog.jobbole.com/95375/)  
 [Doc: Valgrind：Memory leak detection](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.leaks)    
-[用valgrind检查C++程序的内存泄漏](http://zhiqiang.org/note/md/check-cpp-memory-with-valgrind.html)  
+[用valgrind检查C++程序的内存泄漏](http://zhiqiang.org/note/md/check-cpp-memory-with-valgrind.html)   
+[C Function Call Conventions and the Stack](http://www.csee.umbc.edu/~chang/cs313.s02/stack.shtml)  
+ 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_1.jpg  
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_2.jpg

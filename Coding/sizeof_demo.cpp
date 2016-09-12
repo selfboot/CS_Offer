@@ -39,6 +39,18 @@ public:
 class D{
 };
 
+class BU
+{
+    int number;
+    union UBffer
+    {
+        char buffer[13];
+        int number;
+    }ubuf;
+    void foo(){}
+    typedef char*(*f)(void*);
+    enum {hdd,ssd,blueray} disk;
+};
 
 int main ( ) {
     int *a;
@@ -72,5 +84,6 @@ int main ( ) {
     string s("1234");
     cout << "String " << sizeof(s) << "\n";     // 24
 
+    cout << sizeof(BU) << std::endl;
     return 0;
 }

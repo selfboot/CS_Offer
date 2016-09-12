@@ -218,6 +218,7 @@ strcat()函数非常类似于 strcpy()，除了它将一个字符串合并到缓
 
 # 更多阅读
 
+[C Function Call Conventions and the Stack](http://www.csee.umbc.edu/~chang/cs313.s02/stack.shtml)  
 [函数中局部变量的返回](http://blog.csdn.net/jackystudio/article/details/11523353)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Function_1.png

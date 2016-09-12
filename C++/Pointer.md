@@ -42,9 +42,11 @@ C++ 规定所有变量在使用前必须先定义，即指定其类型，在`编
  
 指针变量可以有空值，即该指针变量不指向任何变量，可以这样表示 `p=NULL`; 实际上NULL代表整数0，也就是使p指向地址为0的单元，这样可以使指针不指向任何有效的单元。看下面的程序：
 
-    int* p = 0;
-    // int* p = 1;  
-    // error: cannot initialize a variable of type 'int *' with an rvalue of type 'int'
+```c++
+int* p = 0;
+// int* p = 1;  
+// error: cannot initialize a variable of type 'int *' with an rvalue of type 'int'
+```
 
 这里 pint指针指向 0 地址处，如果改为 int *p=1，则会报错。
 
@@ -52,9 +54,11 @@ C++ 规定所有变量在使用前必须先定义，即指定其类型，在`编
 
 C++规定，一个指针变量加/减一个整数是将该指针变量的原值(是一个地址)和它指向的变量所占用的内存单元字节数相加或相减。如 `p+i` 代表这样的地址计算：p+i*d，d为p所指向的变量单元所占用的字节数。这样才能保证p+i指向p下面的第i个元素。
 
-    int* p = 0;
-    p += 6;
-    cout << p << endl; // 0x18
+```c++
+int* p = 0;
+p += 6;
+cout << p << endl; // 24
+```
 
 `两个指针变量可以相减`：如果两个指针变量指向同一个数组的元素，则两个指针变量值之差是两个指针之间的元素个数。假如p1指向 a[0]，p2指向a[4]，则p2-p1=(a+4)-(a)=4-0=4，但p1+p2并无实际意义。
 
@@ -97,21 +101,45 @@ C++规定，一个指针变量加/减一个整数是将该指针变量的原值(
 
 指向常量的指针（`pointer to const`）不能用于改变其所指对象的值，要想存放常量对象的地址，只能使用指向常量的指针。
 
-    const int *a = 3;
-    int const *a = 3;
-    int const* a = 3;
+```c++
+const int *a = 3;
+int const *a = 3;
+int const* a = 3;
+```
 
 指针本身是对象，因此可以把指针本身定为常量。常量指针（`const pointer`）必须初始化，而且一旦初始化完成，则它的值（也就是存放在指针中的那个地址）就不能再改变了。
 
-    int errNumb = 0;
-    int *const curErr = &errNumb;
+```c++
+int errNumb = 0;
+int *const curErr = &errNumb;
+```
 
 也可以定义一个指向常量的常量指针（const pointer to const）。
 
     const double pi=3.14;
     const double * const pip = &pi;
 
-为了判断const到底对谁起作用（即谁是const的），可以用以下简单规则：**const只对它左边的东西起作用，当const本身就是最左边的修饰符时，它才会对右边的东西起作用**。
+为了判断const到底对谁起作用（即谁是const的），可以用以下简单规则：**const只对它左边的东西起作用，当const本身就是最左边的修饰符时，它才会对右边的东西起作用**。有时候，情况可能会比较复杂，比如：
+
+```c++
+const char * const * pp; 
+pp++;       // OK
+(*pp)++;    // Error
+**pp = 'c'; // Error
+```
+
+怎么去理解呢？先从一级指针说起吧： 
+
+* const char p: 限定变量p为只读。这样如p=2这样的赋值操作就是错误的。 
+* const char \*p: p为一个指向char类型的指针，const只限定p指向的对象为只读。这样，p=&a或  p++等操作都是合法的，但如\*p=4这样的操作就错了，因为企图改写这个已经被限定为只读属性的对象。 
+* char \*const p: 限定此指针为只读，这样p=&a或p++等操作都是不合法的。而\*p=3这样的操作合法，因为并没有限定其最终对象为只读。 
+* const char \*const p: 两者皆限定为只读，不能改写。 
+
+有了以上的对比，再来看二级指针问题：
+ 
+* const char \*\*p：p为一个指向指针的指针，const限定其最终对象为只读，显然这最终对象也是为char类型的变量。故像\*\*p=3这样的赋值是错误的，而像`*p=？，p++`这样的操作合法。 
+* const char \* const \*p：限定最终对象和p指向的指针为只读。这样 `*p=?`的操作也是错的。 
+* const char * const * const p：全部限定为只读，都不可以改写。
 
 # 指针和数组
 
