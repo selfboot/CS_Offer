@@ -151,37 +151,71 @@
         return 0;              
     }
 
-在by_val_lambda中，j 被视为一个常量，一旦初始化后不会再改变（可以认为之后只是一个跟父作用域中j同名的常量），而在by_ref_lambda中，j仍然在使用父作用域中的值。所以，在使用Lambda函数的时候，如果需要捕捉的值成为Lambda函数的常量，我们通常会使用按值传递的方式捕捉；相反的，如果需要捕捉的值成成为Lambda函数运行时的变量，则应该采用按引用方式进行捕捉。
+在by_val_lambda中，**j 被视为一个常量，一旦初始化后不会再改变（可以认为之后只是一个跟父作用域中j同名的常量），而在by_ref_lambda中，j仍然在使用父作用域中的值**。所以，在使用Lambda函数的时候，如果需要捕捉的值成为Lambda函数的常量，我们通常会使用按值传递的方式捕捉；相反的，如果需要捕捉的值成成为Lambda函数运行时的变量，则应该采用按引用方式进行捕捉。
 
 再来看一段代码：
 
-    #include<iostream>                  
-    using namespace std;                
-                                        
-    int main()                          
-    {                                   
-        int val = 0;                                    
-        // auto const_val_lambda = [=](){ val = 3; }; wrong!!!
-                                        
-        auto mutable_val_lambda = [=]() mutable{ val = 3; };
-        mutable_val_lambda();           
-        cout<<val<<endl; // 0
-                                        
-        auto const_ref_lambda = [&]() { val = 4; };
-        const_ref_lambda();             
-        cout<<val<<endl; // 4
-                                        
-        auto mutable_ref_lambda = [&]() mutable{ val = 5; };
-        mutable_ref_lambda();           
-        cout<<val<<endl; // 5
-                                        
-        return 0;      
-    }
+```c++
+#include<iostream>
+using namespace std;
 
-这段代码主要是用来理解Lambda表达式中的mutable关键字的。默认情况下，Lambda函数总是一个const函数，mutable可以取消其常量性。按照规定，一个const的成员函数是不能在函数体内修改非静态成员变量的值。
+int main()
+{
+    int val = 0;
+    // auto const_val_lambda = [=](){ val = 3; }; wrong!!!
+    // If a lambda is marked mutable (e.g. []() mutable { }) it is allowed to mutate the values that have been captured by value.
+    auto mutable_val_lambda = [=]() mutable{ val = 3; };
+    mutable_val_lambda();
+    cout<<val<<endl; // 0
+
+    auto const_ref_lambda = [&]() { val = 4; };
+    const_ref_lambda();
+    cout<<val<<endl; // 4
+
+    auto mutable_ref_lambda = [&]() mutable{ val = 5; };
+    mutable_ref_lambda();
+    cout<<val<<endl; // 5
+
+    return 0;
+}
+```
+
+这段代码主要是用来理解Lambda表达式中的mutable关键字的。默认情况下，Lambda函数总是一个const函数，这意味着我们**不能改变按照值传递方式捕捉的变量**（可以改变引用方式捕捉的变量）。不过我们可以用 mutable 取消其常量性，这样就可以在函数体中改变变量的值。
+
+再来看一个简单的例子：
+
+```c++
+int i = 0;
+int* p = &i;
+auto l = [=]{ ++*p; };
+l();
+std::cout << i << std::endl;  // outputs 1
+```
+
+内部实现相当于下面的代码：
+
+```
+struct lambda {
+    int* p;
+    lambda(int* p_) : p(p_) {}
+    void operator()() const { ++*p; }
+};
+```
+
+可以看到 operator()() 是常量成员函数，相当于声明了 p 是常量指针，如下：
+
+```c++
+int* const p;
+```
+
+因此不允许我们更改指针 p 的值，不过我们仍然可以更改 p 指向的值(*p)。对按照引用捕获值来说，我们的引用本身是 “const” 的（要注意引用本来就不能再指向其他对象了），但是可以改变引用指向的值。
+
 
 # 更多阅读
 
+[What is a lambda expression in C++11?](http://stackoverflow.com/questions/7627098/what-is-a-lambda-expression-in-c11)   
+[Passing by constant reference in the lambda capture list](http://stackoverflow.com/questions/31179355/passing-by-constant-reference-in-the-lambda-capture-list)  
+[Lambda: Why are captured-by-value values const, but capture-by-reference values not?](http://stackoverflow.com/questions/16764153/lambda-why-are-captured-by-value-values-const-but-capture-by-reference-values)   
 [MSDN：C++ Lambda](https://msdn.microsoft.com/zh-cn/library/dd293608.aspx)  
 [C++中的Lambda表达式](http://www.jellythink.com/archives/668)  
 

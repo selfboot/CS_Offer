@@ -323,19 +323,156 @@ class D:public B1,public B2;
 
 C++ 中，基类必须将它的两种成员函数区分开来：一种是基类希望其派生类进行覆盖的函数，另一种是基类希望派生类直接继承而不要改变的函数。对于前者，基类通常将其定义为`虚函数（virtual）`。当我们使用指针或引用调用虚函数时，该引用将被动态绑定。根据引用或指针所绑定的对象不同，该调用可能执行基类的版本，也可执行某个派生类的版本。（成员函数如果没有被声明为虚函数，则其解析过程发生在编译时而非运行时）
 
+## 虚函数
+
 基类通过在其成员函数的声明语句之前加上 virtual 关键字使得该函数执行动态绑定，**任何构造函数之外的非静态函数都可以是虚函数**。如果基类把一个函数声明为虚函数，则该函数在派生类中隐式地也是虚函数（**派生类可以不重写虚函数，必须重写纯虚函数**）。［C++ primer P528］
 
 C++中的虚函数的作用主要是实现多态机制。关于多态，简而言之就是用父类型的指针指向其子类的实例，然后通过父类的指针调用子类的成员函数。这种技术可以让父类的指针有“多种形态”，这是一种泛型技术。
 
 虚函数（Virtual Function）是通过一张虚函数表（Virtual Table）来实现的。每个包含有虚函数的类有一个虚表，在有虚函数的类的实例中保存了虚表的指针，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表像一个地图一样，指明了实际所应该调用的函数。
 
-C++的编译器保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证取到虚函数表的有最高的性能）。
+C++的编译器保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证取到虚函数表的有最高的性能）。对于多继承来说，情况稍微有点复杂，先来看下面的例子：
 
-此外：内联函数也不能是虚函数，因为其在编译时展开。虚函数是动态绑定，运行期决定的，所以内联函数不能是虚函数。
+```c++
+class ClassA {
+public:
+    virtual ~ ClassA() { };
+
+    virtual void FunctionA() { };
+};
+
+class ClassB {
+public:
+    virtual void FunctionB() { };
+};
+
+class ClassC : public ClassA, public ClassB {
+public:
+};
+
+ClassC aObject;
+ClassA *pA = &aObject;
+ClassB *pB = &aObject;
+ClassC *pC = &aObject;
+```
+
+pA，pB 和 pC 大小一样吗？要回到这个问题，需要知道多重继承中内存的布局，详细内容可以参考陈皓的[文章](http://blog.csdn.net/haoel/article/details/3081328/)，简单来说，是因为：
+
+> 多重继承时，以声明顺序在内存中存储A/B的空间（即虚表+数据），再存储C的数据；C中重新实现的虚函数会在A/B的虚表中取代原有的虚表项，C中新加的寻函数会加在A中虚表的最后。
+
+所以，针对上面的多重继承，内存分布如下图：
+
+![][2]
+
+## 构造与析构
+
+为了能够正确的调用对象的析构函数，一般要求具有层次结构的顶级类定义其析构函数为虚函数。因为**在delete一个抽象类指针时候，必须要通过虚函数找到真正的析构函数**。如下所示是正确的用法：
+
+```c++
+class Base
+{
+public:
+    Base(){             cout << "Create Base..." << endl;}
+    virtual ~Base(){    cout << "Delete Base..." <<endl;}
+};
+
+class Derived: public Base
+{
+public:
+    Derived(){  cout << "Create Derived..." << endl;}
+    ~Derived(){ cout << "Delete Derived..." <<endl;}
+};
+
+void foo()
+{
+    Base *pb;
+    pb = new Derived;
+    delete pb;
+//    Create Base...
+//    Create Derived...
+//    Delete Derived...
+//    Delete Base...
+}
+```
+
+如果析构函数不加virtual，delete pb 将会导致未定义行为，对大多数编译器来说，只会执行Base的析构函数，而不是真正的Derived析构函数。这是因为如果不是virtual函数，调用哪个函数依赖于指向指针的静态类型，这里来说就是 Base。
+
+**析构函数可以是纯虚的，但纯虚析构函数必须有定义体，因为析构函数的调用是在子类中隐含的**，如下示例：
+
+```c++
+class Base
+{
+public:
+    Base(){}
+    // virtual ~Base();     // Link Error if we define a derived child object.
+    virtual ~Base()=0;
+};
+Base::~Base() { }   // Link Error if we define a derived child object, but with no function body.
+
+class Derived: public Base
+{
+};
+int main(){
+    Derived d;
+    return 0;
+}
+```
+
+## 更多
+
+**虚函数要么必须有定义，要么必须声明为一个纯虚函数。**
+
+> A virtual function declared in a class shall be defined, or declared pure (10.4) in that class, or both; but no diagnostic is required (3.2).  
+> -- C++03 Standard: 10.3 Virtual functions [class.virtual]
+
+这是因为定义派生类对象时，链接器需要知道虚函数表中基类的虚函数指针，如果虚函数没有定义，就找不到该指针。如下示例：
+
+```c++
+class Base
+{
+public:
+    virtual void test();
+};
+
+class Derived: public Base
+{
+};
+int main(){
+    Derived d;      // 链接错误，如果没有该定义语句，则不会链接出错。
+    return 0;
+}
+```
+
+而对于纯虚函数来说，由于不能生成纯虚函数的对象，所以不需要知道纯虚函数的定义。不过这里有一个例外，前面有提起过如果将析构函数声明为纯虚函数，那么必须提供定义（可以为空函数体），因为派生类的析构函数隐含了对基类析构函数的调用，所以链接器必须要能够找到函数地址。
+
+此外，要知道常见的不能声明为虚函数的有：普通函数（非成员函数）；静态成员函数；内联成员函数；构造函数；友元函数。分别如下：
+
+1. 为什么C++不支持普通函数为虚函数？
+    
+    普通函数（非成员函数）只能被overload，不能被override，声明为虚函数也没有什么意思，因此编译器会在编译时绑定函数。
+
+2. 为什么C++不支持构造函数为虚函数？
+
+    构造函数一般是用来初始化对象，只有在一个对象生成之后，才能发挥多态的作用，如果将构造函数声明为virtual函数，则表现为在对象还没有生成的情况下就使用了多态机制，因而是行不通的
+
+3. 为什么C++不支持内联成员函数为虚函数？
+
+    内联函数就是为了在代码中直接展开，减少函数调用花费的代价，虚函数是为了在继承后对象能够准确的执行自己的动作，这是不可能统一的。（再说了，inline函数在编译时被展开，虚函数在运行时才能动态的邦定函数）
+
+4. 为什么C++不支持静态成员函数为虚函数？
+
+    这也很简单，静态成员函数对于每个类来说只有一份代码，所有的对象都共享这一份代码，也没有动态邦定的必要性。
+
+5. 为什么C++不支持友元函数为虚函数？
+
+    C++不支持友元函数的继承，对于没有继承特性的函数没有虚函数的说法。
+      
+
 
 ［[虚函数地址分配](http://www.nowcoder.com/questionTerminal/d50dbed9a0f44e8092f86927cb7c259f)］  
 ［[虚函数表被置为0](http://www.nowcoder.com/questionTerminal/97c2bf56369845528a109bec8cfb3556)］  
 ［[缺省参数是静态绑定的](http://www.nowcoder.com/questionTerminal/e4d5fe27a85d43548171f32b3bc8501a)］  
+
 
 # 抽象类
 
@@ -370,6 +507,8 @@ C++的编译器保证虚函数表的指针存在于对象实例中最前面的�
 《深度探索C++对象模型》  
 Effective C++ 05  
 More Effective C++ 条款 27  
+
+[C++对象的内存布局(上)](http://blog.csdn.net/haoel/article/details/3081328/)  
 [C++编译器自动生成的函数](http://www.cnblogs.com/xiaoxinxd/archive/2013/01/09/effective_cpp_05.html)  
 [如何让类对象只在栈（堆）上分配空间？](http://blog.csdn.net/hxz_qlh/article/details/13135433)    
 [构造函数：C++](https://msdn.microsoft.com/zh-cn/library/s16xw1a8.aspx)  
@@ -378,8 +517,15 @@ More Effective C++ 条款 27
 [C++ 抽象类](http://www.cnblogs.com/balingybj/p/4771916.html)  
 [关于C++中的虚拟继承的一些总结](http://www.cnblogs.com/BeyondAnyTime/archive/2012/06/05/2537451.html)  
 [类中的const成员](http://www.cnblogs.com/kaituorensheng/p/3244910.html)  
+[C++函数中那些不可以被声明为虚函数的函数](http://blog.csdn.net/hackbuteer1/article/details/6878255)  
+
+[Destructors](http://en.cppreference.com/w/cpp/language/destructor)  
+[Should a virtual function essentially have a definition](http://stackoverflow.com/questions/8642124/should-a-virtual-function-essentially-have-a-definition)  
+[When to use virtual destructors?](http://stackoverflow.com/questions/461203/when-to-use-virtual-destructors)   
+[Should every class have a virtual destructor?](http://stackoverflow.com/questions/353817/should-every-class-have-a-virtual-destructor)  
+
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Class_1.png
-
+[2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Class_2.png
 

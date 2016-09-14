@@ -132,5 +132,5 @@ cout << strlen(a);              //5
 [Cplusplus: abs](http://www.cplusplus.com/reference/cstdlib/abs/?kw=abs)  
 [What are all the common undefined behaviours that a C++ programmer should know about? ](http://stackoverflow.com/questions/367633/what-are-all-the-common-undefined-behaviours-that-a-c-programmer-should-know-a)  
 [What are the common undefined/unspecified behavior for C that you run into?](http://stackoverflow.com/questions/98340/what-are-the-common-undefined-unspecified-behavior-for-c-that-you-run-into)   
-
+[Undefined, unspecified and implementation-defined behavior](http://stackoverflow.com/questions/2397984/undefined-unspecified-and-implementation-defined-behavior)  
 
