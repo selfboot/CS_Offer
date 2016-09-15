@@ -30,10 +30,6 @@
 
 找出一个点和一条线间的距离是经常遇见的几何问题之一。假设给出三个点，A，B和C，想找出点C到点A、B定出的直线间距离。第一步是找出A到B的向量**AB**和A到C的向量**AC**，然后用它们的叉积除以|AB|，就是我们要找的的距离了：d = (AB x AC)/|AB| 。
 
-参考  
-[向量的点乘与叉乘](http://blog.sciencenet.cn/blog-54317-475475.html)  
-[Cross product](https://en.wikipedia.org/wiki/Cross_product)  
-
 # 矩阵
 
 # 卡塔兰数
@@ -48,10 +44,6 @@
 
 ［[可能的出栈序列](http://www.nowcoder.com/questionTerminal/b1e171ec60ac490da8996f39f40a94f9)］  
 
-参考  
-[维基百科卡塔兰数](http://zh.wikipedia.org/wiki/卡塔兰数)    
-[从《编程之美》买票找零问题说起，娓娓道来卡特兰数](http://www.cnblogs.com/wuyuegb2312/p/3016878.html)  
-
 # 其它
 
 ## 调和级数
@@ -64,7 +56,28 @@
 
 其中 C＝0.57722... 称作`欧拉常数`，专为调和级数所用，至今不知是有理数还是无理数）。
 
+## 牛顿迭代
 
+为了快速高效地求出根号a的近似值：首先随便猜一个近似值x，然后不断令x等于x和a/x的平均数，迭代个六七次后x的值就已经相当精确了。
+
+例如，想求根号2等于多少，假如我猜测的结果为4，虽然错的离谱，但可以看到使用牛顿迭代法后这个值很快就趋近于根号2了：
+
+```
+(       4  + 2/   4     ) / 2 = 2.25
+(    2.25  + 2/   2.25  ) / 2 = 1.56944..
+( 1.56944..+ 2/1.56944..) / 2 = 1.42189..
+( 1.42189..+ 2/1.42189..) / 2 = 1.41423..
+```
+
+这种算法的原理很简单，我们仅仅是不断用(x, f(x))的切线来逼近方程x^2 -a=0的根。根号a实际上就是x^2 -a=0的一个正实根，这个函数的导数是2x。也就是说，函数上任一点(x,f(x))处的切线斜率是2x。那么，x-f(x)/(2x)就是一个比x更接近的近似值。代入f(x)=x^2 -a 得到x-(x^2 -a)/(2x)，也就是`(x+a/x)/2`。
+
+# 更多阅读
+
+[维基百科卡塔兰数](http://zh.wikipedia.org/wiki/卡塔兰数)    
+[从《编程之美》买票找零问题说起，娓娓道来卡特兰数](http://www.cnblogs.com/wuyuegb2312/p/3016878.html)  
+[向量的点乘与叉乘](http://blog.sciencenet.cn/blog-54317-475475.html)  
+[Cross product](https://en.wikipedia.org/wiki/Cross_product)  
+[牛顿迭代法快速寻找平方根](http://www.matrix67.com/blog/archives/361)  
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_1.png

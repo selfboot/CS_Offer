@@ -4,23 +4,52 @@ C++11修复大量缺陷和降低代码拖沓，比如lambda表达式的支持将
 
 # 类型推导 auto
 
-在C++11中，假如`编译器`可以从变量的初始化中得到它的类型，那么你不必要指定类型。比如，你可以这样写：
+编译时常常需要把表达式的值赋值给变量，这就要求在声明变量时清楚的知道表达式的类型，然后做到这点并非容易，有时甚至根本做不到。为了解决这个问题，C++ 11 新标准引入了 auto 类型说明符。用它就能让编译器替我们去分析表达式所属的类型。比如，你可以这样写：
 
-    auto x=0;       //x has type int because 0 is int
-    auto c='a';     //char
-    auto d=0.5;     //double
-    auto national_debt=14400000000000LL;    //long long
+```c++
+auto x=0;       //x has type int because 0 is int
+auto c='a';     //char
+auto d=0.5;     //double
+auto national_debt=14400000000000LL;    //long long
+```
 
 编译器在编译阶段就可以推导出x的类型是int，c的类型是 char。当然，这不是一个证明auto有用的一个漂亮的例子，当使用模板特别是STL时auto很好用，比如：STL中的容器的迭代子类型。
 
-    vector<int>::const_iterator ci = vi.begin();
-    auto ci = vi.begin();
+```c++
+vector<int>::const_iterator ci = vi.begin();
+auto ci = vi.begin();
+```
 
-使用auto必需一个初始化值，编译器可以通过这个初始化值推导出类型。因为auto是来简化模板类引入的代码难读的问题，如上面的示例，iteration这种类型就最适合用auto的。
+使用auto必需一个初始化值，编译器可以通过这个初始化值推导出类型。因为auto是来简化模板类引入的代码难读的问题，如上面的示例，iteration这种类型就最适合用auto的。但是，我们不应该把其滥用。比如下面的代码的可读性就降低了。因为，我不知道ProcessData返回什么？int? bool? 还是对象？或是别的什么？这让后面的程序不知道怎么做。
 
-但是，我们不应该把其滥用。比如下面的代码的可读性就降低了。因为，我不知道ProcessData返回什么？int? bool? 还是对象？或是别的什么？这让后面的程序不知道怎么做。
+```c++
+auto obj = ProcessData(someVariables);
+```
 
-    auto obj = ProcessData(someVariables);
+再来看下面的例子：
+
+```c++
+const int a=12;
+auto b = a;
+b= 3;
+cout << b << endl;      // 3
+```
+
+这是因为**编译器推断出来的 auto 类型有时候和初始值的类型并不完全一样，编译器会适当地改变结果类型使其更符合初始化规则**。首先，使用引用时，编译器以引用对象的类型作为 auto 的类型；其次 **auto 一般会忽略顶层 const，同时底层const则会保留下来**（这就可以解释上面的结果）。如果希望推断出的 auto 是一个顶层 const，需要明确指出：
+
+```c++
+const int a=12;
+const auto b = a;
+```
+
+此外，还可以将引用的类型设置为 auto，这时引用的初始化规则仍然适用，也即不能为非常量引用绑定字面值。注意，设置一个类型为 auto 的引用时，**初始值中的顶层常量属性仍然保留**。
+
+```c++
+const int ci=10;        // 顶层常量属性
+auto &g = ci;
+// auto &h = 42;        // Error, 不能为非常量引用绑定字面值
+const auto &j = 42;     // 正确: 可以为常量引用绑定字面值
+```
 
 # 区间迭代
 
