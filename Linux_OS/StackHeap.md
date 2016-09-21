@@ -73,6 +73,7 @@
 * 分配效率：计算机在底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。堆则是C/C++函数库提供的，它的机制是很复杂的，效率比栈要低得多。
 
 # 更多阅读
+
 [Linux内存管理](http://www.kerneltravel.net/journal/v/mem.htm)  
 [什么是堆和栈，它们在哪儿？](http://blog.jobbole.com/75321)  
 [What and where are the stack and heap?](http://stackoverflow.com/questions/79923/what-and-where-are-the-stack-and-heap)  

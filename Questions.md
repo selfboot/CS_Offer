@@ -66,18 +66,18 @@
 - [ ] [类内初始化](C++/Class.md#构造函数初始值列表)
 - [ ] [虚函数实现机制](C++/Class.md#多态)
 - [ ] [函数重载、覆盖、隐藏区别](C++/Class.md#成员函数)
-- [ ] 数组作为形参
-- [ ] 指针与引用区别
-- [ ] 函数指针
+- [ ] [数组作为形参](C++/README.md#数组形参)
+- [ ] [指针与引用区别](C++/Pointer.md#指针与引用)
+- [ ] [函数指针](C++/Pointer.md#函数指针)
 - [ ] [内存对齐原则](C++/Basic.md#内存对齐)
 - [ ] [sizeof 运算符](C++/Basic.md#sizeof-运算符)
 - [ ] [union 实现 CPU 字节序判定](C++/Basic.md#联合体cpu字节序)
-- [ ] 内存堆栈的区别
-- [ ] 常见的内存错误
-- [ ] new 和 malloc 区别
+- [ ] [内存堆栈的区别](Linux_OS/StackHeap.md)
+- [ ] [常见的内存错误](C++/Memory.md#常见的内存错误)
+- [ ] [new 和 malloc 区别](C++/Memory.md#new-和-malloc-的对比)
 - [ ] [四种类型转换方式](C++/Basic.md#类型转换)
-- [ ] include 头文件方式
-- [ ] 按值传递和按引用传递区别
+- [ ] [include 头文件包含](C++/Compiler.md#文件包含)
+- [ ] [按值传递和按引用传递区别](C++/Function#函数参数)
 - [ ] [If 判断规范写法](C++/Basic.md#if-判断语句)
 - [ ] [逗号运算符](C++/Basic.md#逗号运算符)
 - [ ] [智能指针](C++/11_SmartPoint.md)

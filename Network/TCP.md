@@ -246,6 +246,10 @@ ssthresh = cwnd
 [TCP 的那些事儿（上）](http://coolshell.cn/articles/11564.html)  
 [TCP 的那些事儿（下）](http://coolshell.cn/articles/11609.html)  
 
+[TCP keepalive overview](http://tldp.org/HOWTO/TCP-Keepalive-HOWTO/overview.html)  
+[Detection of Half-Open (Dropped) Connections](http://blog.stephencleary.com/2009/05/detection-of-half-open-dropped.html)  
+
+
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_2.png
 [3]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_3.png

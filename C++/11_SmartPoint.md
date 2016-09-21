@@ -53,7 +53,7 @@ int main()
     cout<<*up3<<endl;
     // cout<<*up1<<endl; // 运行时错误
 
-    up3.reset(); // 显示释放内存
+    up3.reset(); // 显式释放内存
     up1.reset(); // 即使up1没有拥有任何内存，但是这样调用也没有问题
     // cout<<*up3<<endl; // 已经释放掉up3了，这样会运行时错误
 
@@ -118,7 +118,6 @@ shared_ptr名如其名，它允许多个该智能指针共享地“拥有”同�
 
 ### shared_ptr 指向数组
  在默认情况下，shared_ptr将调用delete进行内存的释放；当分配内存时使用new[]时，我们需要对应的调用delete[]来释放内存；为了能正确的使用shared_ptr指向一个数组，我们需要定制一个删除函数，例如：
-
 
 ```c++
 #include <iostream>
@@ -216,6 +215,10 @@ int main() {
     f();
 }
 ```
+
+这里的 lock() 用来取得 weak_ptr 对应的 shared_ptr。
+
+> Creates a new std::shared_ptr that shares ownership of the managed object. If there is no managed object, i.e. *this is empty, then the returned shared_ptr also is empty.
 
 # 智能指针实现
 
@@ -339,7 +342,11 @@ int main()
 [从auto_ptr说起](http://www.jellythink.com/archives/673)  
 [到C++11中的智能指针](http://www.jellythink.com/archives/684)  
 [C++11 新特性之智能指针](http://blog.jobbole.com/104569/)  
-[When is std::weak_ptr useful?](http://stackoverflow.com/questions/12030650/when-is-stdweak-ptr-useful)  
+[When is std::weak_ptr useful?](http://stackoverflow.com/questions/12030650/when-is-stdweak-ptr-useful)   
+
+[shared_ptr 是否线程安全？](http://beamnote.com/2014/is-shared_ptr-thread-safe.html)   
+[boost::shared_ptr class template](http://www.boost.org/doc/libs/1_55_0/libs/smart_ptr/shared_ptr.htm#ThreadSafety)  
+
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_11_SmartPoint_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_11_SmartPoint_2.png
