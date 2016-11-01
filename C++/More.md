@@ -41,7 +41,7 @@
         //
         // 注册需要在 main 函数结束后执行的函数.
         // 请注意它们的注册顺序和执行顺序
-        // 在 main 函数结束后被调用，调用顺序与注册顺序相反。 先注册后执行。
+        // 在 main 函数结束后被调用，调用顺序与注册顺序相反。先注册后执行。
         //
     
         atexit(fn1);
@@ -113,6 +113,109 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
 
 ［[double 精度丢失](http://www.nowcoder.com/questionTerminal/d12c2556b4614d8b87a7b64d0d0c24bb)］
 
+# placement new
+
+placement new 是operator new的一个重载版本，只是我们很少用到它。用它可以在已经分配好的内存中（栈或堆中）构建新的对象，这个构建过程不需要额外分配内存，只需要调用对象的构造函数即可。
+
+它的原型如下：
+
+    void *operator new( size_t, void *p ) throw(){
+        return p;
+    }
+
+void *p 实际上就是指向一个已经分配好的内存缓冲区的的首地址。
+
+举例来说:
+
+    class foo{};
+    foo* pfoo = new foo;
+
+pfoo指向的对象的地址你是不能决定的，因为new已经为你做了这些工作。第一步分配内存，第二步调用类的构造函数。而placement new是怎么做的呢，说白了就是把原本new做的两步工作分开来。第一步你自己分配内存，第二步你调用类的构造函数在自己分配的内存上构建新的对象。placement new的好处：
+
+1. 在已分配好的内存上进行对象的构建，构建速度快。
+2. 已分配好的内存可以反复利用，有效的避免内存碎片问题。
+
+在很多情况下，placement new的使用方法和其他普通的new有所不同。
+
+### 1. 缓存提前分配
+
+为了保证通过placement new使用的缓存区的memory alignmen(内存队列)正确准备，使用普通的new来分配它：
+
+    class Task ;
+    char * buff = new [sizeof(Task)]; //分配内存
+
+### 2. 对象的分配
+
+在刚才已分配的缓存区调用 placement new 来构造一个对象。
+
+    Task *ptask = new(buff) Task;
+
+### 3. 使用
+
+按照普通方式使用分配的对象：
+
+    ptask->suspend();
+    ptask->resume();
+
+### 4. 对象的销毁
+
+一旦你使用完这个对象，你必须调用它的析构函数来销毁它。按照下面的方式调用析构函数：
+
+    ptask->~Task(); //调用外在的析构函数
+
+### 5. 释放
+
+可以反复利用缓存并给它分配一个新的对象（重复步骤2，3，4）。如果不打算再次使用这个缓存，你可以象这样释放它：
+    
+    delete [] buff;
+
+跳过任何步骤就可能导致运行时间的崩溃，内存泄露，以及其它的意想不到的情况。
+
+### 6. 建立对象数组
+
+placement new 还可以用来建立带参数的构造函数对象数组。
+
+    #include <iostream>
+    #include <new>
+    using namespace std;
+    
+    class CPong
+    {
+    public:
+        CPong(int m) : v(m) {
+            cout << "CPong constructor" << v << endl;
+            cout << this << endl;
+        }
+    
+    private:
+        int v;
+    };
+    
+    int main(){
+        const int arr_size = 3;
+        char* pong = new char[sizeof(CPong) * arr_size];
+        CPong* pp = (CPong*)pong;
+    
+        for (int i=0; i<arr_size; ++i )
+        {
+            new (pp+i)CPong(i); // 对象构造函数
+        }
+    
+        for (int i=0; i<arr_size; ++i )
+        {
+            new (pp+i)CPong(i+arr_size);
+        }
+    
+        for (int j=0; j<arr_size; ++j )
+        {
+            pp[j].~CPong();
+        }
+    
+        delete [] pong;
+        return 0;
+    }
+
+
 # 更多阅读
 
 [main函数执行前、后再执行的代码](http://blog.csdn.net/u013467442/article/details/49003369)  
@@ -120,4 +223,7 @@ IEEE 754 标准所定义的单精度浮点数所表示的数的范围大约为 
 [IEEE 754浮点数在机器中的格式](http://blog.csdn.net/glgoober/article/details/6209881)  
 [一个浮点数跨平台产生的问题](http://coolshell.cn/articles/11235.html)  
 [float and double](http://www.cplusplus.com/forum/beginner/83526/)  
+[Placement new的用法及用途](http://www.cppblog.com/kongque/archive/2010/02/20/108093.html)   
+[遵循placement new的用法规范](http://www.cnblogs.com/felixYeou/archive/2009/04/15/1436209.html)  
+
 

@@ -332,6 +332,27 @@ struct B : A
 
 > Note that neither override nor final are language keywords. They are technically identifiers; they only gain special meaning when used in those specific contexts. In any other location, they can be valid identifiers.
 
+# new 操作符
+
+new和delete对堆中的内存进行申请和释放，而且这两个操作符是不能被重载的。要实现不同的内存分配行为，需要重载operator new，而不是new和delete。
+
+看如下代码：
+
+    class foo{};
+    foo* pfoo = new foo;
+    
+这里的new实际上是执行如下3个过程：
+
+1. 调用operator new分配内存；
+2. 调用构造函数生成类对象；
+3. 返回相应指针。
+
+operator new 就像 operator+ 一样，是可以重载的，但是不能在全局对原型为void operator new(size_t size)这个原型进行重载，一般只能在类中进行重载。
+
+如果类中没有重载operator new，那么调用的就是全局的::operator new来完成堆的分配。同理，operator new[]、operator delete、operator delete[]也是可以重载的。
+
+new 操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。
+
 # 更多阅读
 
 [Meaning of “const” last in a C++ method declaration?](http://stackoverflow.com/questions/751681/meaning-of-const-last-in-a-c-method-declaration)  

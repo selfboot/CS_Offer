@@ -145,6 +145,11 @@
 # 更多阅读
 
 [解释一下关系数据库的第一第二第三范式？](https://www.zhihu.com/question/24696366)   
+[数据库设计之概念结构设计：E-R图详解](http://blog.csdn.net/zxq1138634642/article/details/9121363)  
+[数据库设计 Step by Step (1)](http://www.cnblogs.com/DBFocus/archive/2011/03/27/1996655.html)  
+[数据库设计 Step by Step (2)——数据库生命周期](http://www.cnblogs.com/DBFocus/archive/2011/04/09/2010904.html)  
+[数据库设计 Step by Step (3)——基本ER模型构件](http://www.cnblogs.com/DBFocus/archive/2011/04/24/2026142.html)  
+
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/DatabaseSystem_Design_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/DatabaseSystem_Design_2.png
