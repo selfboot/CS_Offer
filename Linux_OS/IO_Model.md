@@ -218,6 +218,7 @@ epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪�
 与 I/O 复用密切相关的另一种 I/O 模型是在多线程中使用阻塞式 I/O。这种模型与上述模型极为相似，但它没有使用 select 阻塞在多个描述符上，而是使用多个线程，每个线程阻塞在一个描述符上。
 
 # 更多阅读
+
 [Unix五种I/O模型对比](http://sukai.me/linux-five-io-models/)  
 [IO多路复用之select总结](http://www.cnblogs.com/Anker/archive/2013/08/14/3258674.html)  
 [IO多路复用之epoll总结](http://www.cnblogs.com/Anker/archive/2013/08/17/3263780.html)  
@@ -227,6 +228,7 @@ epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪�
 [聊聊 Linux 中的五种 IO 模型](http://blog.jobbole.com/99905/)  
 [大话同步/异步、阻塞/非阻塞](https://ring0.me/2014/11/sync-async-blocked/)  
 [处理大并发之一 对异步非阻塞的理解](http://blog.csdn.net/feitianxuxue/article/details/8936802)  
+[阻塞、非阻塞、同步、异步](http://ajucs.com/2016/09/20/blocking-nonblocking-sync-async.html)  
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png

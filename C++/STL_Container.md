@@ -251,8 +251,8 @@ std::priority_queue<int, std::vector<int>, std::greater<int>> third (myints,myin
 
     map <string, size_t> word_count; // 空容器
     set <string> exclude = {"the", "but", "and"}; // 列表初始化
-    map <string, string> authors = {{"Joyce", "James"},
-                                    {"Austen", "Jane"}};
+    map <string, string> authors = { {"Joyce", "James"},
+                                    {"Austen", "Jane"} };
 
 **对于有序容器，关键字类型必须定义元素比较的方法**。默认情况下，标准库使用关键字类型的 `< 运算符` 来比较两个关键字。
 
@@ -281,7 +281,7 @@ std::priority_queue<int, std::vector<int>, std::greater<int>> third (myints,myin
 
 解引用关联容器迭代器时，得到一个类型为容器的 value_type 的值的引用。对于map而言，value_type 是一个 pair 类型，其 first 成员保存 `const 的关键字`，second 成员保存值。
 
-    map<int, string> test{{1, "1"}};
+    map<int, string> test{ {1, "1"} };
     auto iter = test.begin();
     cout << iter->first << ", " << iter->second << endl;
     // iter->first = 2;         // 关键字类型是 const 的
@@ -340,7 +340,7 @@ map 和 unordered_map 容器提供了下标运算符和一个对应的at函数�
     map<string, int> word_count;
     word_count["test"];
     word_count["give"] = 1;
-    // word_count: {{give, 1},{test, 0}}
+    // word_count: { {give, 1},{test, 0} }
     
 上面最后一句执行的操作如下：
 
@@ -364,7 +364,7 @@ map 和 unordered_map 容器提供了下标运算符和一个对应的at函数�
 
 在一个不允许重复关键字的关联容器中查找一个元素是一件很简单的事情，元素要么在容器中，要么不在。但对于允许重复关键字的容器来说，过程更为复杂：容器中可能有很多元素具有给定的关键字。如果一个 multimap 或 multiset 中有多个元素具有给定关键字，则这些元素在容器中会`相邻存储`。
 
-    multimap<string, int> authors{{"Alain", 1}, {"Alain", 2}, {"Alain", 3}};
+    multimap<string, int> authors{ {"Alain", 1}, {"Alain", 2}, {"Alain", 3} };
     string search_item("Alain");
     auto iter = authors.find(search_item);
     auto entries = authors.count(search_item);

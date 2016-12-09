@@ -306,7 +306,7 @@ Python本身是一种解释性语言，不进行预编译，因此它就只在�
 * `__init__(self,[...])` 为类的初始化方法。它获取任何传给构造器的参数（比如我们调用 x = SomeClass(10, ‘foo’) ，init 函数就会接到参数 10 和 ‘foo’） 。
 * `__del__(self)`：new和init是对象的构造器， del则是对象的销毁器。它并非实现了语句 del x (因此该语句不等同于 `x.__del__()`)，而是定义当对象被回收时的行为。
 	
-当我们创建一个类的实例时，首先会调用__new__创建实例，接着才会调用__init__来进行初始化。不过注意在旧式类中，实例的创建并没有调用__new__方法，如下例子：
+当我们创建一个类的实例时，首先会调用\_\_new\_\_创建实例，接着才会调用\_\_init\_\_来进行初始化。不过注意在旧式类中，实例的创建并没有调用\_\_new\_\_方法，如下例子：
 
 ```python
 class A:
@@ -316,7 +316,7 @@ class A:
 A()
 ```
 
-对于新式类来说，我们可以覆盖__new__方法，注意该方法的第一个参数cls（其实就是当前类类型）用来指明要创建的类型，后续参数用来传递给__init__进行初始化。如果__new__返回了cls类型的对象，那么接下来调用__init__，否则的话不会调用__init__（调用该方法必须传递一个实例对象）。
+对于新式类来说，我们可以覆盖\_\_new\_\_方法，注意该方法的第一个参数cls（其实就是当前类类型）用来指明要创建的类型，后续参数用来传递给\_\_init\_\_进行初始化。如果\_\_new\_\_返回了cls类型的对象，那么接下来调用\_\_init\_\_，否则的话不会调用\_\_init\_\_（调用该方法必须传递一个实例对象）。
 
 ```python
 class A(object):  # -> don't forget the object specified as base
@@ -332,7 +332,7 @@ A()
 # A.__init__ called
 ```
 
-这里我们调用`super()`来获取 `MRO 中A的下一个类`（在这里其实就是基类 object）的__new__方法来创建一个cls的实例对象，接着用这个对象来调用了__init__。下面的例子中，并没有返回一个合适的对象，所以并没有调用__init__：
+这里我们调用`super()`来获取 `MRO 中A的下一个类`（在这里其实就是基类 object）的\_\_new\_\_方法来创建一个cls的实例对象，接着用这个对象来调用了\_\_init\_\_。下面的例子中，并没有返回一个合适的对象，所以并没有调用\_\_init\_\_：
 
 ```python
 class Sample(object):
@@ -412,16 +412,16 @@ Python 有许多特殊的函数对应到常用的操作符上，比如：
 
 在Python中，重载`__getattr__、__setattr__、__delattr__`和`__getattribute__`方法可以用来管理一个自定义类中的属性访问。其中：
 
-* __getattr__方法将拦截所有未定义的属性获取（当要访问的属性已经定义时，该方法不会被调用，至于定义不定义，是由Python能否查找到该属性来决定的）；
-* __getattribute__方法将拦截所有属性的获取（不管该属性是否已经定义，只要获取它的值，该方法都会调用）。当同时定义了__getattr__时，只有__getattribute__显式调用后者或者抛出 AttributeError 时才会调用__getattr__。另外__getattribute__方法仅仅存在于Python2.6的新式类和Python3的所有类中；
-* __setattr__方法将拦截所有的属性赋值；
-* __delattr__方法将拦截所有的属性删除。
+* \_\_getattr\_\_方法将拦截所有未定义的属性获取（当要访问的属性已经定义时，该方法不会被调用，至于定义不定义，是由Python能否查找到该属性来决定的）；
+* \_\_getattribute\_\_方法将拦截所有属性的获取（不管该属性是否已经定义，只要获取它的值，该方法都会调用）。当同时定义了\_\_getattr\_\_时，只有\_\_getattribute\_\_显式调用后者或者抛出 AttributeError 时才会调用\_\_getattr\_\_。另外\_\_getattribute\_\_方法仅仅存在于Python2.6的新式类和Python3的所有类中；
+* \_\_setattr\_\_方法将拦截所有的属性赋值；
+* \_\_delattr\_\_方法将拦截所有的属性删除。
 
 在Python中，一个类或类实例中的属性是动态的（因为Python是动态的），也就是说，可以往一个类或类实例中添加或删除一个属性。
 
-由于__getattribute__、__setattr__、__delattr__方法对所有的属性进行拦截，所以，在重载它们时，不能再像往常的编码，要注意避免递归调用（如果出现递归，则会引起死循环）；然而对__getattr__方法，则没有这么多的限制。
+由于\_\_getattribute\_\_、\_\_setattr\_\_、\_\_delattr\_\_方法对所有的属性进行拦截，所以，在重载它们时，不能再像往常的编码，要注意避免递归调用（如果出现递归，则会引起死循环）；然而对\_\_getattr\_\_方法，则没有这么多的限制。
 
-在重载__setattr__方法时，不能使用“self.name = value”格式，否则，它将会导致递归调用而陷入死循环。正确的应该是：
+在重载\_\_setattr\_\_方法时，不能使用“self.name = value”格式，否则，它将会导致递归调用而陷入死循环。正确的应该是：
 
 ```python
 def  __setattr__(self, name, value):
@@ -430,7 +430,7 @@ def  __setattr__(self, name, value):
     # do-something
 ```
 
-其中的`object.__setattr__(self, name, value)`一句可以换成`self.__dict__[name] = value`；但前提是，必须保证__getattribute__方法重载正确（如果重载了__getattribute__方法的话），否则，将在赋值时导致错误，因为self.__dict__将要触发对self所有属性中的__dict__属性的获取，这样从而就会引发__getattribute__方法的调用，如果__getattribute__方法重载错误，__setattr__方法自然而然也就会失败。
+其中的`object.__setattr__(self, name, value)`一句可以换成`self.__dict__[name] = value`；但前提是，必须保证\_\_getattribute\_\_方法重载正确（如果重载了\_\_getattribute\_\_方法的话），否则，将在赋值时导致错误，因为self.\_\_dict\_\_将要触发对self所有属性中的\_\_dict\_\_属性的获取，这样从而就会引发\_\_getattribute\_\_方法的调用，如果\_\_getattribute\_\_方法重载错误，\_\_setattr\_\_方法自然而然也就会失败。
 
 ## 自定义序列
 
@@ -445,8 +445,8 @@ def  __setattr__(self, name, value):
 `上下文管理协议（Context Management Protocol）`包含方法 `__enter__()` 和 `__exit__()`，支持
 该协议的对象要实现这两个方法。
 
-* enter: 进入上下文管理器的运行时上下文。如果指定了 as 子句的话，返回值赋值给 as 子句中的 target。
-* exit: 退出与上下文管理器相关的运行时上下文。返回一个布尔值表示是否对发生的异常进行处理。
+* \_\_enter\_\_: 进入上下文管理器的运行时上下文。如果指定了 as 子句的话，返回值赋值给 as 子句中的 target。
+* \_\_exit\_\_: 退出与上下文管理器相关的运行时上下文。返回一个布尔值表示是否对发生的异常进行处理。
 
 在执行with语句包裹起来的代码块之前会调用上下文管理器的 enter 方法，执行完语句体之后会执行 exit 方法。
 
@@ -486,6 +486,7 @@ Python 对一些内建对象进行改进，加入了对上下文管理器的支�
 [你真的理解 Python 中 MRO 算法吗？](http://xymlife.com/2016/05/22/python_mro/)  
 [关于Python类属性与实例属性的讨论](https://segmentfault.com/a/1190000002671941)    
 [Python中的属性管理](http://blog.chinaunix.net/uid-21633169-id-4614666.html)  
+[如何在Python里应用SOLID原则](http://ajucs.com/2016/06/17/use-S-O-L-I-D-in-python.html)   
  
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
 [2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png

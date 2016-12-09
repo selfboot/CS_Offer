@@ -55,39 +55,47 @@ const auto &j = 42;     // 正确: 可以为常量引用绑定字面值
 
 下面迭代器的例子是C++11提供的一种处理迭代的更好方法，有些人叫做区间迭代（基本上所有的现代语言都支持），下面例子足够证明这种语法是多么优雅：
 
-    vector<int> vec;
-    vec.push_back(10);
-    vec.push_back(20);
+```c++
+vector<int> vec;
+vec.push_back(10);
+vec.push_back(20);
     
-    for (int &i: vec)
-    {
-        cout<<i;
-    }
+for (int &i: vec)
+{
+   cout<<i;
+}
+```
 
 你需要做的就是给出一个变量和要迭代的区间。但是如果你想迭代一个map怎么办？你怎么设置map中值的类型？你知道vector值的类型是int，但map的值类型是pair，通过.first和.second给你提供键和值。但是用auto，你根本无需关心确切类型，你可以简单的写成：
 
-    for (auto address_entry: address_book)
-    {
-        cout<<address_entry.first<<" "<address_entry.second<<endl;
-    }
+```c++
+for (auto address_entry: address_book)
+{
+   cout<<address_entry.first<<" "<address_entry.second<<endl;
+}
+```
 
 假如想修改你正在迭代的容器的值，或者你想避免拷贝大对象，你可以用引用的变量遍历。比如，下面的迭代对一个整形vector中每个元素的值加1。
 
-    vector<int> vec;
-    vec.push_back(1);
-    vec.push_back(2);
+```c++
+vector<int> vec;
+vec.push_back(1);
+vec.push_back(2);
     
-    for (int& i: vec)
-    {
-        i++; // increments the value in the vector
-    }
+for (int& i: vec)
+{
+   i++; // increments the value in the vector
+}
+```
 
 # 自动化推导 decltype
 
 decltype是auto的反面兄弟。auto让你声明了一个指定类型的变量，decltype让你从一个变量（或表达式）中得到类型。
 
-    int x = 3;
-    decltype(x) y = x; // 相当于 auto y = x;
+```c++
+int x = 3;
+decltype(x) y = x; // 相当于 auto y = x;
+```
 
 可以对基本上任何类型使用decltype，包括函数的返回值。decltype用于获取一个表达式的类型，而不对表达式进行求值（类似于sizeof）。decltyp(e)规则如下：
 
@@ -99,45 +107,50 @@ decltype是auto的反面兄弟。auto让你声明了一个指定类型的变量�
 
 在引入C++11之前，只有数组能使用初始化列表，其他容器想要使用初始化列表，只能用以下方法：
 
-    int arr[3] = {1, 2, 3}
-    vector<int> v(arr, arr + 3);
+```c++
+int arr[3] = {1, 2, 3}
+vector<int> v(arr, arr + 3);
+```
 
 在C++11中，我们可以使用以下语法来进行替换：
 
-    int arr[3]{1, 2, 3};
-    vector<int> iv{1, 2, 3};
-    map<int, string>{{1, "a"}, {2, "b"}};
-    string str{"Hello World"};
+```c++
+int arr[3]{1, 2, 3};
+vector<int> iv{1, 2, 3};
+string str{"Hello World"};
+```
 
 # nullptr
 
 nullptr是为了解决原来C++中NULL的二义性问题而引进的一种新的类型，因为NULL实际上代表的是0。具体看下面程序：
 
-    #include<iostream>
-    #include <cassert>
+```c++
+#include<iostream>
+#include <cassert>
     
-    using namespace std;
+using namespace std;
     
-    void F(int a){
-        cout<< "Call int: " << a <<endl;
-    }
+void F(int a){
+   cout<< "Call int: " << a <<endl;
+}
     
-    void F(int *p){
-        cout << "Call *p: " << p  << endl;
-    }
+void F(int *p){
+   cout << "Call *p: " << p  << endl;
+}
     
-    int main(){
+int main(){
     
-        int *p = nullptr;
-        int *q = NULL;
-        bool equal = ( p == q ); // equal的值为true，说明p和q都是空指针
-        cout << equal << endl;
-        // int a = nullptr;      // 编译失败，nullptr不能转型为int
-        F(0);                    // 在C++98中编译失败，有二义性；在C++11中调用F（int）
-        F(nullptr);
+   int *p = nullptr;
+   int *q = NULL;
+   bool equal = ( p == q ); // equal的值为true，说明p和q都是空指针
+   cout << equal << endl;
+   // int a = nullptr;      // 编译失败，nullptr不能转型为int
+   F(0);                    // 在C++98中编译失败，有二义性；在C++11中调用F（int）
+   F(nullptr);
     
-        return 0;
-    }
+   return 0;
+}
+```
 
 # lambda 匿名函数
 
