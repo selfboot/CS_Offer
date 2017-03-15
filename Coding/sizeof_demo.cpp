@@ -74,9 +74,9 @@ int main ( ) {
 
     cout << "--- Array ---\n";
     float f[] = {1.0,2.0,3.0,4.0,5.0};
-    cout << "Array  " << sizeof(f) << "\n";     // 5
+    cout << "Array  " << sizeof(f) << "\n";     // 20
     char str[]="Tencent";
-    cout << "Array  " << sizeof(str) << "\n";   // 20
+    cout << "Array  " << sizeof(str) << "\n";   // 8
 
     cout << "--- Vector, String ---\n";
     vector<int> v(10, 0);
