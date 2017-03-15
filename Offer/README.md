@@ -101,6 +101,7 @@
 
 [谈谈面试技巧](http://taosay.net/index.php/2014/07/31/谈谈面试技巧/)  
 [纯干货！程序员面试的技巧](http://blog.jobbole.com/99830/)  
+[找工作攻略(offer:阿里,腾讯,百度,华为,今日头条等）](https://www.nowcoder.com/discuss/21003?type=0&order=0&pos=9&page=1)  
 [求职面试时常被问到的65个问题与技巧性回答](http://www.ipc.me/65-interview-qna.html)  
 [面试心得与总结---BAT、网易、蘑菇街](http://www.nowcoder.com/discuss/3043?type=2&order=0&pos=5&page=2)  
 [纪念那些“坚持到最后但没有笑到最后”的校园招聘](http://www.nowcoder.com/discuss/3196?type=0&order=0&pos=3&page=2)  

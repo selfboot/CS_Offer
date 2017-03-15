@@ -89,7 +89,8 @@
 
 没有能力，只能一边鄙视那些奇葩文化，一边忍受！
 
-参考  
+# 参考 
+ 
 [企业文化到底是什么呢？](https://www.zhihu.com/question/19762179)  
 [奇葩公司文化的特征](http://mp.weixin.qq.com/mp/appmsg/show?__biz=MjM5ODIyMTE0MA==&appmsgid=10000893&itemidx=1&sign=d5628cf6bb1d8a3ba34ce3ea7abfad9b#wechat_redirect)  
 [一封关于奇葩公司文化的来信](http://mp.weixin.qq.com/s?__biz=MjM5ODIyMTE0MA==&mid=206176991&idx=1&sn=382b357d543767e9558ce131364fda11&scene=21#wechat_redirect)  
