@@ -46,8 +46,51 @@
     $ python mydict_test.py
 
 # mock
+有时候我们所写的模块（函数，对象等）可能会依赖其他模块的功能，但是又无法对这些模块的输入输出进行控制，达到完善测试的效果。而这个时候就需要能够模拟这些依赖模块功能的东西，而mock也就应运而生。
 
- 
+假如我们现在编写了一个函数foo，同时函数foo里面调用了函数bar和一个对象C的execute方法。那么要如何对它们进行测试呢？
+
+```
+def foo(bar, input_data, c):
+    # do something here
+    # ...
+    bar_result = bar(input_data)
+    # do something here
+    # ...
+    return c.execute(bar_result)
+```
+这时候就需要用到`unittest.mock`这个库（3.3往后才有这个库，之前的需要单独下载mock库）。和上面类似的，可以编写单元测试对函数foo进行测试。
+
+```
+from unittest.mock import MagicMock
+    
+from _modules import foo
+    
+class TestFoo(unittest.TestCase)
+    
+    def test_bar_called(self):
+        bar_mock = MagicMock(return_value=0)
+        c_mock = MagicMock()
+        result = foo(bar_mock, 0, c_mock)
+        
+        bar_mock.assert_called() # 测试 bar_mock 被调用了
+    
+    def test_c_execute_called(self):
+        bar_mock = MagicMock(return_value=0)
+        c_mock = MagicMock()
+        c_mock.execute.return_value = 1
+        
+        result = foo(bar_mock, 0, c_mock)
+        
+        self.assertEqual(result, 0)
+        c_mock.execute.assert_called_with(0) # 测试 c_mock.execute 被调用且传入参数为 0
+            
+```
+首先需要实例化一个MagicMock对象，然后可以为这个对象设置返回值，副作用等属性，再然后就可以对这个对象上的调用情况进行测试了。同时在MagicMock对象上设置的属性也是MagicMock对象，所以可以得到任意深度的模块包含关系。
+
+实际上使用mock还有一个潜在的好处，使得我们能够对模块间的耦合关系进行拆分，使得测试和后续开发更容易进行。
+
+
 # 更多阅读
 
 [单元测试：廖雪峰的官方网站](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00140137128705556022982cfd844b38d050add8565dcb9000)  
