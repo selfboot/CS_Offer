@@ -17,13 +17,32 @@ C/C++编译系统将一个程序转化为可执行程序的过程包含：
 
 预处理器是在程序源文件被编译之前根据预处理指令对程序源文件进行处理的程序。**预处理器指令以#号开头标识，末尾不包含分号**。预处理命令不是C/C++语言本身的组成部分，不能直接对它们进行编译和链接。C/C++语言的一个重要功能是可以使用预处理指令和具有预处理的功能。C/C++提供的预处理功能主要有文件包含、宏替换、条件编译等。
 
-## 文件包含
+## 头文件包含
 
-预处理指令 #include 用于包含头文件，有两种形式：#include <xxx.h>，#include "xxx.h"。
+头文件是一种文本文件，使用文本编辑器将代码编写好之后，以扩展名.h(.hpp)保存就行了。头文件中一般放一些重复使用的代码，例如函数声明、变量声明、常数定义、宏的定义等等。当使用预处理指令`#include`引用头文件时，相当于将头文件中所有内容，复制到include处。
+ 
+那么编译器在哪里找到include的头文件呢？这就涉及到了 include 的搜索机制。
 
-尖括号形式表示被包含的文件在系统目录中。如果被包含的文件不一定在系统目录中，应该用双引号形式。在双引号形式中可以指出文件路径和文件名。如果在双引号中没有给出绝对路径，则默认为用户当前目录中的文件，此时系统首先在用户当前目录中寻找要包含的文件，若找不到再在系统目录中查找。
+首先 include 有两种形式（[What is the difference between #include <filename> and #include “filename”?](https://stackoverflow.com/questions/21593/what-is-the-difference-between-include-filename-and-include-filename)）：
 
-对于用户自己编写的头文件，宜用双引号形式。对于系统提供的头文件，既可以用尖括号形式，也可以用双引号形式，都能找到被包含的文件，但显然用尖括号形式更直截了当，效率更高。
+```c++
+#include <xxx.h>    // 直接到系统目录中去找某些头文件。
+#include "xxx.h"    // 先到源文件所在文件夹去找，然后再到系统目录中去找某些头文件。
+```
+
+尖括号形式表示被包含的文件在某些系统目录中。双引号形式中可以指出文件路径和文件名，如果在双引号中没有给出绝对路径，则默认为用户当前目录中的文件，此时系统首先在**用户当前目录**中寻找要包含的文件，若找不到再在系统目录中查找。如果双引号中给出绝对路径，则按照路径查找。这里的系统目录，一般是：
+
+```c++
+/usr/include
+/usr/local/include
+/usr/lib/gcc-lib/i386-linux/2.95.2/include
+```
+
+最后一行是gcc程序的库文件地址，各个用户的系统上可能不一样。对于gcc来说，还可以用环境变量C_INCLUDE_PATH (对应C头文件)，CPLUS_INCLUDE_PATH (对应C++头文件)，CPATH(对应C,C++头文件)的值来指定头文件搜索目录。（[How to add a default include path for gcc in linux?](https://stackoverflow.com/questions/558803/how-to-add-a-default-include-path-for-gcc-in-linux)）
+
+此外，使用 gcc 时，可以用 `-I directory`来指定头文件搜索路径，如果指定路径有多个时，则按照指定路径的顺序搜索头文件。
+
+对于用户自己编写的头文件，宜用双引号形式。对于系统提供的头文件，既可以用尖括号形式，也可以用双引号形式，它们都能找到被包含的文件，但显然用尖括号形式更直截了当，效率更高。
 
 ## 宏替换
 
@@ -67,7 +86,7 @@ C/C++编译系统将一个程序转化为可执行程序的过程包含：
 
 这里的库是写好的现有的，成熟的，可以复用的代码。现实中每个程序都要依赖很多基础的底层库，不可能每个人的代码都从零开始，因此库的存在意义非同寻常。本质上来说库是一种可执行代码的二进制形式，可以被操作系统载入内存执行。库有两种：静态库（.a、.lib）和动态库（.so、.dll），所谓静态、动态是指链接方式的不同。**要注意静态链接库中不能再包含其他的动态链接库或者静态库，而在动态链接库中还可以再包含其他的动态或静态链接库。**
 
-## 静态库创建、使用
+## 静态库
 
 静态链接库与动态链接库都是**共享代码**的方式。静态库可以简单看成是一组目标文件（.o/.obj文件）的集合，即很多目标文件经过压缩打包后形成的一个文件。静态库特点总结：
 
@@ -76,7 +95,7 @@ C/C++编译系统将一个程序转化为可执行程序的过程包含：
 * 浪费空间和资源，因为所有相关的目标文件与牵涉到的函数库被链接合成一个可执行文件。
 * 静态库对程序的更新、部署和发布也会带来麻烦。如果静态库更新了，所有使用它的应用程序都需要重新编译、发布给用户。
 
-Linux下使用ar工具、Windows下vs使用lib.exe，将目标文件压缩到一起创建静态库，并且对其进行编号和索引，以便于查找和检索。Linux下静态库命名一般是"lib[your_library_name].a"：lib为前缀，中间是静态库名，扩展名为.a。Linux创建静态库过程如下（大一点的项目会编写makefile文件来生成静态库，输入多个命令太麻烦了）：
+Linux创建静态库过程如下（大一点的项目会编写makefile文件来生成静态库，输入多个命令太麻烦了）：
 
 1. 将代码文件编译成目标文件.o；
 2. 通过ar工具将目标文件打包成.a静态库文件；
@@ -85,18 +104,17 @@ Linux下使用ar工具、Windows下vs使用lib.exe，将目标文件压缩到一
 
 ![静态库生成过程][2]
 
-对于一个静态库，我们还可以使用 ar 命令查看其中的目标文件，如下：
+Linux下使用`ar`命令将目标文件压缩到一起创建静态库，并且对其进行编号和索引，以便于查找和检索。静态库命名一般是"libxxx.a"：lib为前缀，中间是静态库名，扩展名为`.a`。此外，还可以使用ar查看其中的目标文件，如下：
 
 ```shell
-$ ar -t libhycu.a
-　　base64.c.o
-　　binbuf.c.o
-　　cache.c.o
-　　chunk.c.o
-　　codec_a.c.o
+$ ar -crv libadd.a binbuf.c.o base64.c.o add.o
+$ ar -t libadd.a
+    add.o
+    base64.c.o
+    binbuf.c.o
 ```
 
-## 动态库创建、使用
+## 动态库
 
 静态库已经达到代码复用的目的，并且容易使用和理解，那为什么还需要动态库呢？因为静态库有着以下的缺点：
 
@@ -112,19 +130,27 @@ $ ar -t libhycu.a
 * 将一些程序升级变得简单。
 * 甚至可以真正做到链接载入完全由程序员在程序代码中控制（显示调用）。
 
-Linux 下动态链接库的名字形式为 libxxx.so，前缀是lib，后缀名为“.so”。与创建静态库不同的是，不需要打包工具（ar、lib.exe），直接使用编译器即可创建动态库。简单示例如下：
+Linux 下动态链接库的名字形式为 `libxxx.so.*`，前缀是lib，名字是xxx，后缀名为“.so.*”。与创建静态库不同的是，不需要打包工具（ar、lib.exe），直接使用编译器即可创建动态库。简单示例如下：
 
 ```shell
 $ g++ -fPIC -shared -o libdynmath.so DynamicMath.cpp
 ```
 
-Linux下可以用nm命令查看动态库包含的目标文件，此外还可以用 ldd 命令来查看一个可执行文件需要哪些动态库。可执行文件在执行前，必须知道依赖的动态库的位置。可以通过下面三种方法来告诉可执行文件搜索动态库的位置：
+Linux下可以用nm命令查看动态库包含的目标文件，此外还可以用 ldd 命令来查看一个可执行文件需要哪些动态库。
+
+## 库文件的查找路径
+
+要想使用库文件，必须在链接时告诉编译器，库文件的名字是什么？在哪里找到库文件？以静态还是动态的方式链接库文件？
+
+在生成静态库和动态库时提到过，库名字必须是libxxx.a或者libxxx.so.x的形式。当使用gcc编译链接时，必须用`-lxxx` 说明用到的动态库或静态库的名字。此外，还需要使用`-Ldir`来指明库的查找路径。默认情况下使用动态方式链接，这要求路径中存在相应的.so动态库文件，如果不存在，则寻找相应的.a静态库文件。也可以在编译时向gcc传入`-static`选项，指定使用静态方式链接。
+
+对于共享库来说，除了在链接时指明库的路径，在运行前也必须知道动态库的位置。可以通过下面三种方法在运行前来告诉可执行文件搜索动态库的位置：
 
 * 将动态库的路径添加到名为 LD_LIBRARY_PATH 的环境变量；
 * 把库拷贝到 /usr/lib 和 /lib目录下；
 * 修改`/etc/ld.so.conf`文件，把动态库所在的路径加到文件末尾，并执行`sudo ldconfig`刷新。这样，加入的目录下的所有库文件对于可执行程序都是可见的；
 
-# 简单的例子
+# 示例程序
 
 下面是一个保存在文件 helloworld.cpp 中一个简单的 C++ 程序的代码：
 
@@ -178,15 +204,35 @@ helloworld.cpp 的源代码，仅仅有六行，而且该程序除了显示一�
     ➜  ~  ./helloworld.o
     hello, world
 
+
+# 相关命令介绍
+
+## ldconfig
+
+ldconfig命令的用途主要是在默认搜寻目录`/lib`，`/usr/lib`以及动态库配置文件`/etc/ld.so.conf`内所列的目录下，搜索出可共享的动态链接库（格式如`lib*.so*`），进而创建出动态装入程序(ld.so)所需的缓存文件。缓存文件默认为`/etc/ld.so.cache`，此文件保存已排好序的动态链接库名字列表。
+
+ldconfig通常在系统启动时运行，当用户安装了一个新的动态链接库时，就需要手工运行这个命令。
+
+需要注意的地方： 
+
+1. 往/lib和/usr/lib里面加东西，是不用修改/etc/ld.so.conf的，但是完了之后要用ldconfig重新生成cache，不然这个library会找不到。 
+2. 往上面两个目录以外加东西的时候，一定要修改/etc/ld.so.conf，然后再调用ldconfig，不然也会找不到。 
+3. 如果想在这两个目录以外放lib，但是又不想在/etc/ld.so.conf中加东西（或者是没有权限加东西），需要将路径添加到环境变量`LD_LIBRARY_PATH`中。一般来讲这只是一种临时的解决方案，在没有权限或临时需要的时候使用。 
+4. ldconfig做的这些东西与运行程序时有关，跟编译一点关系都没有，编译的时候还是需要加-L。
+
 # 更多阅读
-  
+
+[Program Library HOWTO](http://tldp.org/HOWTO/Program-Library-HOWTO/index.html)  
 [详解C/C++预处理器](http://blog.csdn.net/huang_xw/article/details/7648117)  
 [Compiling Cpp](http://wiki.ubuntu.org.cn/Compiling_Cpp)  
 [C++静态库与动态库](http://www.cnblogs.com/skynet/p/3372855.html)  
 [高级语言的编译：链接及装载过程介绍](http://tech.meituan.com/linker.html)    
 [编译原理 (预处理>编译>汇编>链接)](http://www.cnblogs.com/pipicfan/archive/2012/07/10/2583910.html)   
 [帮 C/C++ 程序员彻底了解链接器](http://blog.jobbole.com/96225/)  
-[链接库以及编译过程](http://liubigbin.github.io/2016/03/20/%E9%93%BE%E6%8E%A5%E5%BA%93%E4%BB%A5%E5%8F%8A%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/)  
+[链接库以及编译过程](http://liubigbin.github.io/2016/03/20/%E9%93%BE%E6%8E%A5%E5%BA%93%E4%BB%A5%E5%8F%8A%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/)   
+[为什么不能在动态库里静态链接？](https://liam0205.me/2017/04/03/not-to-link-libstdc-statically-and-why/)  
+[What is the correct syntax to add CFLAGS and LDFLAGS to “configure”?](https://unix.stackexchange.com/questions/149359/what-is-the-correct-syntax-to-add-cflags-and-ldflags-to-configure)  
+
 
 
 [1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Compiler_1.png
