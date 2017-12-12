@@ -65,6 +65,39 @@ void main( void )
 }
 ```
 
+C++ standard section 3.1 节指出
+
+> A declaration introduces names into a translation unit or redeclares names introduced by previous declarations. A declaration specifies the interpretation and attributes of these names.
+
+接着说明 `A declaration is a definition unless`:
+
+```
+void sqrt(double);  // 1. declares a function without specifying the function’s body
+
+// 2. declares a static member within a class definition
+struct X
+{
+    int a;          // defines a
+    static int b;   // declares b    
+};
+
+class Y;            // 3. declares a class name
+
+// 4. contains the extern keyword without an initializer or function body
+extern const int i = 0; // defines i
+extern int j;           // declares j
+extern "C"
+{
+    void foo();         // declares foo
+}
+
+// 5. a typedef or using statement.
+typedef long LONG_32;  // declares LONG_32
+using namespace std;   // declares std
+```
+
+详细内容参考 [What is the difference between a definition and a declaration?](https://stackoverflow.com/questions/1410563/what-is-the-difference-between-a-definition-and-a-declaration)  
+
 # 左值还是右值
 
 左值与右值这两概念是从 c 中传承而来的，在 c 中，左值指的是既能够出现在等号左边也能出现在等号右边的变量(或表达式)，右值指的则是只能出现在等号右边的变量(或表达式)。
