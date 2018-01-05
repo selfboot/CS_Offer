@@ -274,7 +274,7 @@ Python 中 list 类似于 C++ STL中 vector 的实现。在需要的时候扩容
 [Hidden features of Python](http://stackoverflow.com/questions/101268/hidden-features-of-python)  
 [关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)  
 [Python 简要面试问题](http://blog.sivagao.com/2016-02/guide-python/)  
-[Python面试必须要看的15个问题]  (http://codingpy.com/article/essential-python-interview-questions/)  
+[Python面试必须要看的15个问题](http://codingpy.com/article/essential-python-interview-questions/)  
 [How do I pass a variable by reference?](http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference)  
 [如何面试Python后端工程师](https://www.zhihu.com/question/33398583)  
 [Ten Things Python Programmers Should Know](http://danieltakeshi.github.io/2013/07/05/ten-things-python-programmers-should-know/)  
