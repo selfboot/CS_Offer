@@ -341,11 +341,11 @@ introsort的大致思想是：当数据很大时先用quicksort,当递归超过�
 [八大排序算法的Python实现](http://blog.2liang.me/2015/09/24/%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84Python%E5%AE%9E%E7%8E%B0/)  
 [Sorting Algorithm Animations](http://www.sorting-algorithms.com)
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_1.gif
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_2.gif
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_3.gif
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_4.gif
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_5.gif
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Algorithm_Sort_6.gif
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Algorithm_Sort_1.gif
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Algorithm_Sort_2.gif
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Algorithm_Sort_3.gif
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Algorithm_Sort_4.gif
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Algorithm_Sort_5.gif
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Algorithm_Sort_6.gif
 
 

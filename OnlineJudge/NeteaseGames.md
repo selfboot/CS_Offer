@@ -526,9 +526,9 @@
         }
     }
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_OJ_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_OJ_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_OJ_3.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_OJ_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_OJ_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_OJ_3.png
 
 参考
 

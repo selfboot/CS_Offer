@@ -249,5 +249,5 @@ C++ Primer 文件输入输出
 [C++输入输出详解：C++标准输入输出流、文件流、字符串流](http://c.biancheng.net/cpp/biancheng/cpp/rumen_13/)
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_InputOutput.gif
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_InputOutput.gif
 

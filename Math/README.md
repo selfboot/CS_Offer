@@ -80,9 +80,9 @@
 [牛顿迭代法快速寻找平方根](http://www.matrix67.com/blog/archives/361)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_2.gif
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_4.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_2.gif
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_4.png
 
 

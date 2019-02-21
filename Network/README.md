@@ -147,8 +147,8 @@ HTTP 有两个主要的版本 HTTP 1.0 和 HTTP 1.1，1.1 版本在带宽优化�
 [《计算机网络》这门课为何如此之难？](https://www.zhihu.com/question/19718686)    
 [TCP和UDP的区别](http://liangjiabin.com/blog/2015/03/difference-between-tcp-vs-udp-protocol.html)
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_01.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_02.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_01.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_02.jpg
 
 
 

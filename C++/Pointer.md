@@ -340,10 +340,10 @@ pp++;       // OK
 [C++ 函数指针 & 类成员函数指针](http://blog.csdn.net/crayondeng/article/details/16868351)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Pointer_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Pointer_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Pointer_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Pointer_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Pointer_5.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Pointer_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Pointer_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Pointer_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Pointer_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Pointer_5.png
 
 

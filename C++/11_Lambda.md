@@ -221,5 +221,5 @@ int* const p;
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_11_Lambda_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_11_Lambda_1.png
 

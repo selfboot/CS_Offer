@@ -305,5 +305,5 @@ namedtuple主要用来产生可以使用名称来访问元素的数据对象，�
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Modules_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Modules_1.png
 

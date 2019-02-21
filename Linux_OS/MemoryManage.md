@@ -236,12 +236,12 @@
 [探究操作系统的内存分配（malloc）对齐策略](http://www.cnblogs.com/Creator/archive/2012/04/05/2433386.html)  
 [Linux内存寻址之分页机制](http://blog.xiaohansong.com/2015/10/05/Linux%E5%86%85%E5%AD%98%E5%AF%BB%E5%9D%80%E4%B9%8B%E5%88%86%E9%A1%B5%E6%9C%BA%E5%88%B6/)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_2.jpg
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_3.jpg
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_4.jpg
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_5.jpg
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_MemoryManage_6.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_MemoryManage_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_MemoryManage_2.jpg
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_MemoryManage_3.jpg
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_MemoryManage_4.jpg
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_MemoryManage_5.jpg
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_MemoryManage_6.jpg
 
 
 

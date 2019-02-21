@@ -263,8 +263,8 @@ Web代理（proxy）服务器是网络的中间实体。代理位于Web客户端
 [99%的人都理解错了HTTP中GET与POST的区别](http://mp.weixin.qq.com/s?__biz=MzI3NzIzMzg3Mw==&mid=100000054&idx=1&sn=71f6c214f3833d9ca20b9f7dcd9d33e4#rd)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_HTTP_4.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_HTTP_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_HTTP_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_HTTP_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_HTTP_4.png
 

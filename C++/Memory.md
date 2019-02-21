@@ -236,9 +236,9 @@ int main()
 [C Function Call Conventions and the Stack](http://www.csee.umbc.edu/~chang/cs313.s02/stack.shtml)  
  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_1.jpg  
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_2.jpg
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_3.jpg
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Memory_4.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Memory_1.jpg  
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Memory_2.jpg
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Memory_3.jpg
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Memory_4.png
 
 

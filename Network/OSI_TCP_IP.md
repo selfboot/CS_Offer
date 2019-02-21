@@ -54,7 +54,7 @@ TCP/IP模型是一系列网络协议的总称，这些协议的目的，就是�
 [TCP/IP 协议栈及 OSI 参考模型详解](http://www.codeceo.com/article/tcp-ip-osi-model.html)  
 [TCP/IP协议族](https://zh.wikipedia.org/wiki/TCP/IP协议族)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_OSI_TCP_IP_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_OSI_TCP_IP_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_OSI_TCP_IP_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_OSI_TCP_IP_2.png
 
 

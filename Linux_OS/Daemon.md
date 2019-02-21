@@ -141,7 +141,7 @@ fork 函数创建的子进程，继承了父进程的文件操作权限，为防
 
 [Linux 守护进程的实现](http://alfred-sun.github.io/blog/2015/06/18/daemon-implementation/)
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_Daemon_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_Daemon_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_Daemon_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_Daemon_2.png
 
 

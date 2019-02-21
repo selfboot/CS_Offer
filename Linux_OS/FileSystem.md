@@ -193,8 +193,8 @@ Linux的文件类型有以下几种:
 [RAID技术介绍和总结](http://blog.jobbole.com/83808/)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_FileSystem_1.jpg
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_FileSystem_2.jpg
-[3]:http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_FileSystem_3.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_FileSystem_1.jpg
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_FileSystem_2.jpg
+[3]:https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_FileSystem_3.jpg
 
 

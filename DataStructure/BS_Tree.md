@@ -119,7 +119,7 @@ BST 的查找是从根结点开始，若二叉树非空，将给定值与根结�
 [二叉查找树（BST）](http://songlee24.github.io/2015/01/13/binary-search-tree/)
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_BST_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_BST_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_BST_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_BST_2.png
 
 

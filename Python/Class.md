@@ -488,11 +488,11 @@ Python 对一些内建对象进行改进，加入了对上下文管理器的支�
 [Python中的属性管理](http://blog.chinaunix.net/uid-21633169-id-4614666.html)  
 [如何在Python里应用SOLID原则](http://ajucs.com/2016/06/17/use-S-O-L-I-D-in-python.html)   
  
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_5.png
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Class_6.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_5.png
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_6.png
 
 

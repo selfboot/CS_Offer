@@ -80,6 +80,6 @@
 [Understanding the Stack](https://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Mips/stack.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_StackHeap_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_StackHeap_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_StackHeap_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_StackHeap_2.png
 

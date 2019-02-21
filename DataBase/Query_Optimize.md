@@ -106,7 +106,7 @@ MySQL也有一个“建议”（见第十条）告诉你怎么去重新组织你
 [mysql全文检索原理与实例分析](http://www.bkjia.com/Mysql/1024998.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Query_Optimize_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Query_Optimize_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Query_Optimize_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Query_Optimize_2.png
 
 

@@ -61,8 +61,8 @@ P(A) = 构成事件 A 的元素的数目 / 构成事件空间 S 的所有元素�
 # 更多阅读
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_Statistics_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_Statistics_2.svg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_Statistics_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_Statistics_2.svg
 
 
 

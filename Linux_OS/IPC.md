@@ -420,7 +420,7 @@ char form server = B
 [Linux进程间通信——使用消息队列](http://blog.csdn.net/ljianhui/article/details/10287879)  
 [Linux进程间通信——使用信号量](http://blog.csdn.net/ljianhui/article/details/10243617)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IPC_1.jpg
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_6.gif
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IPC_1.jpg
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_ProcessThread_6.gif
 
 

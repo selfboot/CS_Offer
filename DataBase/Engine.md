@@ -68,9 +68,9 @@ InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截�
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Engine_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Engine_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Engine_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Engine_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Engine_5.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Engine_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Engine_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Engine_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Engine_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Engine_5.png
 

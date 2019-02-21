@@ -250,16 +250,16 @@ ssthresh = cwnd
 [Detection of Half-Open (Dropped) Connections](http://blog.stephencleary.com/2009/05/detection-of-half-open-dropped.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_5.png
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_6.png
-[7]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_7.png
-[8]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_8.png
-[9]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_9.png
-[10]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_TCP_10.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_5.png
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_6.png
+[7]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_7.png
+[8]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_8.png
+[9]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_9.png
+[10]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_TCP_10.jpg
 
 
 

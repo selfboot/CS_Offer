@@ -442,5 +442,5 @@ Python中如果调用函数A，它返回函数B。这个返回的函数B就叫�
 [Python中的闭包](http://www.the5fire.com/closure-in-python.html)   
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Function_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Function_1.png
 

@@ -184,6 +184,6 @@ gevent是一个基于libev的并发库。它为各种并发和网络相关的任
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Coroutine_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Coroutine_2.gif
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Coroutine_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Coroutine_2.gif
 

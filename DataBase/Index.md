@@ -340,11 +340,11 @@ ADD INDEX `first_name_last_name4` (first_name, last_name(4));
 [主键与唯一索引的区别](http://blog.mimvp.com/2015/03/the-difference-between-primary-key-and-unique-index/)  
 [MySQL索引原理及慢查询优化](http://tech.meituan.com/mysql-index.html)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Index_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Index_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Index_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Index_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Index_5.png
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/DataBaseSyetem_Index_6.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Index_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Index_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Index_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Index_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Index_5.png
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataBaseSyetem_Index_6.png
 
 

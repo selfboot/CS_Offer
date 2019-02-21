@@ -45,9 +45,9 @@ VL树的特性让二叉搜索树的节点实现平衡(balance)：节点相对均
 [AVL树(一)之 图文解析 和 C语言的实现](http://www.cnblogs.com/skywang12345/p/3576969.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_AVL_1.jpg
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_AVL_2.jpg
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_AVL_3.jpg
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_AVL_4.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_AVL_1.jpg
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_AVL_2.jpg
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_AVL_3.jpg
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_AVL_4.jpg
 
 

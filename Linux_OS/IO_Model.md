@@ -235,11 +235,11 @@ epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪�
 [处理大并发之一 对异步非阻塞的理解](http://blog.csdn.net/feitianxuxue/article/details/8936802)  
 [阻塞、非阻塞、同步、异步](http://ajucs.com/2016/09/20/blocking-nonblocking-sync-async.html)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_5.png
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_IO_Model_6.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IO_Model_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IO_Model_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IO_Model_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IO_Model_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IO_Model_5.png
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_IO_Model_6.png
 
 

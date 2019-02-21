@@ -16,7 +16,7 @@
 [算法系列之二十三]线段树（Interval Tree）
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_ST_1.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_ST_1.jpg
  
 
 

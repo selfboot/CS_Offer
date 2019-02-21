@@ -242,6 +242,6 @@ gdb调试中需要用到的命令
 [C++编译器无法捕捉到的8种错误](http://blog.jobbole.com/15837/)  
 [What is a segmentation fault?](http://stackoverflow.com/questions/2346806/what-is-a-segmentation-fault)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_GDB_Debug_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_GDB_Debug_1.png
 
 

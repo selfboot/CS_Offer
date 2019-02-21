@@ -160,6 +160,6 @@ STL通过函数模板提供了很多作用于容器的通用算法，例如查�
 [C++ STL轻松导学](http://morningspace.51.net/resource/stlintro/stlintro.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_STL_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_STL_1.png
 
 

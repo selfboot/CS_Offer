@@ -44,7 +44,7 @@
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_IP_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_IP_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_IP_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_IP_2.png
 
 

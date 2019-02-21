@@ -225,9 +225,9 @@ UDP通信流程图如下：
 [Linux Socket编程（不限Linux）](http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_4.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_Socket_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_Socket_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_Socket_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_Socket_4.png
 
 

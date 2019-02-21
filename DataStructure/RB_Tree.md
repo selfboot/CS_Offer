@@ -92,14 +92,14 @@
 [数据结构之红黑树](http://dongxicheng.org/structure/red-black-tree/)  
 [Wiki：红黑树](https://zh.wikipedia.org/wiki/红黑树)
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_5.png
-[6]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_6.png
-[7]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_7.png
-[8]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_8.png
-[9]: http://7xrlu9.com1.z0.glb.clouddn.com/DataStructure_RB_9.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_5.png
+[6]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_6.png
+[7]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_7.png
+[8]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_8.png
+[9]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/DataStructure_RB_9.png
 
 

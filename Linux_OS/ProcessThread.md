@@ -280,13 +280,13 @@ POSIX线程标准要求C标准库中的大多数函数具备线程安全性。
 [操作系统(计算机)进程和线程管理](http://c.biancheng.net/cpp/u/xitong_2/)    
 [内核线程与用户线程的一点小总结](http://www.jianshu.com/p/5a4fc2729c17)   
 [孤儿进程与僵尸进程](http://www.cnblogs.com/Anker/p/3271773.html)    
-[sem_init on OS X](http://stackoverflow.com/questions/1413785/sem-init-on-os-x)  
+[sem_init on OS X](http://stackoverflow.com/questions/1413785/sem-init-on-os-x)   
+[Linux process states](https://idea.popcount.org/2012-12-11-linux-process-states/)  
 
-
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_2.png
-[3]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_3.png
-[4]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_4.png
-[5]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_5.gif
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_ProcessThread_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_ProcessThread_2.png
+[3]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_ProcessThread_3.png
+[4]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_ProcessThread_4.png
+[5]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_ProcessThread_5.gif
 
 

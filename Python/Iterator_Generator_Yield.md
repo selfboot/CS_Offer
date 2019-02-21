@@ -323,5 +323,5 @@ def close(self):
 [2.5版yield之学习心得](http://zoomq.qiniudn.com/ZQScrapBook/ZqFLOSS/data/20061206220831/index.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Iterator_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Iterator_1.png
 

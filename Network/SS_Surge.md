@@ -39,6 +39,6 @@ SSL 和这个目标还是有一些出入。其中最大的问题是防冒充服�
 [Surge 新手使用指南](https://medium.com/@scomper/surge-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-a1533c10e80b)  
 [Surge for Mac 简明指南](https://medium.com/@scomper/surge-for-mac-%E7%AE%80%E6%98%8E%E6%8C%87%E5%8D%97-f6f357b8f09c)  
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Network_ShadowSocks_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Network_ShadowSocks_1.png
 
 

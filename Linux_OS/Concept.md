@@ -170,6 +170,6 @@ Linux进程的 4GB 地址空间，3G-4G是内核态的地址空间，存放整�
 [What is Linux System Calls and Library Functions?](http://www.thegeekstuff.com/2012/07/system-calls-library-functions/)    
 
 
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_2.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Linux_OS_2.png
 
 

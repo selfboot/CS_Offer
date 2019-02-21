@@ -72,5 +72,5 @@ P(Boy) = 60% ，这是一个先验概率，即没有看到一个穿长裤的同�
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Math_BayesTheorem_1.jpg
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Math_BayesTheorem_1.jpg
 

@@ -235,8 +235,8 @@ ldconfig通常在系统启动时运行，当用户安装了一个新的动态链
 
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Compiler_1.png
-[2]: http://7xrlu9.com1.z0.glb.clouddn.com/C++_Compiler_2.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Compiler_1.png
+[2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/C++_Compiler_2.png
 
 
 

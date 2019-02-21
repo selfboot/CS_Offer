@@ -94,5 +94,5 @@ MapReduce提供一个统一的计算框架，可完成：
 [Hadoop Map/Reduce 执行流程详解](http://zheming.wang/hadoop-mapreduce-zhi-xing-liu-cheng-xiang-jie.html)  
 
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/hadoop_spark_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/hadoop_spark_1.png
 

@@ -282,5 +282,5 @@ Python 中 list 类似于 C++ STL中 vector 的实现。在需要的时候扩容
 [The Vital Guide to Python Interviewing](https://www.toptal.com/python)  
 [操作之灵魂——拷贝](http://selfboot.cn/2014/08/08/python_copy/)
 
-[1]: http://7xrlu9.com1.z0.glb.clouddn.com/Python_Iterator_1.png
+[1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Iterator_1.png
 
