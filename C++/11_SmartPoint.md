@@ -41,6 +41,7 @@ cout << *ptr2 << endl;
 
 ```c++
 #include <iostream>
+#include <memory>
 using namespace std;
 
 int main()
