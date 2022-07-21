@@ -487,6 +487,7 @@ Python 对一些内建对象进行改进，加入了对上下文管理器的支�
 [关于Python类属性与实例属性的讨论](https://segmentfault.com/a/1190000002671941)    
 [Python中的属性管理](http://blog.chinaunix.net/uid-21633169-id-4614666.html)  
 [如何在Python里应用SOLID原则](http://ajucs.com/2016/06/17/use-S-O-L-I-D-in-python.html)   
+[Function overloading in Python](https://www.scaler.com/topics/function-overloading-in-python/)
  
 [1]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_1.png
 [2]: https://cs-offer-1251736664.cos.ap-beijing.myqcloud.com/Python_Class_2.png
